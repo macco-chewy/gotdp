@@ -1,0 +1,33 @@
+{
+  "auth": {
+    "mechanism": "",
+    "url": ""
+  },
+  "metadata": {
+    "baseDomain": "gotdp.aws.zstz.net"
+  },
+  "defaults": {
+    "environment": {
+      "name": "",
+      "dedicatedAccount": true,
+      "primaryRegion": "",
+      "regions": [],
+      "roles": []
+    },
+    "policy": {
+      "name": "",
+      "policy_statements": [],
+      "managed_policies": []
+    },
+    "role": {
+      "name": "",
+      "assumedName": "",
+      "managedPolicies": [],
+      "policyStatements": []
+    }
+  },
+  "environments": {},
+  "policies": {},
+  "projectName": "GoT Death Pool",
+  "roles": {}
+}

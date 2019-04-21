@@ -1,0 +1,82 @@
+service: gotdp-consumerapi-lambdas
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-mocha-plugin
+
+custom:
+  serverless-offline:
+    port: 3000
+  
+  defaults:
+    stage: Development
+    region: us-west-1
+
+  apiGateway:
+    restApiId:
+      "Fn::ImportValue": "ConsumerApi-${self:custom.stage}-${self:custom.region}-ApiGatewayRestApi-RestApiId"
+    restApiRootResourceId:
+      "Fn::ImportValue": "ConsumerApi-${self:custom.stage}-${self:custom.region}-ApiGatewayRestApiResourceV1-Id"
+  lambda:
+    defaultRole:
+      "Fn::ImportValue": "ConsumerApi-${self:custom.stage}-${self:custom.region}-DefaultLambdaRole-Arn"
+    defaultTimeout: 30
+    namePrefix: "gotdp-consumerapi-${self:custom.stage}-"
+  stackName: ${self:custom.stage}-${self:service} 
+  stage: ${opt:stage,self:custom.defaults.stage}
+  region: ${opt:region,self:custom.defaults.region}
+  webpack:
+    webpackConfig: webpack.config.js   # Name of webpack configuration file
+    includeModules: true   # Node modules configuration for packaging
+    packager: npm   # Packager that will be used to package your external modules
+    packExternalModulesMaxBuffer: 200 * 1024   # Size of stdio buffers for spawned child processes
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stackName: ${self:custom.stackName}
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  timeout: ${self:custom.lambda.defaultTimeout}
+  apiGateway:
+    restApiId: ${self:custom.apiGateway.restApiId}
+    restApiRootResourceId: ${self:custom.apiGateway.restApiRootResourceId}
+  role: ${self:custom.lambda.defaultRole}
+  environment:
+    GOTDP_DYNAMO_TABLE: "gotdp-${self:custom.stage}"
+  
+# package:
+#   individually: true
+
+functions:
+  getCharacters:
+    handler: lambdas/getCharacters.handler
+    name: ${self:custom.lambda.namePrefix}getCharacters
+    events:
+      - http:
+          path: characters
+          method: get
+          cors: true
+          private: false
+  
+  healthcheck:
+    handler: lambdas/healthcheck.handler
+    name: ${self:custom.lambda.namePrefix}healthcheck
+    events:
+      - http:
+          path: healthcheck
+          method: get
+          cors: true
+          private: false
+    environment:
+      STATUS: 'ok'
+  
+  refreshCharacters:
+    handler: lambdas/refreshCharacters.handler
+    name: ${self:custom.lambda.namePrefix}refreshCharacters
+    events:
+      - schedule:
+        name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
+        rate: rate(10 minutes)
+        enabled: true

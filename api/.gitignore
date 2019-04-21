@@ -1,0 +1,10 @@
+# package directories
+.webpack
+node_modules
+jspm_packages
+
+# code coverage is built each time test is run
+coverage
+
+# Serverless directories
+.serverless

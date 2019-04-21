@@ -1,0 +1,41 @@
+{
+  "name": "gotdp-consumerapi-lambdas",
+  "version": "1.0.0",
+  "description": "Consumer APIs Lambdas",
+  "main": "index.js",
+  "scripts": {
+    "deploy:dev": "./node_modules/.bin/sls deploy --stage=dev --region=us-west-1",
+    "invoke": "./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --function",
+    "start": "./node_modules/.bin/sls offline --stage=dev --region=us-west-1 --noTimeout --dontPrintOutput",
+    "debug": "export SLS_DEBUG=* && node --inspect=5858 ./node_modules/.bin/sls offline -s dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mike Cherry",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-sdk": "^2.337.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-flowtype": "^2.46.2",
+    "eslint-plugin-import": "^2.11.0",
+    "serverless": "^1.41.0",
+    "serverless-mocha-plugin": "^1.8.0",
+    "serverless-offline": "^4.9.4",
+    "serverless-webpack": "^5.1.1",
+    "webpack": "^3.10.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "cheerio": "^1.0.0-rc.3",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "uuid": "^3.2.1"
+  }
+}

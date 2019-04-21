@@ -1,0 +1,186 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Supporting Resources for the Sample Serverless API stack
+Parameters:
+  Environment:
+    Description: The name of the environment being deployed.
+    Type: String
+    AllowedValues:
+      - dev
+      - test
+      - stage
+      - prod
+  BaseDomainName:
+    Description: The base domain name of the application.  All service specific domains will use this as the base.
+    Type: String
+Conditions:
+  IsProd:
+    Fn::Equals:
+      - !Ref Environment
+      - prod
+
+Resources:
+
+  ApiGatewayCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName:
+        Fn::If:
+          - IsProd
+          - !Sub "api.${BaseDomainName}"
+          - !Sub "api.${Environment}.${BaseDomainName}"
+      ValidationMethod: DNS
+    
+  ApiGatewayRestApi:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: !Sub "${Environment}-${AWS::Region}-gotdp-cosumer-api"
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+  
+  ApiGatewayResourceV1:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      ParentId: !GetAtt ApiGatewayRestApi.RootResourceId
+      PathPart: v1
+      RestApiId: !Ref ApiGatewayRestApi
+  
+  ApiGatewayMethodRootGet:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      ApiKeyRequired: True
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Type: MOCK
+      ResourceId: !GetAtt ApiGatewayRestApi.RootResourceId
+      RestApiId: !Ref ApiGatewayRestApi
+  
+  ApiGatewayDefaultDeployment:
+    Type: "AWS::ApiGateway::Deployment"
+    DependsOn: ApiGatewayMethodRootGet
+    Properties:
+      RestApiId: !Ref ApiGatewayRestApi
+      StageName: !Ref Environment
+  
+  ApiGatewayDomainName:
+    Type: "AWS::ApiGateway::DomainName"
+    Properties:
+      DomainName:
+        Fn::If:
+          - IsProd
+          - !Sub "api.${BaseDomainName}"
+          - !Sub "api.${Environment}.${BaseDomainName}"
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      RegionalCertificateArn: !Ref ApiGatewayCertificate
+  
+  ApiGatewayDomainMapping:
+    Type: "AWS::ApiGateway::BasePathMapping"
+    DependsOn: ApiGatewayDomainName
+    Properties:
+      DomainName:
+        Fn::If:
+          - IsProd
+          - !Sub "api.${BaseDomainName}"
+          - !Sub "api.${Environment}.${BaseDomainName}"
+      RestApiId: !Ref ApiGatewayRestApi
+      Stage: !Ref Environment
+  
+  ApiGatewayResponseDefault4XX:
+    Type: "AWS::ApiGateway::GatewayResponse"
+    Properties:
+      ResponseType: DEFAULT_4XX
+      ResponseParameters:
+        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'"
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      RestApiId: !Ref ApiGatewayRestApi
+  
+  ApiGatewayResponseDefault5XX:
+    Type: "AWS::ApiGateway::GatewayResponse"
+    Properties:
+      ResponseType: DEFAULT_5XX
+      ResponseParameters:
+        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'"
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      RestApiId: !Ref ApiGatewayRestApi
+  
+  DefaultLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: !Sub "gotdp-${Environment}-${AWS::Region}-ConsumerApiDefaultLambdaRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: 
+          - Effect: Allow
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+  
+  DefaultLambdaExecutionPolicy:
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: !Sub "gotdp-${Environment}-${AWS::Region}-ConsumerApiDefaultLambdaExecutionPolicy"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - "logs:CreateLogGroup"
+              - "logs:CreateLogStream"
+              - "logs:PutLogEvents"
+            Resource:
+              - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gotdp-consumerapi-dev-*:*:*"
+          - Effect: Allow
+            Action:
+              - "dynamodb:BatchGetItem"
+              - "dynamodb:ConditionCheckItem"
+              - "dynamodb:PutItem"
+              - "dynamodb:Scan"
+              - "dynamodb:Query"
+              - "dynamodb:DescribeStream"
+              - "dynamodb:UpdateItem"
+              - "dynamodb:DescribeGlobalTableSettings"
+              - "dynamodb:DescribeTable"
+              - "dynamodb:GetShardIterator"
+              - "dynamodb:DescribeGlobalTable"
+              - "dynamodb:GetItem"
+              - "dynamodb:DescribeContinuousBackups"
+              - "dynamodb:DescribeBackup"
+              - "dynamodb:GetRecords"
+              - "dynamodb:DeleteItem"
+            Resource:
+              - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/gotdp-${Environment}"
+              - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/gotdp-${Environment}/*"
+      Roles:
+        - !Ref DefaultLambdaRole
+
+Outputs:
+
+  ApiGatewayRestApiId:
+    Value: !Ref ApiGatewayRestApi
+    Export:
+      Name: !Sub "ConsumerApi-${Environment}-${AWS::Region}-ApiGatewayRestApi-RestApiId"
+  
+  ApiGatewayRestApiRootResourceId:
+    Value: !GetAtt ApiGatewayRestApi.RootResourceId
+    Export:
+      Name: !Sub "ConsumerApi-${Environment}-${AWS::Region}-ApiGatewayRestApi-RootResourceId"
+  
+  ApiGatewayRestApiResourceV1Id:
+    Value: !Ref ApiGatewayResourceV1
+    Export:
+      Name: !Sub "ConsumerApi-${Environment}-${AWS::Region}-ApiGatewayRestApiResourceV1-Id"
+
+  ApiGatewayDomainName:
+    Value: !GetAtt ApiGatewayDomainName.RegionalDomainName
+    Export:
+      Name: !Sub "ConsumerApi-${Environment}-${AWS::Region}-ApiGatewayDomainName-RegionalDomainName"
+  
+  DefaultLambdaRoleArn:
+    Value: !GetAtt DefaultLambdaRole.Arn
+    Export:
+      Name: !Sub "ConsumerApi-${Environment}-${AWS::Region}-DefaultLambdaRole-Arn"
+  

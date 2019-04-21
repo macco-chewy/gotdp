@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Shared services Route53 resources
+Parameters:
+  HostedZoneId:
+    Description: The hosted zone to contain route53 resources
+    Type: String
+    Default: Z4MC4VKEYA2LQ
+
+Resources:
+
+  ConsumerApiDevCertificateVerificationRecord:
+    Type: "AWS::Route53::RecordSet"
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: "_9c4e23b65e2302b638224e0aabe52d6d.api.dev.gotdp.aws.zstz.net."
+      Type: CNAME
+      TTL: 60
+      ResourceRecords:
+        - "_4865f515597afed4159ee0175037ad79.ltfvzjuylp.acm-validations.aws."
+
+  ConsumerApiDevUSWest1StackHealthCheck:
+    Type: "AWS::Route53::HealthCheck"
+    Properties:
+      HealthCheckConfig:
+        Port: "443"
+        Type: "HTTPS_STR_MATCH"
+        SearchString: "ok"
+        ResourcePath: !Sub "/v1/dev/healthcheck"
+        FullyQualifiedDomainName: "igbc61fo0h.execute-api.us-west-1.amazonaws.com"
+        RequestInterval: "30"
+        FailureThreshold: "2"
+  
+  ConsumerApiDevUSWest1StackRegionalEndpointRecord:
+    Type: "AWS::Route53::RecordSet"
+    Properties:
+      Region: "us-west-1"
+      HealthCheckId: !Ref ConsumerApiDevUSWest1StackHealthCheck
+      SetIdentifier: "gotdp-consumerapi-dev-us-west-1"
+      HostedZoneId: !Ref HostedZoneId
+      Name: "api.dev.gotdp.aws.zstz.net"
+      Type: CNAME
+      TTL: 60
+      ResourceRecords:
+        - "d-wp61npjn6b.execute-api.us-west-1.amazonaws.com"

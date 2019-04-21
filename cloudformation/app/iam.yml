@@ -1,0 +1,205 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Testapp IAM resources
+Parameters:
+  Environment:
+    Description: The name of the environment being deployed.
+    Type: String
+    AllowedValues:
+      - dev
+      - test
+      - stage
+      - prod
+  MasterAccountId:
+    Description: The account Id for the master org account.
+    Type: Number
+Conditions:
+  IsDev:
+    Fn::Equals:
+      - !Ref Environment
+      - dev
+  IsTest:
+    Fn::Equals:
+      - !Ref Environment
+      - test
+  IsStage:
+    Fn::Equals:
+      - !Ref Environment
+      - stage
+  IsProd:
+    Fn::Equals:
+      - !Ref Environment
+      - prod
+
+Resources:
+
+  AdministratorRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: Administrator
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${MasterAccountId}:root"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AdministratorAccess"
+        - "arn:aws:iam::aws:policy/job-function/Billing"
+
+  DevOpRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: DevOp
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${MasterAccountId}:root"
+      Policies:
+        - PolicyName: DevOps
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "cloudformation:CreateStack"
+                  - "cloudformation:CreateStackSet"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:DescribeStackEvents"
+                  - "cloudformation:UpdateStack"
+                Resource: "*"
+
+  DevEnvRoleDev:
+    Type: "AWS::IAM::Role"
+    Condition: IsDev
+    Properties:
+      RoleName: Developer
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${MasterAccountId}:root"
+      Policies:
+        - PolicyName: Developers
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "cloudformation:CreateStack"
+                  - "cloudformation:CreateStackSet"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:DescribeStackEvents"
+                  - "cloudformation:UpdateStack"
+                Resource: "*"
+
+  TestEnvDevRole:
+    Type: "AWS::IAM::Role"
+    Condition: IsTest
+    Properties:
+      RoleName: Developer
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${MasterAccountId}:root"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+
+  StageEnvDevRole:
+    Type: "AWS::IAM::Role"
+    Condition: IsStage
+    Properties:
+      RoleName: Developer
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${MasterAccountId}:root"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+
+  ProdEnvDevRole:
+    Type: "AWS::IAM::Role"
+    Condition: IsProd
+    Properties:
+      RoleName: Developer
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${MasterAccountId}:root"
+      Policies:
+        - PolicyName: Developers
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Deny
+                Action: "*"
+                Resource: "*"
+  
+  StackSetAdministratorRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: AWSCloudFormationStackSetAdministrationRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: "cloudformation.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: /
+      Policies:
+        - PolicyName: AssumeRole-AWSCloudFormationStackSetExecutionRole
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "sts:AssumeRole"
+                Resource:
+                  - "arn:aws:iam::*:role/AWSCloudFormationStackSetExecutionRole"
+  
+  StackSetExecuterRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: AWSCloudFormationStackSetExecutionRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: 
+                - !Sub "${AWS::AccountId}"
+            Action:
+              - "sts:AssumeRole"
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+  
+  ApiGatewayLoggerRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: ApiGatewayLogger
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "sts:AssumeRole"
+            Principal:
+              Service: "apigateway.amazonaws.com"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
