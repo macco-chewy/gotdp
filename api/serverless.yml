@@ -77,6 +77,8 @@ functions:
     name: ${self:custom.lambda.namePrefix}refreshCharacters
     events:
       - schedule:
-        name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
-        rate: rate(10 minutes)
-        enabled: true
+          name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
+          rate: rate(5 minutes)
+          enabled: true
+          input:
+            warm: true

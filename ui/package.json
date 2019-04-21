@@ -1,0 +1,29 @@
+{
+  "name": "gotdp-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web UI",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8"
+  },
+  "scripts": {
+    "deploy:dev": "/usr/local/bin/aws s3 sync build/ s3://www.dev.gotdp.aws.zstz.net",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
