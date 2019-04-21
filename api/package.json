@@ -1,6 +1,7 @@
 {
   "name": "gotdp-consumerapi-lambdas",
   "version": "1.0.0",
+  "private": true,
   "description": "Consumer APIs Lambdas",
   "main": "index.js",
   "scripts": {

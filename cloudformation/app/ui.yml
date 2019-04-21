@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Supporting Resources for the Sample Serverless API stack
+Parameters:
+  Environment:
+    Description: The name of the environment being deployed.
+    Type: String
+    AllowedValues:
+      - dev
+      - test
+      - stage
+      - prod
+  BaseDomainName:
+    Description: The base domain name of the application.  All service specific domains will use this as the base.
+    Type: String
+
+Conditions:
+  IsProd:
+    Fn::Equals:
+      - !Ref Environment
+      - prod
+
+Resources:
+
+  WebsiteS3Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName:
+        Fn::If:
+          - IsProd
+          - !Sub "www.${BaseDomainName}"
+          - !Sub "www.${Environment}.${BaseDomainName}"
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+  
+  WebsiteS3BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${WebsiteS3Bucket}/*"
+      Bucket: !Ref WebsiteS3Bucket
+    
