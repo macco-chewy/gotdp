@@ -5,6 +5,7 @@
   "description": "Web UI",
   "dependencies": {
     "connected-react-router": "^6.2.2",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
@@ -17,7 +18,7 @@
     "stacktrace-js": "^2.0.0"
   },
   "scripts": {
-    "deploy:dev": "/usr/local/bin/aws s3 sync build/ s3://www.dev.gotdp.aws.zstz.net",
+    "deploy:dev": "/usr/local/bin/npm run build && /usr/local/bin/aws s3 sync build/ s3://www.dev.gotdp.aws.zstz.net",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
