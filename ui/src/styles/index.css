@@ -1,3 +1,21 @@
+:root {
+  --black: #000000;
+  --off-white: #eeeeee;
+  --light-gray: #aaaaaa;
+  
+  --blue-berry: #3b33aa;
+  --lapis: #3366aa;
+  --teal: #33a2aa;
+  
+  --ruby: #aa3b33;
+  --olive: #a2aa33;
+  
+  --primary-text: var(--off-white);
+  --secondary-text: var(--teal);
+  --accent-text: var(--olive);
+  --warning-text: var(--ruby);
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +24,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--primary-text);
+  font-size: 12px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -14,13 +34,13 @@ h1, h2, h3, h4, h5, h6 {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
 }
 
 select.form-control,
 textarea.form-control,
 input.form-control {
-  font-size: 16px;
+  font-size: 12px;
 }
 input[type=file] {
   width: 100%;
