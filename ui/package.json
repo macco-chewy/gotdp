@@ -4,14 +4,21 @@
   "private": true,
   "description": "Web UI",
   "dependencies": {
+    "connected-react-router": "^6.2.2",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8"
+    "react-redux": "^7.0.0",
+    "react-router": "^4.4.0-beta.6",
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "stacktrace-js": "^2.0.0"
   },
   "scripts": {
-    "deploy:dev": "/usr/local/bin/aws s3 sync build/ s3://www.dev.gotdp.aws.zstz.net",
+    "deploy:dev": "/usr/local/bin/npm run build && /usr/local/bin/aws s3 sync build/ s3://www.dev.gotdp.aws.zstz.net",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

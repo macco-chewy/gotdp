@@ -44,9 +44,15 @@ const characterNames = [
 
 export async function handler() {
   try {
-    characterNames.forEach(async name => {
-      await refreshCharacterByName(name);
-    });
+    for (let i = 0, x = characterNames.length; i < x; i++) {
+      let name = characterNames[i];
+      try {
+        await refreshCharacterByName(name);
+      } catch (e) {
+        console.error(`Error refreshing character ${name}: ${e.message}`);
+        console.error(e);
+      }
+    }
     return 'ok';
   } catch (e) {
     return e.message
