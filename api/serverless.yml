@@ -1,8 +1,8 @@
 service: gotdp-consumerapi-lambdas
 
 plugins:
-  - serverless-offline
   - serverless-webpack
+  - serverless-offline
   - serverless-mocha-plugin
 
 custom:
@@ -78,7 +78,7 @@ functions:
     events:
       - schedule:
           name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
-          rate: rate(5 minutes)
+          rate: rate(15 minutes)
           enabled: true
           input:
             warm: true

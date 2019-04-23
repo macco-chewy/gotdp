@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { get } from 'request-promise';
+import * as request from 'request-promise';
 import { DynamoDB } from 'aws-sdk';
 const cheerio = require('cheerio');
 
@@ -14,19 +14,25 @@ const CHARACTER_STATUS = {
 
 // Base Character object
 export const Character = function () {
-  this.age = '';
-  this.bids = {
-    1: [],
-    2: []
-  };
-  this.createDt = 0;
+  // properties
+  this.type = 'Character';
   this.id = uuid();
-  this.imageUrl = '';
-  this.name = '';
-  this.sourceUrl = '';
-  this.status = 0;
-  this.updateDt = 0;
   this.version = 1;
+  this.createDt = 0;
+  this.updateDt = 0;
+
+  // attributes
+  this.attributes = {
+    age: 0,
+    bids: {
+      1: [],
+      2: []
+    },
+    imageUrl: '',
+    name: '',
+    sourceUrl: '',
+    status: 0
+  }
 };
 
 
@@ -42,7 +48,15 @@ export const getAllCharacters = async () => {
       ":sk": 'CHARACTER|v0'
     }
   };
-  return (await documentClient.query(params).promise()).Items;
+
+  //return (await documentClient.query(params).promise()).Items;
+  const items = (await documentClient.query(params).promise()).Items;
+  const characters = [];
+  items.forEach(item => {
+    characters.push(convertDynamoItemToCharacter(item));
+  });
+
+  return characters;
 }
 
 
@@ -92,18 +106,17 @@ export const saveCharacter = async (character) => {
   }
 
   // check if item already exists
-  const existingCharacter = await getCharacterByName(character.name);
+  const existingCharacter = await getCharacterByName(character.attributes.name);
   if (existingCharacter) {
-    const props = [];
-    for (let prop in character) {
-      const ignoredProps = ['id', 'createDt', 'updateDt'];
-      if (ignoredProps.indexOf(prop) === -1 && JSON.stringify(character[prop]) !== JSON.stringify(existingCharacter[prop])) {
-        props.push(prop);
+    const attributes = [];
+    for (let attribute in character.attributes) {
+      if (JSON.stringify(character.attributes[attribute]) !== JSON.stringify(existingCharacter.attributes[attribute])) {
+        attributes.push(attribute);
       }
     }
 
-    // if no changed props return existing character
-    if (props.length === 0) {
+    // if no changed attributes return existing character
+    if (attributes.length === 0) {
       return existingCharacter;
     }
 
@@ -120,14 +133,14 @@ export const saveCharacter = async (character) => {
     existingCharacter.version++;
 
     // update the updateDt
-    props.push('updateDt');
     existingCharacter.updateDt = Date.now();
 
     // create attribute updates
     const attributeUpdates = {};
-    props.forEach(prop => {
-      attributeUpdates[prop] = { Action: 'PUT', Value: character[prop] }
+    attributes.forEach(attribute => {
+      attributeUpdates[attribute] = { Action: 'PUT', Value: character.attributes[attribute] }
     });
+    attributeUpdates.updateDt = { Action: 'PUT', Value: existingCharacter.updateDt }
 
     // update v0 character
     const updateparams = {
@@ -150,11 +163,7 @@ export const saveCharacter = async (character) => {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     Item: item
   };
-  try {
-    await documentClient.put(params).promise();
-  } catch (e) {
-    console.log('failed on this item', item);
-  }
+  await documentClient.put(params).promise();
 
   return character;
 };
@@ -190,56 +199,85 @@ const fetchCharacterFromWiki = async (name) => {
 
   let characterHTML;
   try {
-    const response = await get(sourceUrl);
+    const response = await request.get(sourceUrl);
     characterHTML = cheerio.load(response);
   } catch (e) {
-    switch (e.statusCode) {
-      case 404:
-        throw new Error(`Character "${name}" not found`);
-      default:
-        throw e;
+    if (e.statusCode) {
+      switch (e.statusCode) {
+        case 404:
+          throw new Error(`Character "${name}" not found`);
+      }
     }
+    throw e;
   }
 
   const character = new Character();
-  character.age = characterHTML('div[data-source=Age] div').text().substr(0, 2);
-  character.imageUrl = characterHTML('figure[data-source=Image] a img').attr('src');
-  character.name = characterHTML('h2[data-source=Title]').text();
-  character.sourceUrl = sourceUrl;
-  character.status = deriveStatus(characterHTML('div[data-source=Status] div a').text());
-
+  character.attributes.age = parseInt(characterHTML('div[data-source=Age] div').text().substr(0, 2), 10) || 0;
+  character.attributes.imageUrl = characterHTML('figure[data-source=Image] a img').attr('src');
+  character.attributes.name = characterHTML('h2[data-source=Title]').text();
+  character.attributes.sourceUrl = sourceUrl;
+  character.attributes.status = deriveStatus(characterHTML('div[data-source=Status] div a').text());
   return character;
 };
 
 
 const convertDynamoItemToCharacter = (item = {}) => {
   const character = new Character();
-  character.age = item.age;
-  character.bids = item.bids;
-  character.createDt = item.createDt;
-  character.id = item.id;
-  character.imageUrl = item.imageUrl;
-  character.name = item.name;
-  character.sourceUrl = item.sourceUrl;
-  character.status = item.status;
-  character.updateDt = item.updateDt;
-  character.version = item.version;
+  // populate properties
+  [
+    'id',
+    'createDt',
+    'updateDt',
+    'version'
+  ].forEach(prop => {
+    character[prop] = item[prop];
+  });
+
+  // populate attributes
+  [
+    'age',
+    'bids',
+    'imageUrl',
+    'name',
+    'sourceUrl',
+    'status'
+  ].forEach(prop => {
+    character.attributes[prop] = item[prop];
+  });
+
+  // return character
   return character;
 };
 
 
 const convertCharacterToDynamoItem = (character = {}) => {
-  return {
-    age: character.age || 'Unknown',
-    bids: character.bids,
-    createDt: character.createDt,
-    id: character.id,
-    imageUrl: character.imageUrl,
-    name: character.name,
-    sk: 'CHARACTER|v0',
-    sourceUrl: character.sourceUrl,
-    status: character.status,
-    updateDt: character.updateDt,
-    version: character.version
-  };
+  const item = {};
+
+  //populate properties
+  [
+    'id',
+    'createDt',
+    'updateDt',
+    'version'
+  ].forEach(prop => {
+    item[prop] = character[prop];
+  });
+
+  // populate attributes
+  [
+    'age',
+    'bids',
+    'imageUrl',
+    'name',
+    'sourceUrl',
+    'status',
+  ].forEach(prop => {
+    item[prop] = character.attributes[prop];
+  });
+
+  // fix item props
+  item.sk = 'CHARACTER|v0';
+
+  // return item
+  return item;
 };
