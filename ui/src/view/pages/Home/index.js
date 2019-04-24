@@ -6,13 +6,9 @@ import PropTypes from 'prop-types';
 import { collection } from 'actions/characters';
 
 import BasicLayout from 'view/layouts/BasicLayout';
+import CharacterCard from './CharacterCard';
 
-
-
-const CharacterCard = function (props) {
-  const { character } = props;
-  return (<div>{character.attributes.name}</div>);
-}
+import styles from './styles.module.css';
 
 
 
@@ -31,13 +27,15 @@ class Home extends Component {
     const characters = this.props.characters;
     return (
       <BasicLayout>
-        {
-          !characters
-            ? null
-            : characters.map((character, i) => {
-              return <CharacterCard key={i} character={character} />
-            })
-        }
+        <div className={styles.root}>
+          {
+            !characters
+              ? null
+              : characters.map((character, i) => {
+                return <CharacterCard key={i} character={character} />
+              })
+          }
+        </div>
       </BasicLayout>
     );
   }

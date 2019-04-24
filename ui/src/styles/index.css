@@ -5,13 +5,13 @@
   
   --blue-berry: #3b33aa;
   --lapis: #3366aa;
-  --teal: #33a2aa;
+  --ice: #66bdeb;
   
   --ruby: #aa3b33;
   --olive: #a2aa33;
   
   --primary-text: var(--off-white);
-  --secondary-text: var(--teal);
+  --secondary-text: var(--ice);
   --accent-text: var(--olive);
   --warning-text: var(--ruby);
 }
