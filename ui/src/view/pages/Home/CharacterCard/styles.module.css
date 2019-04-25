@@ -1,40 +1,90 @@
 .root {
-  height: 5rem;
+  display: flex;
+  flex-direction: row;
   margin-bottom: 12px;
   background: var(--olive);
-  border-radius: 10px;
+  border-radius: 1rem;
   cursor: pointer;
 }
 
 .profilePicContainer {
-  width: 4.6rem;
-  height: 4.6rem;
+  width: 5rem;
+  height: 5rem;
   margin: .2rem;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75) ), url(img/profileDefault.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  border-radius: 1rem 0 0 1rem;
+
+  animation-duration: .5s;
+  animation-name: contract;
+  animation-timing-function: ease-in-out;
+
+  /* Keyword values */
+  /* animation-timing-function: ease;
+  animation-timing-function: ease-in;
+  animation-timing-function: ease-out;
+  animation-timing-function: ease-in-out;
+  animation-timing-function: linear;
+  animation-timing-function: step-start;
+  animation-timing-function: step-end; */
+
+  /* Function values */
+  /* animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
+  animation-timing-function: steps(4, end); */
+
+  /* Steps Function keywords */ 
+  /* animation-timing-function: steps(4, jump-start);
+  animation-timing-function: steps(10, jump-end);
+  animation-timing-function: steps(20, jump-none);
+  animation-timing-function: steps(5, jump-both);
+  animation-timing-function: steps(6, start);
+  animation-timing-function: steps(8, end); */
+
+  /* Multiple animations */
+  /* animation-timing-function: ease, step-start, cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+
+  /* Global values */
+  /* animation-timing-function: inherit;
+  animation-timing-function: initial;
+  animation-timing-function: unset; */
 }
 
 .profilePic {
   width: 100%;
   height: 100%;
-  background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75) ),  url(img/profileDefault.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  border-radius: 1rem 0 0 1rem;
   filter: saturate(250%);
 }
 
+.detailsContainer {
+  padding: 1rem 1rem 1rem .5rem;
+  color: var(--dark-gray);
+}
+
+.name {
+  border: 2px orange;
+}
+
+.details {
+  display: none;
+}
+
 .deceased {
-  background: #333333;
+  background: var(--dark-gray);
 }
 
 .deceased .profilePic {
   -webkit-filter: grayscale(1);
   filter: grayscale(1);
+}
+
+.deceased .detailsContainer {
+  color: var(--ruby);
 }
 
 .wight {
@@ -45,13 +95,44 @@
   filter: sepia(50%) hue-rotate(170deg) saturate(250%);
 }
 
-
-
-.active {
-  height: 15rem;
+.wight .detailsContainer {
+  color: var(--snow);
 }
 
 .active .profilePicContainer {
-  width: 9.6rem;
-  height: 14.6rem;
+  width: 10rem;
+  height: 15rem;
+
+  animation-duration: .5s;
+  animation-name: expand;
+}
+
+.active .details {
+  display: flex;
+}
+
+
+
+@keyframes expand {
+  from {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  to {
+    width: 10rem;
+    height: 15rem;
+  }
+}
+
+@keyframes contract {
+  from {
+    width: 10rem;
+    height: 15rem;
+  }
+
+  to {
+    width: 5rem;
+    height: 5rem;
+  }
 }

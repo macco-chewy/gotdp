@@ -6,13 +6,12 @@ import PropTypes from 'prop-types';
 import { collection } from 'actions/characters';
 
 import BasicLayout from 'view/layouts/BasicLayout';
-import CharacterCard from './CharacterCard';
 
 import styles from './styles.module.css';
 
 
 
-class Home extends Component {
+class User extends Component {
   static propTypes = {
     characters: PropTypes.any,
     getCharacters: PropTypes.func,
@@ -50,7 +49,7 @@ class Home extends Component {
             !characters
               ? null
               : characters.map((character, i) => {
-                return <CharacterCard key={i} character={character} />
+                return <div>{character.attributes.name}</div>
               })
           }
         </div>
@@ -68,4 +67,4 @@ const actions = {
   push
 };
 
-export default connect(getState, actions)(Home);
+export default connect(getState, actions)(User);

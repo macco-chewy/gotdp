@@ -42,3 +42,15 @@ Resources:
       TTL: 60
       ResourceRecords:
         - "d-wp61npjn6b.execute-api.us-west-1.amazonaws.com"
+
+  WebDevPublicUrl:
+    Type: "AWS::Route53::RecordSet"
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: "www.dev.gotdp.aws.zstz.net"
+      Type: CNAME
+      TTL: 60
+      ResourceRecords:
+        - "_4865f515597afed4159ee0175037ad79.ltfvzjuylp.acm-validations.aws."
+
+        http://www.dev.gotdp.aws.zstz.net.s3-website-us-west-1.amazonaws.com

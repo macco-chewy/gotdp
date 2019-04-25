@@ -31,6 +31,10 @@ export default function CharacterCard(props) {
       <div className={styles.profilePicContainer}>
         <div className={styles.profilePic} style={{ backgroundImage: `url(${character.attributes.imageUrl})` }} />
       </div>
+      <div className={styles.detailsContainer}>
+        <div className={styles.name}><h2>{character.attributes.name}</h2></div>
+        <div className={styles.details}>asdf</div>
+      </div>
     </div>
   );
 }

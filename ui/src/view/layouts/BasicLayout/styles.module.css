@@ -25,10 +25,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-left: 190px;
-  padding-right: 24px;
-  margin-bottom: 50px;
-  border-bottom: 3px solid #333333;
+  padding: 2rem 2rem 0 190px;
+  margin-bottom: 6rem;
+  border-bottom: 3px solid var(--dark-gray);
 }
 
 .logo {

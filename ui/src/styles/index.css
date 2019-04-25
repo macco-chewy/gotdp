@@ -2,10 +2,12 @@
   --black: #000000;
   --off-white: #eeeeee;
   --light-gray: #aaaaaa;
+  --dark-gray: #333333;
   
   --blue-berry: #3b33aa;
   --lapis: #3366aa;
-  --ice: #66bdeb;
+  --ice: #57bef5;
+  --snow: #d4e8f3;
   
   --ruby: #aa3b33;
   --olive: #a2aa33;
@@ -29,6 +31,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
   font-family: "Cinzel", serif;
 }
 
