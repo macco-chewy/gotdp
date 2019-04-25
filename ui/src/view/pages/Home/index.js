@@ -54,6 +54,7 @@ class Home extends Component {
               })
           }
         </div>
+
       </BasicLayout>
     );
   }
