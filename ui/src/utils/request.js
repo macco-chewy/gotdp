@@ -85,8 +85,7 @@ const mockedFetch = (url, options) => new Promise((resolve, reject) => import('l
     });
   }));
 
-const requestInterface = process.env.IS_OFFLINE !== true ? window.fetch : mockedFetch;
-
+const requestInterface = process.env.REACT_APP_IS_OFFLINE !== 'true' ? window.fetch : mockedFetch;
 const request = (url, options = {}) => {
   return requestInterface(url, options)
     .then(parseError.bind(undefined, url, { ...options }))

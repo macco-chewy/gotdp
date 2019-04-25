@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
+import PropTypes from 'prop-types';
+
+import Link from 'view/components/Link';
+
 import styles from './styles.module.css';
 
 class BasicLayout extends Component {
+  static propTypes = {
+    characters: PropTypes.any,
+    getCharacters: PropTypes.func,
+    push: PropTypes.func
+  };
+
   render() {
     return (
-      <div className={styles.root}> {/* eslint-ignore-line */}              
+      <div className={styles.root}> {/* eslint-ignore-line */}
         <div className={styles.container}>
           <div className={styles.header}>
             <div className={styles.logo}></div>
@@ -19,4 +31,10 @@ class BasicLayout extends Component {
   }
 }
 
-export default BasicLayout;
+const getState = (globalState) => ({});
+
+const actions = {
+  push
+};
+
+export default connect(getState, actions)(BasicLayout);

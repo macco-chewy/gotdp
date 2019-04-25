@@ -6,12 +6,13 @@ export const characters = [
     "createDt": 1556005918336,
     "updateDt": 1556005918336,
     "attributes": {
-      "age": 0,
+      "age": 17,
       "bids": {
         "1": [],
         "2": []
       },
-      "name": "Gregor Clegane",
+      "imageUrl": "https://vignette.wikia.nocookie.net/gameofthrones/images/b/b1/Arya_Season_8.jpg/revision/latest/scale-to-width-down/700?cb=20190206213617",
+      "name": "Arya Stark",
       "sourceUrl": "https://gameofthrones.fandom.com/wiki/The_Mountain",
       "status": "1"
     }
@@ -31,7 +32,7 @@ export const characters = [
       "imageUrl": "https://vignette.wikia.nocookie.net/gameofthrones/images/0/07/Melisandre_%28The_Queen%27s_Justice%29.png/revision/latest/scale-to-width-down/319?cb=20170830235514",
       "name": "Melisandre",
       "sourceUrl": "https://gameofthrones.fandom.com/wiki/Melisandre",
-      "status": "1"
+      "status": "3"
     }
   },
   {
@@ -49,7 +50,7 @@ export const characters = [
       "imageUrl": "https://vignette.wikia.nocookie.net/gameofthrones/images/f/f3/Sansa_S8.jpg/revision/latest/scale-to-width-down/350?cb=20190206213553",
       "name": "Sansa Stark",
       "sourceUrl": "https://gameofthrones.fandom.com/wiki/Sansa_Stark",
-      "status": "1"
+      "status": "2"
     }
   }
 ];
