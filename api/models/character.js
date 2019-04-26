@@ -5,18 +5,25 @@ const cheerio = require('cheerio');
 
 const documentClient = new DynamoDB.DocumentClient();
 
+// define dynamo indexes
+const TYPE = 'Character';
+const INDEX = `${TYPE.toUpperCase()}|v0`;
+const INDEX_U = `${TYPE.toUpperCase()}|v`;
+
 // Character status enumeration
 const CHARACTER_STATUS = {
   0: { display: 'Undefined', regex: /^$/ },
-  1: { display: 'Alive', regex: /^Alive/ },
-  2: { display: 'Deceased', regex: /^Deceased/ }
+  1: { display: 'Alive', regex: /^alive$/i },
+  2: { display: 'Deceased', regex: /^deceased$/i },
+  3: { display: 'Wight / White Walker', regex: /(?=.*reanimated)^deceased/i }
 };
 
 // Base Character object
 export const Character = function () {
   // properties
-  this.type = 'Character';
+  this.type = TYPE;
   this.id = uuid();
+  this.name = '';
   this.version = 1;
   this.createDt = 0;
   this.updateDt = 0;
@@ -28,13 +35,15 @@ export const Character = function () {
       1: [],
       2: []
     },
+    displayName: '',
     imageUrl: '',
-    name: '',
     sourceUrl: '',
     status: 0
   }
 };
 
+// formatting / marshalling
+const IGNORED_PROPS = ['type'];
 
 export const getAllCharacters = async () => {
   const params = {
@@ -45,7 +54,7 @@ export const getAllCharacters = async () => {
       "#sk": "sk"
     },
     ExpressionAttributeValues: {
-      ":sk": 'CHARACTER|v0'
+      ":sk": INDEX
     }
   };
 
@@ -63,7 +72,7 @@ export const getAllCharacters = async () => {
 export const getCharacterById = async (id) => {
   // const params = {
   //   TableName: process.env.GOTDP_DYNAMO_TABLE,
-  //   Key: { id, sk: 'CHARACTER|v0' }
+  //   Key: { id, sk: INDEX }
   // };
   // console.log(await documentClient.get(params).promise());
   return undefined;
@@ -81,7 +90,7 @@ export const getCharacterByName = async (name) => {
     },
     ExpressionAttributeValues: {
       ":name": name,
-      ":sk": 'CHARACTER|v0'
+      ":sk": INDEX
     }
   };
   const items = (await documentClient.query(params).promise()).Items;
@@ -106,54 +115,51 @@ export const saveCharacter = async (character) => {
   }
 
   // check if item already exists
-  const existingCharacter = await getCharacterByName(character.attributes.name);
+  const existingCharacter = await getCharacterByName(character.name);
   if (existingCharacter) {
-    const attributes = [];
-    for (let attribute in character.attributes) {
-      if (JSON.stringify(character.attributes[attribute]) !== JSON.stringify(existingCharacter.attributes[attribute])) {
-        attributes.push(attribute);
-      }
-    }
 
-    // if no changed attributes return existing character
-    if (attributes.length === 0) {
+    const deepEqual = require('fast-deep-equal');
+    if (deepEqual(existingCharacter.attributes, character.attributes)) {
       return existingCharacter;
     }
 
-    // put new character version
+    // version and archive the existing character
     const item = convertCharacterToDynamoItem(existingCharacter);
-    item.sk = `CHARACTER|v${existingCharacter.version}`;
+    item.sk = `${INDEX_U}${existingCharacter.version}`;
     const params = {
       TableName: process.env.GOTDP_DYNAMO_TABLE,
       Item: item
     };
     await documentClient.put(params).promise();
 
+    // merge existing property values
+    // replace the id
+    character.id = existingCharacter.id;
     // bump the current version
-    existingCharacter.version++;
-
+    character.version = existingCharacter.version + 1;
     // update the updateDt
-    existingCharacter.updateDt = Date.now();
+    character.updateDt = Date.now();
+    // update attributes
+    character.attributes = Object.assign({}, existingCharacter.attributes, character.attributes);
 
     // create attribute updates
-    const attributeUpdates = {};
-    attributes.forEach(attribute => {
-      attributeUpdates[attribute] = { Action: 'PUT', Value: character.attributes[attribute] }
-    });
-    attributeUpdates.updateDt = { Action: 'PUT', Value: existingCharacter.updateDt }
+    const updates = {};
+    updates.version = { Action: 'PUT', Value: character.version };
+    updates.updateDt = { Action: 'PUT', Value: character.updateDt };
+    updates.attributes = { Action: 'PUT', Value: character.attributes };
 
     // update v0 character
     const updateparams = {
       TableName: process.env.GOTDP_DYNAMO_TABLE,
       Key: {
-        id: existingCharacter.id,
-        sk: 'CHARACTER|v0',
+        id: character.id,
+        sk: INDEX,
       },
-      AttributeUpdates: attributeUpdates
+      AttributeUpdates: updates
     };
     await documentClient.update(updateparams).promise();
 
-    return existingCharacter;
+    return character;
   }
 
   // set create and update dates
@@ -170,8 +176,22 @@ export const saveCharacter = async (character) => {
 
 
 export const refreshCharacterByName = async (name) => {
+  let displayName = name;
+  if (typeof name === 'object') {
+    displayName = name.displayName;
+    name = name.name;
+  }
+
+  // fetch current character data from wiki
   const character = await fetchCharacterFromWiki(name);
-  saveCharacter(character);
+
+  // save displayName
+  character.attributes.displayName = displayName;
+
+  // prevent overwriting bids by deleting
+  delete character.attributes.bids;
+
+  return await saveCharacter(character);
 };
 
 
@@ -212,38 +232,30 @@ const fetchCharacterFromWiki = async (name) => {
   }
 
   const character = new Character();
+  character.name = characterHTML('h2[data-source=Title]').text();
   character.attributes.age = parseInt(characterHTML('div[data-source=Age] div').text().substr(0, 2), 10) || 0;
+  character.attributes.displayName = name;
   character.attributes.imageUrl = characterHTML('figure[data-source=Image] a img').attr('src');
-  character.attributes.name = characterHTML('h2[data-source=Title]').text();
   character.attributes.sourceUrl = sourceUrl;
   character.attributes.status = deriveStatus(characterHTML('div[data-source=Status] div a').text());
+
+  for (const attribute in character.attributes) {
+    if (character.attributes[attribute] === undefined) {
+      delete character.attributes[attribute];
+    }
+  }
+
   return character;
 };
 
-
 const convertDynamoItemToCharacter = (item = {}) => {
   const character = new Character();
-  // populate properties
-  [
-    'id',
-    'createDt',
-    'updateDt',
-    'version'
-  ].forEach(prop => {
-    character[prop] = item[prop];
-  });
 
-  // populate attributes
-  [
-    'age',
-    'bids',
-    'imageUrl',
-    'name',
-    'sourceUrl',
-    'status'
-  ].forEach(prop => {
-    character.attributes[prop] = item[prop];
-  });
+  for (const prop in character) {
+    if (IGNORED_PROPS.indexOf(prop) === -1) {
+      character[prop] = item[prop]
+    }
+  }
 
   // return character
   return character;
@@ -253,30 +265,14 @@ const convertDynamoItemToCharacter = (item = {}) => {
 const convertCharacterToDynamoItem = (character = {}) => {
   const item = {};
 
-  //populate properties
-  [
-    'id',
-    'createDt',
-    'updateDt',
-    'version'
-  ].forEach(prop => {
-    item[prop] = character[prop];
-  });
-
-  // populate attributes
-  [
-    'age',
-    'bids',
-    'imageUrl',
-    'name',
-    'sourceUrl',
-    'status',
-  ].forEach(prop => {
-    item[prop] = character.attributes[prop];
-  });
+  for (const prop in character) {
+    if (IGNORED_PROPS.indexOf(prop) === -1) {
+      item[prop] = character[prop];
+    }
+  }
 
   // fix item props
-  item.sk = 'CHARACTER|v0';
+  item.sk = INDEX;
 
   // return item
   return item;

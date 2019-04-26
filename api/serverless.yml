@@ -59,6 +59,16 @@ functions:
           method: get
           cors: true
           private: false
+
+  getQuestions:
+    handler: lambdas/getQuestions.handler
+    name: ${self:custom.lambda.namePrefix}getQuestions
+    events:
+      - http:
+          path: questions
+          method: get
+          cors: true
+          private: false
   
   healthcheck:
     handler: lambdas/healthcheck.handler
@@ -80,5 +90,8 @@ functions:
           name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
           rate: rate(15 minutes)
           enabled: true
-          input:
-            warm: true
+  
+  refreshQuestions:
+    handler: lambdas/refreshQuestions.handler
+    name: ${self:custom.lambda.namePrefix}refreshQuestions
+    events:
