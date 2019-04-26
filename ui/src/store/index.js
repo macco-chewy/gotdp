@@ -7,7 +7,12 @@ import createRootReducer from 'reducers';
 
 const loggerMiddleware = createLogger();
 
-const initialState = {};
+const initialState = {
+  global: {
+    isLoading: false
+  },
+  characters: []
+};
 
 // exports
 export const history = createBrowserHistory();

@@ -51,13 +51,13 @@ const parseError = (url, options = {}, response) => {
 
 const mockedFetch = (url, options) => new Promise((resolve, reject) => import('libs/api/mocks')
   .then(mocks => {
-    // TODO Add POST, PUT, PATCH handling
-    if (options.method !== 'GET') {
-      return reject(Object.assign({}, {
-        status: 400,
-        message: 'offline mode',
-      }));
-    }
+    // // TODO Add POST, PUT, PATCH handling
+    // if (options.method !== 'GET') {
+    //   return reject(Object.assign({}, {
+    //     status: 400,
+    //     message: 'offline mode',
+    //   }));
+    // }
     let path;
     let id;
     if (/.*localhost:\d{4}.*/.test(url)) {
@@ -80,7 +80,7 @@ const mockedFetch = (url, options) => new Promise((resolve, reject) => import('l
         },
       },
       json() {
-        return new Promise(r => setTimeout(() => r(mocks[mockName]), 300));
+        return new Promise(r => setTimeout(() => r(mocks[mockName]), 1500));
       },
     });
   }));
