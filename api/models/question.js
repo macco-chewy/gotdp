@@ -1,6 +1,8 @@
 import { v4 as uuid } from 'uuid';
 import { DynamoDB } from 'aws-sdk';
 
+import * as common from '../libs/common';
+
 const documentClient = new DynamoDB.DocumentClient();
 
 // define dynamo indexes
@@ -47,12 +49,12 @@ export const getAllQuestions = async () => {
   };
 
   const items = (await documentClient.query(params).promise()).Items;
-  const questions = [];
+  const questions = {};
   items.forEach(item => {
-    questions.push(convertDynamoItemToQuestion(item));
+    questions[item.name] = convertDynamoItemToQuestion(item);
   });
 
-  return questions;
+  return Object.sort(questions);
 }
 
 

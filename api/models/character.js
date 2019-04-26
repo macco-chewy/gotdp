@@ -3,6 +3,8 @@ import * as request from 'request-promise';
 import { DynamoDB } from 'aws-sdk';
 const cheerio = require('cheerio');
 
+import * as common from '../libs/common';
+
 const documentClient = new DynamoDB.DocumentClient();
 
 // define dynamo indexes
@@ -60,12 +62,12 @@ export const getAllCharacters = async () => {
 
   //return (await documentClient.query(params).promise()).Items;
   const items = (await documentClient.query(params).promise()).Items;
-  const characters = [];
+  const characters = {};
   items.forEach(item => {
-    characters.push(convertDynamoItemToCharacter(item));
+    characters[item.name] = convertDynamoItemToCharacter(item);
   });
 
-  return characters;
+  return Object.sort(characters);
 }
 
 
