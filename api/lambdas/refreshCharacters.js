@@ -22,7 +22,7 @@ const characterNames = [
   'The Hound',
   'Qyburn',
   'Gilly',
-  'Sam',
+  { name: 'Sam', displayName: 'Baby Sam' },
   'Davos Seaworth',
   'Varys',
   'Yara Greyjoy',
@@ -30,9 +30,9 @@ const characterNames = [
   'Beric Dondarrion',
   'Podrick Payne',
   'Hot Pie',
-  'Eddison Tollett',
-  'Tormund',
-  'Brienne of Tarth',
+  { name: 'Eddison Tollett', displayName: 'Dolorus Edd Tollett' },
+  { name: 'Tormund', displayName: 'Tormund Giantsbane' },
+  { name: 'Brienne Tarth', displayName: 'Brienne of Tarth' },
   'Grey Worm',
   'Meera Reed',
   'Bronn',
@@ -50,7 +50,6 @@ export async function handler() {
         await refreshCharacterByName(name);
       } catch (e) {
         console.error(`Error refreshing character ${name}: ${e.message}`);
-        console.error(e);
       }
     }
     return 'ok';
