@@ -4,12 +4,12 @@ import {
 
 const questions = [
   {
-    name: 'question1',
+    name: 'question01',
     type: 'text',
     text: 'Who will sit the Iron Throne?'
   },
   {
-    name: 'question2',
+    name: 'question02',
     type: 'radio',
     text: 'Is Daenerys Pregnant?',
     answers: [
@@ -18,22 +18,22 @@ const questions = [
     ]
   },
   {
-    name: 'question3',
+    name: 'question03',
     type: 'radio',
     text: 'Will she lose the baby?',
     answers: [
       { text: 'Yes', value: '1' },
       { text: 'No', value: '2' }
     ],
-    dependsOn: 'question2'
+    dependsOn: 'question02'
   },
   {
-    name: 'question4',
+    name: 'question04',
     type: 'text',
     text: 'Who kills The Night King?'
   },
   {
-    name: 'question5',
+    name: 'question05',
     type: 'radio',
     text: 'Will Nymeria make a comeback?',
     answers: [
@@ -42,12 +42,12 @@ const questions = [
     ]
   },
   {
-    name: 'question6',
+    name: 'question06',
     type: 'text',
     text: 'Who kills Cersei?'
   },
   {
-    name: 'question7',
+    name: 'question07',
     type: 'radio',
     text: 'Will Bran control or warg a dragon?',
     answers: [
@@ -56,7 +56,7 @@ const questions = [
     ]
   },
   {
-    name: 'question8',
+    name: 'question08',
     type: 'radio',
     text: 'Is Cersei Pregnant?',
     answers: [
@@ -65,14 +65,14 @@ const questions = [
     ]
   },
   {
-    name: 'question9',
+    name: 'question09',
     type: 'radio',
     text: 'Will she lose the baby?',
     answers: [
       { text: 'Yes', value: '1' },
       { text: 'No', value: '2' }
     ],
-    dependsOn: 'question8'
+    dependsOn: 'question08'
   },
   {
     name: 'question10',
