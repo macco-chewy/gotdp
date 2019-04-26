@@ -30,7 +30,11 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.getCharacters();
+    const { characters } = this.props;
+    if (!characters || !Array.isArray(characters) || characters.length === 0) {
+      this.props.getCharacters();
+    }
+
     setTimeout(() => {
       this.setState({
         displayStyle: {

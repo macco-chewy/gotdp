@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 
-import Link from 'view/components/Link';
-
 import styles from './styles.module.css';
 
 class BasicLayout extends Component {

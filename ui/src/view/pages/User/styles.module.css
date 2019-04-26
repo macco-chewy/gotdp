@@ -3,3 +3,22 @@
   flex-direction: column;
   width: 100%;
 }
+
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 2;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--dark-gray);
+}
+
+.formItemLabel {
+  flex: 2;
+  padding: 0 1rem;
+}
+
+.formItem {
+  flex: 1;
+  padding: 0 1rem;
+}
