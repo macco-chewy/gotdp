@@ -43,14 +43,40 @@ Resources:
       ResourceRecords:
         - "d-wp61npjn6b.execute-api.us-west-1.amazonaws.com"
 
-  WebDevPublicUrl:
+
+  
+  
+  ConsumerApiProdCertificateVerificationRecord:
     Type: "AWS::Route53::RecordSet"
     Properties:
       HostedZoneId: !Ref HostedZoneId
-      Name: "www.dev.gotdp.aws.zstz.net"
+      Name: "_9bf3091c5eaa873baf7d51913a91eb23.api.gotdp.aws.zstz.net."
       Type: CNAME
       TTL: 60
       ResourceRecords:
-        - "_4865f515597afed4159ee0175037ad79.ltfvzjuylp.acm-validations.aws."
+        - "_1a44e9bc34b003d9af34989c5fd25d7c.ltfvzjuylp.acm-validations.aws."
 
-        http://www.dev.gotdp.aws.zstz.net.s3-website-us-west-1.amazonaws.com
+  ConsumerApiProdUSWest1StackHealthCheck:
+    Type: "AWS::Route53::HealthCheck"
+    Properties:
+      HealthCheckConfig:
+        Port: "443"
+        Type: "HTTPS_STR_MATCH"
+        SearchString: "ok"
+        ResourcePath: !Sub "/v1/prod/healthcheck"
+        FullyQualifiedDomainName: "e0bw0xys10.execute-api.us-west-1.amazonaws.com"
+        RequestInterval: "30"
+        FailureThreshold: "2"
+  
+  ConsumerApiProdUSWest1StackRegionalEndpointRecord:
+    Type: "AWS::Route53::RecordSet"
+    Properties:
+      Region: "us-west-1"
+      HealthCheckId: !Ref ConsumerApiProdUSWest1StackHealthCheck
+      SetIdentifier: "gotdp-consumerapi-prod-us-west-1"
+      HostedZoneId: !Ref HostedZoneId
+      Name: "api.gotdp.aws.zstz.net"
+      Type: CNAME
+      TTL: 60
+      ResourceRecords:
+        - "d-rhps1kdfbi.execute-api.us-west-1.amazonaws.com"

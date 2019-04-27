@@ -23,6 +23,11 @@ custom:
       "Fn::ImportValue": "ConsumerApi-${self:custom.stage}-${self:custom.region}-DefaultLambdaRole-Arn"
     defaultTimeout: 30
     namePrefix: "gotdp-consumerapi-${self:custom.stage}-"
+  functions:
+    default:
+      refreshRate: "15 minutes"
+    dev:
+      refreshRage: "120 minutes"
   stackName: ${self:custom.stage}-${self:service} 
   stage: ${opt:stage,self:custom.defaults.stage}
   region: ${opt:region,self:custom.defaults.region}
@@ -88,7 +93,7 @@ functions:
     events:
       - schedule:
           name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
-          rate: rate(15 minutes)
+          rate: rate(${self:custom.functions.${self:custom.stage}.refreshRate, self:custom.functions.default.refreshRate})
           enabled: true
   
   refreshQuestions:
