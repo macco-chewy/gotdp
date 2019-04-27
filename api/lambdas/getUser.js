@@ -4,7 +4,7 @@ import { getUserByName } from '../models/user';
 export async function handler(event) {
   try {
 
-    const name = event.pathParameters.name;
+    const name = decodeURIComponent(event.pathParameters.name);
     const user = await getUserByName(name);
 
     if (!user) {
