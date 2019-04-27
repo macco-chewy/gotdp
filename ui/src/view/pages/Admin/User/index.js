@@ -27,8 +27,13 @@ const CharacterFormRow = (props) => {
     value = '';
   }
 
+  let rowStyle = styles.formRow;
+  if (value !== '') {
+    rowStyle = classnames(rowStyle, styles[`status${value}`]);
+  }
+
   return (
-    <div className={styles.formRow}>
+    <div className={rowStyle}>
       <div className={styles.formItemLabel}>
         <h5>{character.attributes.displayName}</h5>
       </div>
@@ -62,10 +67,15 @@ const QuestionFormRow = (props) => {
     value = '';
   }
 
+  let rowStyle = styles.formRow;
+  if (value !== '') {
+    rowStyle = classnames(rowStyle, styles.status1);
+  }
+
   switch (type) {
     case 'text':
       return (
-        <div className={styles.formRow}>
+        <div className={rowStyle}>
           <label className={styles.formItemLabel} htmlFor={questionName}><h5>{question.attributes.text}</h5></label>
           <div className={classnames(styles.formItem, styles.flex3)}>
             <input type="text" className="form-control" id={questionName} name={questionName} value={value} onChange={onChange} />
@@ -75,7 +85,7 @@ const QuestionFormRow = (props) => {
     case 'radio':
       const classNames = classnames(styles.formItem, styles.flex1);
       return (
-        <div className={styles.formRow}>
+        <div className={rowStyle}>
           <div className={styles.formItemLabel}><h5>{question.attributes.text}</h5></div>
           <div className={classNames} />
 
