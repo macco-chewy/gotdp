@@ -11,7 +11,8 @@ const initialState = {
   global: {
     isLoading: false
   },
-  characters: []
+  characters: {},
+  questions: {}
 };
 
 // exports

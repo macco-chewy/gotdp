@@ -3,6 +3,7 @@ import request from 'utils/request';
 const API_URL = 'https://api.dev.gotdp.aws.zstz.net/v1';
 
 export const CHARACTERS = 'characters';
+export const QUESTIONS = 'questions';
 export const USER = 'user';
 
 export function getCharacters() {
@@ -19,6 +20,26 @@ export function getCharacters() {
       .catch((e) => {
         resolve({
           characters: null,
+          error: e
+        });
+      });
+  });
+}
+
+export function getQuestions() {
+  return new Promise((resolve) => {
+    request(`${API_URL}/${QUESTIONS}`, {
+      method: 'GET'
+    })
+      .then(res => {
+        resolve({
+          questions: res,
+          error: null
+        });
+      })
+      .catch((e) => {
+        resolve({
+          questions: null,
           error: e
         });
       });
