@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import * as request from 'request-promise';
 import { DynamoDB } from 'aws-sdk';
 
 import * as common from '../libs/common';
@@ -6,13 +7,12 @@ import * as common from '../libs/common';
 const documentClient = new DynamoDB.DocumentClient();
 
 // define dynamo indexes
-const TYPE = 'Question';
+const TYPE = 'User';
 const INDEX = `${TYPE.toUpperCase()}|v0`;
 const INDEX_U = `${TYPE.toUpperCase()}|v`;
 
-
-// Base Question object
-export const Question = function ({ name = '', type = '', text = '', answers, dependsOn, finalAnswer } = {}) {
+// Base Character object
+export const User = function ({ name = '', bids = {}, questions = {} } = {}) {
   // properties
   this.type = TYPE;
   this.id = uuid();
@@ -23,11 +23,8 @@ export const Question = function ({ name = '', type = '', text = '', answers, de
 
   // attributes
   this.attributes = {
-    type,
-    text,
-    answers: (answers) ? JSON.parse(JSON.stringify(answers)) : undefined,
-    dependsOn,
-    finalAnswer
+    bids,
+    questions
   }
 };
 
@@ -35,7 +32,7 @@ export const Question = function ({ name = '', type = '', text = '', answers, de
 const IGNORED_PROPS = ['type'];
 
 
-export const getAllQuestions = async () => {
+export const getAllUsers = async () => {
   const params = {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     IndexName: "GS_Type",
@@ -49,16 +46,16 @@ export const getAllQuestions = async () => {
   };
 
   const items = (await documentClient.query(params).promise()).Items;
-  const questions = {};
+  const users = {};
   items.forEach(item => {
-    questions[item.name] = convertDynamoItemToQuestion(item);
+    users[item.name] = convertDynamoItemToUser(item);
   });
 
-  return Object.sort(questions);
+  return Object.sort(users);
 }
 
 
-export const getQuestionById = async (id) => {
+export const getUserById = async (id) => {
   // const params = {
   //   TableName: process.env.GOTDP_DYNAMO_TABLE,
   //   Key: { id, sk: INDEX }
@@ -68,7 +65,7 @@ export const getQuestionById = async (id) => {
 };
 
 
-export const getQuestionByName = async (name) => {
+export const getUserByName = async (name) => {
   const params = {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     IndexName: "GS_Name",
@@ -89,32 +86,31 @@ export const getQuestionByName = async (name) => {
     return undefined;
   }
 
-  // if more than one question returned
+  // if more than one character returned
   if (items.length > 1) {
-    throw new Error(`Multiple questions returned for name ${name}`);
+    throw new Error(`Multiple users returned for name ${name}`);
   }
 
-  return convertDynamoItemToQuestion(items[0]);
+  return convertDynamoItemToUser(items[0]);
 };
 
 
-export const saveQuestion = async (question) => {
-  if (!(question instanceof Question)) {
-    throw new Error('Cannot save question - not of type Question');
+export const saveUser = async (user) => {
+  if (!(user instanceof User)) {
+    throw new Error('Cannot save user - not of type User');
   }
 
   // check if item already exists
-  const existingQuestion = await getQuestionByName(question.name);
-  if (existingQuestion) {
-
+  const existingUser = await getUserByName(user.name);
+  if (existingUser) {
     const deepEqual = require('fast-deep-equal');
-    if (deepEqual(existingQuestion.attributes, question.attributes)) {
-      return existingQuestion;
+    if (deepEqual(existingUser.attributes, user.attributes)) {
+      return existingUser;
     }
 
-    // version and archive the existing question
-    const item = convertQuestionToDynamoItem(existingQuestion);
-    item.sk = `${INDEX_U}${existingQuestion.version}`;
+    // version and archive the existing character
+    const item = convertUserToDynamoItem(existingUser);
+    item.sk = `${INDEX_U}${existingUser.version}`;
     const params = {
       TableName: process.env.GOTDP_DYNAMO_TABLE,
       Item: item
@@ -123,88 +119,71 @@ export const saveQuestion = async (question) => {
 
     // merge existing property values
     // replace the id
-    question.id = existingQuestion.id;
+    user.id = existingUser.id;
     // replace the createDt
-    question.createDt = existingQuestion.createDt;
+    user.createDt = existingUser.createDt;
     // bump the current version
-    question.version = existingQuestion.version + 1;
+    user.version = existingUser.version + 1;
     // update the updateDt
-    question.updateDt = Date.now();
+    user.updateDt = Date.now();
     // update attributes
-    question.attributes = Object.assign({}, existingQuestion.attributes, question.attributes);
+    user.attributes = Object.assign({}, existingUser.attributes, user.attributes);
 
     // create attribute updates
     const updates = {};
-    updates.version = { Action: 'PUT', Value: question.version };
-    updates.updateDt = { Action: 'PUT', Value: question.updateDt };
-    updates.attributes = { Action: 'PUT', Value: question.attributes };
+    updates.version = { Action: 'PUT', Value: user.version };
+    updates.updateDt = { Action: 'PUT', Value: user.updateDt };
+    updates.attributes = { Action: 'PUT', Value: user.attributes };
 
-    // update v0 question
+    // update v0 character
     const updateparams = {
       TableName: process.env.GOTDP_DYNAMO_TABLE,
       Key: {
-        id: question.id,
+        id: user.id,
         sk: INDEX,
       },
       AttributeUpdates: updates
     };
     await documentClient.update(updateparams).promise();
 
-    return question;
+    return user;
   }
 
   // set create and update dates
-  question.createDt = question.updateDt = Date.now();
-  const item = convertQuestionToDynamoItem(question);
+  user.createDt = user.updateDt = Date.now();
+  const item = convertUserToDynamoItem(user);
   const params = {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     Item: item
   };
   await documentClient.put(params).promise();
 
-  return question;
+  return user;
 };
 
 
-export const refreshQuestionByName = async (name, attributes = {}) => {
-  if (!name) {
-    throw new Error('name is required');
-  }
 
-  // get new question object
-  attributes.name = name;
-  const question = new Question(attributes);
 
-  for (const attribute in question.attributes) {
-    if (question.attributes[attribute] === undefined) {
-      delete question.attributes[attribute];
-    }
-  }
+const convertDynamoItemToUser = (item = {}) => {
+  const user = new User();
 
-  // save the question
-  await saveQuestion(question);
-};
-
-const convertDynamoItemToQuestion = (item = {}) => {
-  const question = new Question();
-
-  for (const prop in question) {
+  for (const prop in user) {
     if (IGNORED_PROPS.indexOf(prop) === -1) {
-      question[prop] = item[prop]
+      user[prop] = item[prop]
     }
   }
 
-  // return question
-  return question;
+  // return character
+  return user;
 };
 
 
-const convertQuestionToDynamoItem = (question = {}) => {
+const convertUserToDynamoItem = (user = {}) => {
   const item = {};
 
-  for (const prop in question) {
+  for (const prop in user) {
     if (IGNORED_PROPS.indexOf(prop) === -1) {
-      item[prop] = question[prop];
+      item[prop] = user[prop];
     }
   }
 

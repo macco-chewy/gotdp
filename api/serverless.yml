@@ -75,6 +75,30 @@ functions:
           cors: true
           private: false
   
+  getUser:
+    handler: lambdas/getUser.handler
+    name: ${self:custom.lambda.namePrefix}getUser
+    events:
+      - http:
+          path: user/{name}
+          method: get
+          cors: true
+          private: false
+          request:
+            parameters:
+              paths:
+                name: true
+  
+  getUsers:
+    handler: lambdas/getUsers.handler
+    name: ${self:custom.lambda.namePrefix}getUsers
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
+          private: false
+  
   healthcheck:
     handler: lambdas/healthcheck.handler
     name: ${self:custom.lambda.namePrefix}healthcheck
@@ -86,6 +110,16 @@ functions:
           private: false
     environment:
       STATUS: 'ok'
+  
+  putUser:
+    handler: lambdas/putUser.handler
+    name: ${self:custom.lambda.namePrefix}putUser
+    events:
+      - http:
+          path: user
+          method: put
+          cors: true
+          private: false
   
   refreshCharacters:
     handler: lambdas/refreshCharacters.handler
