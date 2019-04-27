@@ -137,6 +137,8 @@ export const saveCharacter = async (character) => {
     // merge existing property values
     // replace the id
     character.id = existingCharacter.id;
+    // replace the createDt
+    character.createDt = existingCharacter.createDt;
     // bump the current version
     character.version = existingCharacter.version + 1;
     // update the updateDt
