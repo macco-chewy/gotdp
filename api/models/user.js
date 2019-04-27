@@ -61,7 +61,7 @@ export const getUserById = async (id) => {
   //   Key: { id, sk: INDEX }
   // };
   // console.log(await documentClient.get(params).promise());
-  return undefined;
+  return;
 };
 
 
@@ -83,7 +83,7 @@ export const getUserByName = async (name) => {
 
   // if no items
   if (!Array.isArray(items) || items.length === 0) {
-    return undefined;
+    return;
   }
 
   // if more than one character returned

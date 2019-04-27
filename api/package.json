@@ -5,12 +5,12 @@
   "description": "Consumer APIs Lambdas",
   "main": "index.js",
   "scripts": {
-    "deploy:dev": "./node_modules/.bin/sls deploy --stage=dev --region=us-west-1 --aws-profile gotdp-dev",
-    "deploy:prod": "./node_modules/.bin/sls deploy --stage=prod --region=us-west-1 --aws-profile gotdp-prod",
-    "invoke": "./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --function",
-    "invoke:debug": "export SLS_DEBUG=* && ./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --function",
-    "start": "./node_modules/.bin/sls offline --stage=dev --region=us-west-1 --noTimeout --dontPrintOutput",
-    "start:debug": "export SLS_DEBUG=* && node --inspect=5858 ./node_modules/.bin/sls offline -s dev",
+    "deploy:dev": "./node_modules/.bin/sls deploy --stage=dev --region=us-west-1 --aws-profile=gotdp-dev",
+    "deploy:prod": "./node_modules/.bin/sls deploy --stage=prod --region=us-west-1 --aws-profile=gotdp-prod",
+    "invoke": "./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --aws-profile=gotdp-dev --function",
+    "invoke:debug": "export SLS_DEBUG=* && ./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --aws-profile=gotdp-dev --function",
+    "start": "AWS_PROFILE=gotdp-dev ./node_modules/.bin/sls offline --stage=dev --region=us-west-1 --dontPrintOutput",
+    "start:debug": "export SLS_DEBUG=* && export AWS_PROFILE=gotdp-dev && node --inspect=5858 ./node_modules/.bin/sls offline -s dev --aws-profile=gotdp-dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
