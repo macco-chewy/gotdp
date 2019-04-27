@@ -8,8 +8,9 @@
     "deploy:dev": "./node_modules/.bin/sls deploy --stage=dev --region=us-west-1 --aws-profile gotdp-dev",
     "deploy:prod": "./node_modules/.bin/sls deploy --stage=prod --region=us-west-1 --aws-profile gotdp-prod",
     "invoke": "./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --function",
+    "invoke:debug": "export SLS_DEBUG=* && ./node_modules/.bin/sls invoke local --stage=dev --region=us-west-1 --function",
     "start": "./node_modules/.bin/sls offline --stage=dev --region=us-west-1 --noTimeout --dontPrintOutput",
-    "debug": "export SLS_DEBUG=* && node --inspect=5858 ./node_modules/.bin/sls offline -s dev",
+    "start:debug": "export SLS_DEBUG=* && node --inspect=5858 ./node_modules/.bin/sls offline -s dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

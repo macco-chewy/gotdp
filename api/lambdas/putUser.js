@@ -5,7 +5,7 @@ export async function handler(event) {
   try {
 
     const data = JSON.parse(event.body);
-    const { name, bids, questions } = data;
+    const { name, attributes: { bids, questions } } = data;
     const user = await saveUser(new User({ name, bids, questions }));
 
     return {
