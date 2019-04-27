@@ -31,7 +31,7 @@ class Home extends Component {
 
   componentDidMount() {
     const { characters } = this.props;
-    if (!characters || !Array.isArray(characters) || characters.length === 0) {
+    if (!characters || typeof characters !== 'object' || Object.keys(characters).length === 0) {
       this.props.getCharacters();
     }
 
@@ -47,14 +47,15 @@ class Home extends Component {
 
   render() {
     const characters = this.props.characters;
+    const keys = (characters && typeof characters === 'object') ? Object.keys(characters) : [];
     return (
       <BasicLayout>
         <div className={styles.root} style={this.state.displayStyle}>
           {
-            !characters
+            !keys.length > 0
               ? null
-              : characters.map((character, i) => {
-                return <CharacterCard key={i} character={character} />
+              : keys.map((name, i) => {
+                return <CharacterCard key={i} character={characters[name]} />
               })
           }
         </div>

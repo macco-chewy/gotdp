@@ -8,17 +8,47 @@
 .formRow {
   display: flex;
   flex-direction: row;
-  flex-basis: 2;
   padding: 1rem 0;
   border-bottom: 1px solid var(--dark-gray);
 }
 
+.formRowSpacer {
+  height: 3rem;
+}
+
 .formItemLabel {
-  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  flex: 3;
   padding: 0 1rem;
 }
 
 .formItem {
-  flex: 1;
   padding: 0 1rem;
+}
+
+.formItem.flex1 {
+  flex: 1;
+}
+
+.formItem.flex2 {
+  flex: 2;
+}
+
+.formItem.flex3 {
+  flex: 3;
+}
+
+.formItme.flex4 {
+  flex: 4;
+}
+
+.formItem.flex5 {
+  flex: 5;
+}
+
+.formItem.flex6 {
+  flex: 6;
 }

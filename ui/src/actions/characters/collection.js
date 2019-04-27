@@ -4,7 +4,7 @@ export const REQUEST_GET_CHARACTER_COLLECTION = 'REQUEST_GET_CHARACTER_COLLECTIO
 export const FAIL_GET_CHARACTER_COLLECITON = 'FAIL_GET_CHARACTER_COLLECITON';
 export const RESOLVE_GET_CHARACTER_COLLECTION = 'RESOLVE_GET_CHARACTER_COLLECTION';
 
-export const resolveCharacters = (characters, metadata = {}) => ({
+export const resolveCharacters = (characters) => ({
   type: RESOLVE_GET_CHARACTER_COLLECTION,
   characters
 });
