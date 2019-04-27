@@ -1,4 +1,8 @@
 import 'whatwg-fetch';
+import * as importedMocks from 'libs/api/mocks';
+
+const mockTimeout = 500;
+const mocks = Object.assign({}, importedMocks);
 
 const isJSONResponse = response => {
   let json = false;
@@ -49,28 +53,37 @@ const parseError = (url, options = {}, response) => {
   return response;
 };
 
-const mockedFetch = (url, options) => new Promise((resolve, reject) => import('libs/api/mocks')
-  .then(mocks => {
-    // // TODO Add POST, PUT, PATCH handling
-    // if (options.method !== 'GET') {
-    //   return reject(Object.assign({}, {
-    //     status: 400,
-    //     message: 'offline mode',
-    //   }));
-    // }
-    let path;
-    let id;
-    if (/.*localhost:\d{4}.*/.test(url)) {
-      [path, id] = url.substring(url.indexOf('40') + 6).split('/');
-    } else {
-      [path, id] = url.substring(url.indexOf('v1/') + 3).split('/');
-    }
-    let mockName = path.replace(/(?!\w+)(.*)/, '');
-    if (id) {
-      mockName += 'Details';
-    }
+const mockedFetch = (url, options) => new Promise((resolve, reject) => {
+
+  let path, id;
+  [path, id] = url.substring(url.indexOf('v1/') + 3).split('/');
+
+  // find id in body
+  const body = (options.body) ? JSON.parse(options.body) : '';
+  if (!id && options.method !== 'GET') {
+    id = body.id || body.name || undefined;
+  }
+
+  let mockName = path.replace(/(?!\w+)(.*)/, '');
+  if (id) {
+    mockName = `${mockName}_${id}`;
+  }
+
+  const method = options.method;
+  let response;
+  switch (method) {
+    case 'PUT':
+      // TODO: fix data mutation logic - currently not re-retrievalbe
+      mocks[mockName] = response = body;
+      break;
+    default:
+      response = mocks[mockName];
+      break;
+  }
+
+  if (!response) {
     return resolve({
-      status: 200,
+      status: 404,
       headers: {
         get(header) {
           const headers = {
@@ -80,10 +93,26 @@ const mockedFetch = (url, options) => new Promise((resolve, reject) => import('l
         },
       },
       json() {
-        return new Promise(r => setTimeout(() => r(mocks[mockName]), 1500));
+        return new Promise(r => setTimeout(() => r(), mockTimeout));
       },
     });
-  }));
+  }
+
+  return resolve({
+    status: 200,
+    headers: {
+      get(header) {
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        return headers[header];
+      },
+    },
+    json() {
+      return new Promise(r => setTimeout(() => r(response), mockTimeout));
+    },
+  });
+});
 
 const requestInterface = process.env.REACT_APP_IS_OFFLINE !== 'true' ? window.fetch : mockedFetch;
 const request = (url, options = {}) => {

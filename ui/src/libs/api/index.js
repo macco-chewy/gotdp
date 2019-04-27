@@ -1,10 +1,11 @@
 import request from 'utils/request';
 
-const API_URL = 'https://api.dev.gotdp.aws.zstz.net/v1';
+const API_URL = process.env.REACT_APP_STAGE === 'prod' ? 'https://api.gotdp.aws.zstz.net/v1' : 'https://api.dev.gotdp.aws.zstz.net/v1';
 
 export const CHARACTERS = 'characters';
 export const QUESTIONS = 'questions';
 export const USER = 'user';
+export const USERS = 'users';
 
 export function getCharacters() {
   return new Promise((resolve) => {
@@ -46,10 +47,50 @@ export function getQuestions() {
   });
 }
 
+export function getUserByName(name) {
+  return new Promise((resolve) => {
+    request(`${API_URL}/${USER}/${name}`, {
+      method: 'GET'
+    })
+      .then(res => {
+        resolve({
+          user: res,
+          error: null
+        });
+      })
+      .catch((e) => {
+        resolve({
+          user: null,
+          error: e
+        });
+      });
+  });
+}
+
+export function getUsers() {
+  return new Promise((resolve) => {
+    request(`${API_URL}/${USERS}`, {
+      method: 'GET'
+    })
+      .then(res => {
+        resolve({
+          users: res,
+          error: null
+        });
+      })
+      .catch((e) => {
+        resolve({
+          users: null,
+          error: e
+        });
+      });
+  });
+}
+
 export function submitUser(data) {
   return new Promise(resolve => {
     request(`${API_URL}/${USER}`, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
     })
       .then(res => resolve({
