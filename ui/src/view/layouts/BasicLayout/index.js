@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import styles from './styles.module.css';
 
@@ -12,9 +13,31 @@ class BasicLayout extends Component {
     push: PropTypes.func
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      bgIndex: 0
+    }
+  }
+
+  componentWillMount() {
+    this.generateNextIndex();
+    setInterval(this.generateNextIndex, 60000);
+  }
+
+
+  generateNextIndex = () => {
+    this.setState({ bgIndex: Math.floor((Math.random() * 10) + 1) });
+  }
+
   render() {
+    let rootClassNames = styles.root;
+    const { bgIndex } = this.state;
+    if (bgIndex) {
+      rootClassNames = classnames(rootClassNames, styles[`bg${this.state.bgIndex}`]);
+    }
     return (
-      <div className={styles.root}> {/* eslint-ignore-line */}
+      <div className={rootClassNames}>
         <div className={styles.container}>
           <div className={styles.header}>
             <div className={styles.logo}></div>

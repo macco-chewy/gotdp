@@ -1,17 +1,24 @@
 :root {
+  /* breakpoints min-width */
+  --xs: 320px;
+  --sm: 500px;
+  --md: 768px;
+  --lg: 1024px;
+  --xl: 1200px;
+
+  /* colors */
   --black: #000000;
   --off-white: #eeeeee;
   --light-gray: #aaaaaa;
   --dark-gray: #333333;
-  
   --blue-berry: #3b33aa;
   --lapis: #3366aa;
   --ice: #57bef5;
   --snow: #d4e8f3;
-  
   --ruby: #aa3b33;
   --olive: #a2aa33;
   
+  /* color aliases */
   --primary-text: var(--off-white);
   --secondary-text: var(--ice);
   --accent-text: var(--olive);
@@ -48,4 +55,53 @@ input.form-control {
 }
 input[type=file] {
   width: 100%;
+}
+
+
+@media (min-width: 0px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+
+  h4 {
+    font-size: 13px;
+  }
+
+  h5 {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 500px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+
+  h5 {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  
 }
