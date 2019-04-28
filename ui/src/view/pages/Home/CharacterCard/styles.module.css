@@ -60,13 +60,19 @@
 .detailsContainer {
   padding: 1rem 1rem 1rem .5rem;
   color: var(--dark-gray);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
 .name {
-  border: 2px orange;
+  flex: 0;
+  border-bottom: 1px solid #333333;
 }
 
 .details {
+  flex: 1;
   display: none;
 }
 
@@ -136,19 +142,6 @@
 
 @media (min-width: 0px) {
   .root {
-    margin-bottom: .5rem;
-  }
-
-  .profilePicContainer {
-    width: 3.5rem;
-    height: 3.5rem;
-    margin: .2rem;
-  }
-}
-
-
-@media (min-width: 500px) {
-  .root {
     margin-bottom: 1rem;
   }
 
@@ -156,6 +149,7 @@
     width: 5rem;
     height: 5rem;
     margin: .2rem;
+    margin-right: .5rem;
   }
 }
 
