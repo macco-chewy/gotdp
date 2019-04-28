@@ -35,7 +35,7 @@ const CharacterFormRow = (props) => {
   return (
     <div className={rowStyle}>
       <div className={styles.formItemLabel}>
-        <h5>{character.attributes.displayName}</h5>
+        <h3>{character.attributes.displayName}</h3>
       </div>
       <div className={itemClassNames}>
         <input className="form-check-input" type="radio" name={radioName} id={`${radioName}_1`} value="1" checked={value === '1'} onChange={onChange} />
@@ -76,7 +76,7 @@ const QuestionFormRow = (props) => {
     case 'text':
       return (
         <div className={rowStyle}>
-          <label className={styles.formItemLabel} htmlFor={questionName}><h5>{question.attributes.text}</h5></label>
+          <label className={styles.formItemLabel} htmlFor={questionName}><h4>{question.attributes.text}</h4></label>
           <div className={classnames(styles.formItem, styles.flex3)}>
             <input type="text" className="form-control" id={questionName} name={questionName} value={value} onChange={onChange} />
           </div>
@@ -264,7 +264,6 @@ class User extends Component {
     // this.props.createUser(data);
 
     const user = this.state.user;
-    console.log(user);
     this.props.createUser(user);
 
     this.props.push('/admin/success');
@@ -281,11 +280,11 @@ class User extends Component {
         <div className={styles.root}>
           <form onSubmit={this.handleUsernameSearch}>
             <div className={styles.formRow}>
-              <h3>User Details</h3>
+              <h2>User Details</h2>
             </div>
             <div className={styles.formRow}>
               <div className={classnames(styles.formItem, styles.flex1)}>
-                <label htmlFor="search_name"><h5>Name</h5></label>
+                <label htmlFor="search_name"><h3>Name</h3></label>
                 <input type="text" className="form-control" id="search_name" name="search_name" onChange={this.handleNameChange} />
                 <div>
                   <button type="submit" className="btn btn-primary" style={{ margin: '.4rem .4rem 0 0' }} disabled={isLoading || !canSubmit}>Search</button>
@@ -300,7 +299,7 @@ class User extends Component {
           <form onSubmit={this.handleFormSubmit}>
 
             <div className={styles.formRow}>
-              <h3>Character Statuses</h3>
+              <h2>Character Statuses</h2>
             </div>
             {
               !characterKeys.length > 0
@@ -313,7 +312,7 @@ class User extends Component {
             <div className={styles.formRowSpacer} />
 
             <div className={styles.formRow}>
-              <h3>Questions</h3>
+              <h2>Questions</h2>
             </div>
             {
               !questionKeys.length > 0

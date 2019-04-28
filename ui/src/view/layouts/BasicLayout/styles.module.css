@@ -57,9 +57,24 @@
 
 .footer {
   flex: 0;
-  height: 50px;
+  min-height: 50px;
+  padding: 1rem;
   background: var(--lapis);
-  border-top: 2px solid var(--ice);
+  border-top: 1px solid var(--off-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.footer a {
+  color: var(--off-white);
+}
+
+.footer a:hover {
+  color: #333333;
 }
 
 
@@ -67,54 +82,35 @@
   .container {
     width: 100%;
     min-height: 100vh;
-    border-radius: 16px 16px 0 0;
   }
 
   .header {
-    height: 28px;
-    padding: .3rem 2rem 0 40px;
+    height: 75px;
+    padding: .5rem 2rem 0 90px;
     background-color: var(--lapis);
     border-bottom: 1px solid var(--dark-gray);
-    border-radius: 16px 16px 0 16px;
+    border-radius: 35px 0 0 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .header h1 {
+    font-size: 3.5rem;
   }
 
   .logo {
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 30px;
-    height: 30px;
+    width: 75px;
+    height: 75px;
     background-size: cover;
   }
 
   .quote {
     display: none;
-  }
-}
-
-
-@media (min-width: 500px) {
-  .container {
-    width: 100%;
-    min-height: 100vh;
-    border-radius: 24px 0 0 0;
-  }
-
-  .header {
-    height: 48px;
-    padding: .5rem 2rem 0 70px;
-    background-color: var(--lapis);
-    border-bottom: 1px solid var(--dark-gray);
-    border-radius: 24px 0 0 24px;
-  }
-
-  .logo {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 50px;
-    height: 50px;
-    background-size: cover;
   }
 }
 
