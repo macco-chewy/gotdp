@@ -1,16 +1,12 @@
 .root {
   display: flex;
   flex-direction: row;
-  margin-bottom: 12px;
   background: var(--olive);
   border-radius: 1rem;
   cursor: pointer;
 }
 
 .profilePicContainer {
-  width: 5rem;
-  height: 5rem;
-  margin: .2rem;
   background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75) ), url(img/profileDefault.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -134,5 +130,43 @@
   to {
     width: 5rem;
     height: 5rem;
+  }
+}
+
+
+@media (min-width: 0px) {
+  .root {
+    margin-bottom: .5rem;
+  }
+
+  .profilePicContainer {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: .2rem;
+  }
+}
+
+
+@media (min-width: 500px) {
+  .root {
+    margin-bottom: 1rem;
+  }
+
+  .profilePicContainer {
+    width: 5rem;
+    height: 5rem;
+    margin: .2rem;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .root {
+    margin-bottom: 2rem;
+  }
+
+  .profilePicContainer {
+    width: 8rem;
+    height: 8rem;
   }
 }
