@@ -17,6 +17,7 @@ export default function CharacterCard(props) {
   let rootClassNames = styles.root;
   switch (character.attributes.status) {
     case '1': // alive
+      rootClassNames = classnames(rootClassNames, styles.alive);
       break;
     case '2': // deceased
       rootClassNames = classnames(rootClassNames, styles.deceased);
