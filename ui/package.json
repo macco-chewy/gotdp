@@ -5,6 +5,7 @@
   "description": "Web UI",
   "dependencies": {
     "connected-react-router": "^6.2.2",
+    "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",

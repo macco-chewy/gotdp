@@ -3,74 +3,49 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 
-import { collection } from 'actions/characters';
+import { collection as characterCollection } from 'actions/characters';
+import { collection as userCollection } from 'actions/users';
 
 import BasicLayout from 'view/layouts/BasicLayout';
-import CharacterCard from './CharacterCard';
-
-import styles from './styles.module.css';
-
+import CharacterPanel from './CharacterPanel';
 
 
 class Home extends Component {
   static propTypes = {
     characters: PropTypes.any,
     getCharacters: PropTypes.func,
-    push: PropTypes.func
+    push: PropTypes.func,
+    users: PropTypes.any
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayStyle: {
-        position: 'absolute',
-        visibility: 'hidden'
-      }
-    }
-  }
-
   componentDidMount() {
-    const { characters } = this.props;
+    const { characters, users } = this.props;
     if (!characters || typeof characters !== 'object' || Object.keys(characters).length === 0) {
       this.props.getCharacters();
     }
-
-    setTimeout(() => {
-      this.setState({
-        displayStyle: {
-          position: 'relative',
-          visibility: 'visible'
-        }
-      })
-    }, 1000);
+    if (!users || typeof users !== 'object' || Object.keys(users).length === 0) {
+      this.props.getUsers();
+    }
   };
 
   render() {
-    const characters = this.props.characters;
-    const keys = (characters && typeof characters === 'object') ? Object.keys(characters) : [];
+    const { characters, users } = this.props;
     return (
       <BasicLayout>
-        <div className={styles.root} style={this.state.displayStyle}>
-          {
-            !keys.length > 0
-              ? null
-              : keys.map((name, i) => {
-                return <CharacterCard key={i} character={characters[name]} />
-              })
-          }
-        </div>
-
+        <CharacterPanel characters={characters} users={users} />
       </BasicLayout>
     );
   }
 }
 
 const getState = (globalState) => ({
-  characters: globalState.characters
+  characters: globalState.characters,
+  users: globalState.users
 });
 
 const actions = {
-  getCharacters: collection.get,
+  getCharacters: characterCollection.get,
+  getUsers: userCollection.get,
   push
 };
 

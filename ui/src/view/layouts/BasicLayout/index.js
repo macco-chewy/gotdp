@@ -32,10 +32,11 @@ class BasicLayout extends Component {
 
   render() {
     let rootClassNames = styles.root;
-    const { bgIndex } = this.state;
-    if (bgIndex) {
-      rootClassNames = classnames(rootClassNames, styles[`bg${this.state.bgIndex}`]);
-    }
+    // const { bgIndex } = this.state;
+    // if (bgIndex) {
+    //   rootClassNames = classnames(rootClassNames, styles.[`bg${this.state.bgIndex}`]);
+    // }
+    rootClassNames = classnames(rootClassNames, styles.bg1);
     return (
       <div className={rootClassNames}>
         <div className={styles.container}>

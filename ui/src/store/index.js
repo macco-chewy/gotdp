@@ -13,7 +13,8 @@ const initialState = {
   },
   characters: {},
   questions: {},
-  user: null
+  user: null,
+  users: {}
 };
 
 // exports
