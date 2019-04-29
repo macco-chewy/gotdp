@@ -13,10 +13,6 @@
   background-position: center top;
   border-radius: 1rem 0 0 1rem;
 
-  animation-duration: .5s;
-  animation-name: contract;
-  animation-timing-function: ease-in-out;
-
   /* Keyword values */
   /* animation-timing-function: ease;
   animation-timing-function: ease-in;
@@ -58,6 +54,7 @@
 }
 
 .detailsContainer {
+  flex: 1;
   padding: 1rem 1rem 1rem .5rem;
   color: var(--dark-gray);
   display: flex;
@@ -74,7 +71,68 @@
 .details {
   flex: 1;
   display: none;
+  margin-top: 1rem;
+  overflow: auto;
 }
+
+.characterPanel a {
+  color: #333333;
+  font-weight: bold;
+}
+
+.quote {
+  margin: .5rem;
+  padding: .5rem;
+  background: var(--off-white);
+  border-radius: 1rem;
+}
+
+.summary {
+  margin-top: 1rem;
+}
+
+.quote pre {
+  font-size: 1.2rem;
+}
+
+.userPanel {
+  
+}
+
+.userPanel table {
+  width: 100%;
+  border: 1px solid #333333;
+}
+
+.userPanel th {
+  padding: .2rem;
+  background: #333333;
+  color: var(--off-white);
+  border-bottom: 1px solid #000000;
+  font-size: .8rem;
+}
+
+.userPanel td {
+  width: 2rem;
+  border-bottom: 1px solid #000000;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.userPanel td.status1 {
+  background: var(--olive);
+}
+
+.userPanel td.status2 {
+  background: var(--ruby);
+}
+
+.userPanel td.status3 {
+  background: var(--ice);
+}
+
+
+
 
 .deceased {
   background: var(--dark-gray);
@@ -101,43 +159,23 @@
   color: var(--snow);
 }
 
-.active .profilePicContainer {
-  width: 10rem;
-  height: 15rem;
-
-  animation-duration: .5s;
+.active {
+  /* animation-duration: .5s;
   animation-name: expand;
+  animation-timing-function: ease-in-out; */
 }
 
 .active .details {
   display: flex;
 }
 
-
-
-@keyframes expand {
-  from {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  to {
-    width: 10rem;
-    height: 15rem;
-  }
+.inactive {
+  animation-duration: .5s;
+  animation-name: contract;
+  animation-timing-function: ease-in-out;
 }
 
-@keyframes contract {
-  from {
-    width: 10rem;
-    height: 15rem;
-  }
 
-  to {
-    width: 5rem;
-    height: 5rem;
-  }
-}
 
 
 @media (min-width: 0px) {
@@ -151,16 +189,87 @@
     margin: .2rem;
     margin-right: .5rem;
   }
+
+  .details {
+    flex-direction: column;
+  }
+
+  .characterPanel {
+  
+  }
+
+  .userPanel {
+    margin-top: 2rem;
+  }
+
+  .root.active {
+    height: calc(15rem + .4rem);
+  }
+
+  .active .profilePicContainer {
+    width: 10rem;
+    height: 15rem;
+  }
 }
 
 
 @media (min-width: 768px) {
   .root {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .profilePicContainer {
     width: 8rem;
     height: 8rem;
   }
+
+  .details {
+    flex-direction: row;
+  }
+
+  .characterPanel {
+    flex: 2;
+  }
+  
+  .userPanel {
+    flex: 1;
+    margin-top: 0;
+    margin-left: 2rem;
+  }
+
+  .root.active {
+    margin-left: 2rem;
+    height: calc(30rem + .4rem);
+  }
+
+  .active .profilePicContainer {
+    width: 20rem;
+    height: 30rem;
+  }
+
+
+  /* @keyframes expand {
+    from {
+      width: 8rem;
+      height: 8rem;
+    }
+
+    to {
+      width: 20rem;
+      height: 30rem;
+    }
+  }
+
+  @keyframes contract {
+    from {
+      width: 20rem;
+      height: 30rem;
+    }
+
+    to {
+      width: 8rem;
+      height: 8rem;
+    }
+  } */
+
 }

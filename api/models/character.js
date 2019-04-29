@@ -39,7 +39,9 @@ export const Character = function () {
     },
     displayName: '',
     imageUrl: '',
+    quote: '',
     sourceUrl: '',
+    summary: '',
     status: 0
   }
 };
@@ -240,11 +242,13 @@ const fetchCharacterFromWiki = async (name) => {
   character.attributes.age = parseInt(characterHTML('div[data-source=Age] div').text().substr(0, 2), 10) || 0;
   character.attributes.displayName = name;
   character.attributes.imageUrl = characterHTML('figure[data-source=Image] a img').attr('src');
+  character.attributes.quote = characterHTML('#mw-content-text .quote').first().text().trim().replace('[src]', '');
   character.attributes.sourceUrl = sourceUrl;
+  character.attributes.summary = characterHTML('#mw-content-text .quote').first().next().text().trim();
   character.attributes.status = deriveStatus(characterHTML('div[data-source=Status] div a').text());
 
   for (const attribute in character.attributes) {
-    if (character.attributes[attribute] === undefined) {
+    if (character.attributes[attribute] === undefined || character.attributes[attribute] === '') {
       delete character.attributes[attribute];
     }
   }
