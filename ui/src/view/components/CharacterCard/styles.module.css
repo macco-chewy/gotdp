@@ -1,7 +1,6 @@
 .root {
   display: flex;
   flex-direction: row;
-  background: var(--olive);
   border-radius: 1rem;
   cursor: pointer;
 }
@@ -12,35 +11,6 @@
   background-repeat: no-repeat;
   background-position: center top;
   border-radius: 1rem 0 0 1rem;
-
-  /* Keyword values */
-  /* animation-timing-function: ease;
-  animation-timing-function: ease-in;
-  animation-timing-function: ease-out;
-  animation-timing-function: ease-in-out;
-  animation-timing-function: linear;
-  animation-timing-function: step-start;
-  animation-timing-function: step-end; */
-
-  /* Function values */
-  /* animation-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
-  animation-timing-function: steps(4, end); */
-
-  /* Steps Function keywords */ 
-  /* animation-timing-function: steps(4, jump-start);
-  animation-timing-function: steps(10, jump-end);
-  animation-timing-function: steps(20, jump-none);
-  animation-timing-function: steps(5, jump-both);
-  animation-timing-function: steps(6, start);
-  animation-timing-function: steps(8, end); */
-
-  /* Multiple animations */
-  /* animation-timing-function: ease, step-start, cubic-bezier(0.1, 0.7, 1.0, 0.1); */
-
-  /* Global values */
-  /* animation-timing-function: inherit;
-  animation-timing-function: initial;
-  animation-timing-function: unset; */
 }
 
 .profilePic {
@@ -56,7 +26,6 @@
 .detailsContainer {
   flex: 1;
   padding: 1rem 1rem 1rem .5rem;
-  color: var(--dark-gray);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,7 +34,6 @@
 
 .name {
   flex: 0;
-  border-bottom: 1px solid #333333;
 }
 
 .details {
@@ -76,15 +44,15 @@
 }
 
 .characterPanel a {
-  color: #333333;
   font-weight: bold;
 }
 
 .quote {
   margin: .5rem;
   padding: .5rem;
-  background: var(--off-white);
   border-radius: 1rem;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 .summary {
@@ -134,8 +102,27 @@
 
 
 
+.alive {
+  background: var(--bg-color-alive);
+  color: var(--font-color-alive);
+}
+
+.alive .name {
+  border-bottom: 1px solid var(--font-color-alive);
+}
+
+.alive .quote {
+  background: var(--bg-color-alive-inverse);
+  color: var(--font-color-alive-inverse);
+}
+
+.alive a {
+  color: var(--font-color-alive);
+}
+
 .deceased {
-  background: var(--dark-gray);
+  background: var(--bg-color-deceased);
+  color: var(--font-color-deceased);
 }
 
 .deceased .profilePic {
@@ -143,26 +130,39 @@
   filter: grayscale(1);
 }
 
-.deceased .detailsContainer {
-  color: var(--ruby);
+.deceased .name {
+  border-bottom: 1px solid var(--font-color-deceased);
+}
+
+.deceased .quote {
+  background: var(--bg-color-deceased-inverse);
+  color: var(--font-color-deceased-inverse);
+}
+
+.deceased a {
+  color: var(--font-color-deceased);
 }
 
 .wight {
-  background: var(--ice);
+  background: var(--bg-color-wight);
+  color: var(--font-color-wight);
 }
 
 .wight .profilePic {
   filter: sepia(50%) hue-rotate(170deg) saturate(250%);
 }
 
-.wight .detailsContainer {
-  color: var(--snow);
+.wight .name {
+  border-bottom: 1px solid var(--font-color-wight);
 }
 
-.active {
-  /* animation-duration: .5s;
-  animation-name: expand;
-  animation-timing-function: ease-in-out; */
+.wight .quote {
+  background: var(--bg-color-wight-inverse);
+  color: var(--font-color-wight-inverse);
+}
+
+.wight a {
+  color: var(--font-color-wight);
 }
 
 .active .details {
@@ -246,30 +246,5 @@
     width: 20rem;
     height: 30rem;
   }
-
-
-  /* @keyframes expand {
-    from {
-      width: 8rem;
-      height: 8rem;
-    }
-
-    to {
-      width: 20rem;
-      height: 30rem;
-    }
-  }
-
-  @keyframes contract {
-    from {
-      width: 20rem;
-      height: 30rem;
-    }
-
-    to {
-      width: 8rem;
-      height: 8rem;
-    }
-  } */
 
 }
