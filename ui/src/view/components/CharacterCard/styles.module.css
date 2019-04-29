@@ -34,6 +34,7 @@
 
 .name {
   flex: 0;
+  padding-left: .5rem;
 }
 
 .details {
@@ -57,6 +58,8 @@
 
 .summary {
   margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: justify;
 }
 
 .quote pre {
@@ -74,29 +77,29 @@
 
 .userPanel th {
   padding: .2rem;
-  background: #333333;
+  background: var(--dark-gray);
   color: var(--off-white);
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid var(--black);
   font-size: .8rem;
 }
 
 .userPanel td {
   width: 2rem;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid var(--black);
   font-size: 1rem;
   text-align: center;
 }
 
 .userPanel td.status1 {
-  background: var(--olive);
+  background: var(--bg-color-alive);
 }
 
 .userPanel td.status2 {
-  background: var(--ruby);
+  background: var(--bg-color-deceased);
 }
 
 .userPanel td.status3 {
-  background: var(--ice);
+  background: var(--bg-color-wight);
 }
 
 
