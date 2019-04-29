@@ -27,7 +27,7 @@ custom:
     default:
       refreshRate: "15 minutes"
     dev:
-      refreshRage: "120 minutes"
+      refreshRage: "30 days"
   stackName: ${self:custom.stage}-${self:service} 
   stage: ${opt:stage,self:custom.defaults.stage}
   region: ${opt:region,self:custom.defaults.region}
@@ -134,3 +134,7 @@ functions:
     handler: lambdas/refreshQuestions.handler
     name: ${self:custom.lambda.namePrefix}refreshQuestions
     events:
+      - schedule:
+          name: ${self:custom.lambda.namePrefix}refreshQuestions-schedule
+          rate: rate(${self:custom.functions.${self:custom.stage}.refreshRate, self:custom.functions.default.refreshRate})
+          enabled: true
