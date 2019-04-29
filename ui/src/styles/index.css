@@ -25,19 +25,19 @@
   --warning-text: var(--ruby);
 
   --bg-color-alive: var(--olive);
-  --bg-color-deceased: var(--dark-gray);
+  --bg-color-deceased: var(--ruby);
   --bg-color-wight: var(--ice);
 
   --bg-color-alive-inverse: var(--dark-gray);
-  --bg-color-deceased-inverse: var(--ruby);
-  --bg-color-wight-inverse: var(--snow);
+  --bg-color-deceased-inverse: var(--dark-gray);
+  --bg-color-wight-inverse: var(--dark-gray);
 
   --font-color-alive: var(--dark-gray);
-  --font-color-deceased: var(--ruby);
-  --font-color-wight: var(--snow);
+  --font-color-deceased: var(--dark-gray);
+  --font-color-wight: var(--dark-gray);
 
   --font-color-alive-inverse: var(--olive);
-  --font-color-deceased-inverse: var(--dark-gray);
+  --font-color-deceased-inverse: var(--ruby);
   --font-color-wight-inverse: var(--ice);
 }
 

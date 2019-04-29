@@ -71,7 +71,7 @@ export default function CharacterCard(props) {
             <table>
               <tbody>
                 <tr>
-                  <th colSpan="2" style={{ background: '#333333', color: 'var(--off-white)', textAlign: 'center' }}>Bids</th>
+                  <th colSpan="2" style={{ textAlign: 'center' }}>Bids</th>
                 </tr>
                 {
                   Object.keys(users).map((name, i) => {
