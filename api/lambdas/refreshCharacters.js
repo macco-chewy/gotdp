@@ -2,7 +2,7 @@ import {
   refreshCharacterByName
 } from '../models/character';
 
-const characterNames = [
+const characters = [
   'Jon Snow',
   'Daenerys Targaryen',
   'Tyrion Lannister',
@@ -14,7 +14,7 @@ const characterNames = [
   'Samwell Tarly',
   'Cersei Lannister',
   'Bran Stark',
-  'Lyanna Mormont',
+  { name: 'Lyanna Mormont', status: '3' },
   'Missandei',
   'Theon Greyjoy',
   'Euron Greyjoy',
@@ -30,7 +30,7 @@ const characterNames = [
   'Beric Dondarrion',
   'Podrick Payne',
   'Hot Pie',
-  { name: 'Eddison Tollett', displayName: 'Dolorus Edd Tollett' },
+  { name: 'Eddison Tollett', displayName: 'Dolorus Edd Tollett', status: '3' },
   { name: 'Tormund', displayName: 'Tormund Giantsbane' },
   { name: 'Brienne Tarth', displayName: 'Brienne of Tarth' },
   'Grey Worm',
@@ -44,12 +44,12 @@ const characterNames = [
 
 export async function handler() {
   try {
-    for (let i = 0, x = characterNames.length; i < x; i++) {
-      let name = characterNames[i];
+    for (let i = 0, x = characters.length; i < x; i++) {
+      let data = characters[i];
       try {
-        await refreshCharacterByName(name);
+        await refreshCharacterByName(data);
       } catch (e) {
-        console.error(`Error refreshing character ${name}: ${e.message}`);
+        console.error(`Error refreshing character ${data.name || data}: ${e.message}`);
       }
     }
     return 'ok';

@@ -181,11 +181,27 @@ export const saveCharacter = async (character) => {
 };
 
 
-export const refreshCharacterByName = async (name) => {
-  let displayName = name;
-  if (typeof name === 'object') {
-    displayName = name.displayName;
-    name = name.name;
+export const refreshCharacterByName = async (data) => {
+  if (
+    !data
+    || (
+      typeof data !== 'string'
+      && (
+        typeof data !== 'object' || !data.name
+      )
+    )
+  ) {
+    throw new Error('Error in refreshCharacterByName - name is required');
+  }
+
+  let name, displayName, status;
+  if (typeof data === 'object') {
+    name = data.name;
+    displayName = data.displayName || name;
+    status = data.status;
+  } else {
+    name = data;
+    displayName = name;
   }
 
   // fetch current character data from wiki
@@ -193,6 +209,11 @@ export const refreshCharacterByName = async (name) => {
 
   // save displayName
   character.attributes.displayName = displayName;
+
+  // override status
+  if (status) {
+    character.attributes.status = status;
+  }
 
   // prevent overwriting bids by deleting
   delete character.attributes.bids;
