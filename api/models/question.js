@@ -12,7 +12,7 @@ const INDEX_U = `${TYPE.toUpperCase()}|v`;
 
 
 // Base Question object
-export const Question = function ({ name = '', type = '', text = '', answers, dependsOn, finalAnswer } = {}) {
+export const Question = function ({ name = '', type = '', text = '', answers, correctAnswer, dependsOn, finalAnswer } = {}) {
   // properties
   this.type = TYPE;
   this.id = uuid();
@@ -26,6 +26,7 @@ export const Question = function ({ name = '', type = '', text = '', answers, de
     type,
     text,
     answers: (answers) ? JSON.parse(JSON.stringify(answers)) : undefined,
+    correctAnswer,
     dependsOn,
     finalAnswer
   }
@@ -35,7 +36,7 @@ export const Question = function ({ name = '', type = '', text = '', answers, de
 const IGNORED_PROPS = ['type'];
 
 
-export const getAllQuestions = async () => {
+export const getAllQuestions = async (sortKey = 'name') => {
   const params = {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     IndexName: "GS_Type",
@@ -49,10 +50,33 @@ export const getAllQuestions = async () => {
   };
 
   const items = (await documentClient.query(params).promise()).Items;
-  const questions = {};
+  const questions = [];
   items.forEach(item => {
-    questions[item.name] = convertDynamoItemToQuestion(item);
+    questions.push(convertDynamoItemToQuestion(item));
   });
+
+  if (sortKey) {
+    const compare = function (key, a, b) {
+      // look for key in top level props
+      let compareA = a[key];
+      let compareB = b[key];
+
+      // if not there find it in attributes
+      if (!compareA) {
+        compareA = a.attributes[key];
+        compareB = b.attributes[key];
+      }
+
+      if (compareA < compareB) {
+        return -1;
+      }
+      if (compareA > compareB) {
+        return 1;
+      }
+      return 0;
+    };
+    questions.sort(compare.bind(null, sortKey));
+  }
 
   return Object.sort(questions);
 }
