@@ -11,12 +11,7 @@
 /* .root.bg2 { background: var(--black) url(img/bg2.jpg) no-repeat center center fixed;background-size: cover; }
 .root.bg3 { background: var(--black) url(img/bg3.jpg) no-repeat center center fixed;background-size: cover; }
 .root.bg4 { background: var(--black) url(img/bg4.jpg) no-repeat center center fixed;background-size: cover; }
-.root.bg5 { background: var(--black) url(img/bg5.jpg) no-repeat center center fixed;background-size: cover; }
-.root.bg6 { background: var(--black) url(img/bg6.jpg) no-repeat center center fixed;background-size: cover; }
-.root.bg7 { background: var(--black) url(img/bg7.jpg) no-repeat center center fixed;background-size: cover; }
-.root.bg8 { background: var(--black) url(img/bg8.jpg) no-repeat center center fixed;background-size: cover; }
-.root.bg9 { background: var(--black) url(img/bg9.jpg) no-repeat center center fixed;background-size: cover; }
-.root.bg10 { background: var(--black) url(img/bg10.jpg) no-repeat center center fixed;background-size: cover; } */
+.root.bg5 { background: var(--black) url(img/bg5.jpg) no-repeat center center fixed;background-size: cover; } */
 
 .container {
   max-width: calc(var(--lg) - 60px);

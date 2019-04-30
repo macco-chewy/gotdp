@@ -34,20 +34,20 @@ export default function CharacterCard(props) {
   }
 
   let liveCount, deadCount, wightCount;
-  liveCount = deadCount = wightCount = [];
+  liveCount = deadCount = wightCount = 0;
 
   for (const name in users) {
     const user = users[name];
     const bid = parseInt(user.attributes.bids[character.id], 10);
     switch (bid) {
       case 1:
-        liveCount.push(name);
+        liveCount++;
         break;
       case 2:
-        deadCount.push(name);
+        deadCount++;
         break;
       case 3:
-        wightCount.push(name);
+        wightCount++;
         break;
       default:
         break;
@@ -60,10 +60,31 @@ export default function CharacterCard(props) {
         <div className={styles.profilePic} style={(character.attributes.imageUrl) ? { backgroundImage: `url(${character.attributes.imageUrl})` } : {}} />
       </div>
       <div className={styles.detailsContainer}>
-        <div className={styles.name}><h2>{character.attributes.displayName || character.attributes.name}</h2></div>
+        <div className={styles.name}>
+          <h2>{character.attributes.displayName || character.attributes.name}</h2>
+
+          <div className={styles.stats}>
+            <table>
+              <tbody>
+                <tr>
+                  <td className={styles.status1}>{liveCount}</td>
+                  <td className={styles.status2}>{deadCount}</td>
+                  <td className={styles.status3}>{wightCount}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
         <div className={styles.details}>
           <div className={styles.characterPanel}>
-            <div className={styles.quote}><pre>{character.attributes.quote}</pre></div>
+            <div className={styles.quote}>{
+              character.attributes.quote.split('\n').map((line, i) => {
+                return (
+                  <p key={i}>{line}</p>
+                )
+              })
+            }</div>
             <div className={styles.summary}>{character.attributes.summary}</div>
             <div><a href={character.attributes.sourceUrl} target="new">Read more</a></div>
           </div>
@@ -71,7 +92,7 @@ export default function CharacterCard(props) {
             <table>
               <tbody>
                 <tr>
-                  <th colSpan="2" style={{ textAlign: 'center' }}>Bids</th>
+                  <th colSpan="2" style={{ textAlign: 'center', backgroundColor: 'var(--black)', fontSize: '1.2rem' }}>Bids</th>
                 </tr>
                 {
                   Object.keys(users).map((name, i) => {
@@ -83,7 +104,7 @@ export default function CharacterCard(props) {
                     return (
                       <tr key={i}>
                         <th>{name}</th>
-                        <td className={styles[`status${bid}`]}>&bull;</td>
+                        <td className={styles[`status${bid}`]}>&nbsp;</td>
                       </tr>
                     )
                   })

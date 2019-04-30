@@ -20,17 +20,11 @@ class BasicLayout extends Component {
     this.loadTimer = Date.now();
     this.screenViewTimer = Date.now();
     this.state = {
-      bgIndex: 0
+      bgIndex: Math.floor((Math.random() * 10) + 1)
     }
   }
 
-  componentWillMount() {
-    this.generateNextIndex();
-  }
-
-
   componentDidMount() {
-    // setInterval(this.generateNextIndex, 60000);
     sendGAPageView(window.location.pathname);
     if (this.loadTimer) {
       sendGALoadTiming(window.location.pathname, Date.now() - this.loadTimer);
@@ -45,17 +39,13 @@ class BasicLayout extends Component {
     }
   }
 
-  generateNextIndex = () => {
-    this.setState({ bgIndex: Math.floor((Math.random() * 10) + 1) });
-  }
-
   render() {
     let rootClassNames = styles.root;
     // const { bgIndex } = this.state;
-    // if (bgIndex) {
-    //   rootClassNames = classnames(rootClassNames, styles.[`bg${this.state.bgIndex}`]);
-    // }
-    rootClassNames = classnames(rootClassNames, styles.bg1);
+    const bgIndex = 1;
+    if (bgIndex) {
+      rootClassNames = classnames(rootClassNames, styles[`bg${bgIndex}`]);
+    }
     return (
       <div className={rootClassNames}>
         <div className={styles.container}>

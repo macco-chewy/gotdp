@@ -1,4 +1,5 @@
 .root {
+  position: relative;
   display: flex;
   flex-direction: row;
   border-radius: 1rem;
@@ -50,20 +51,16 @@
 
 .quote {
   margin: .5rem;
-  padding: .5rem;
+  padding: 1rem 1rem .2rem;
   border-radius: 1rem;
+  font-size: 1rem;
   font-weight: bold;
-  font-size: 2rem;
 }
 
 .summary {
   margin-top: 1rem;
   margin-bottom: 1rem;
   text-align: justify;
-}
-
-.quote pre {
-  font-size: 1.2rem;
 }
 
 .userPanel {
@@ -80,7 +77,9 @@
   background: var(--dark-gray);
   color: var(--off-white);
   border-bottom: 1px solid var(--black);
+  font-family: "Cinzel", serif;
   font-size: .8rem;
+  text-align: center;
 }
 
 .userPanel td {
@@ -90,17 +89,33 @@
   text-align: center;
 }
 
-.userPanel td.status1 {
+td.status1 {
   background: var(--bg-color-alive);
 }
 
-.userPanel td.status2 {
+td.status2 {
   background: var(--bg-color-deceased);
 }
 
-.userPanel td.status3 {
+td.status3 {
   background: var(--bg-color-wight);
 }
+
+.stats {
+  position: absolute;
+  right: 20px;
+  top: 8px;
+}
+
+.stats td {
+  padding: .25rem .5rem;
+  border: 1px solid var(--dark-gray);
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+
 
 
 
@@ -193,6 +208,10 @@
     margin-right: .5rem;
   }
 
+  .stats {
+    display: none;
+  }
+
   .details {
     flex-direction: column;
   }
@@ -206,12 +225,19 @@
   }
 
   .root.active {
-    height: calc(15rem + .4rem);
+    height: calc(30rem + .4rem);
   }
 
   .active .profilePicContainer {
     width: 10rem;
-    height: 15rem;
+    height: 30rem;
+  }
+}
+
+
+@media (min-width: 520px) {
+  .stats {
+    display: block;
   }
 }
 
@@ -231,7 +257,8 @@
   }
 
   .characterPanel {
-    flex: 2;
+    flex: 3;
+    padding-bottom: 1rem;
   }
   
   .userPanel {
