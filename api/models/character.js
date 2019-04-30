@@ -49,7 +49,7 @@ export const Character = function () {
 // formatting / marshalling
 const IGNORED_PROPS = ['type'];
 
-export const getAllCharacters = async () => {
+export const getAllCharacters = async (sortKey = 'displayName') => {
   const params = {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     IndexName: "GS_Type",
@@ -64,10 +64,33 @@ export const getAllCharacters = async () => {
 
   //return (await documentClient.query(params).promise()).Items;
   const items = (await documentClient.query(params).promise()).Items;
-  const characters = {};
+  const characters = [];
   items.forEach(item => {
-    characters[item.name] = convertDynamoItemToCharacter(item);
+    characters.push(convertDynamoItemToCharacter(item));
   });
+
+  if (sortKey) {
+    const compare = function (key, a, b) {
+      // look for key in top level props
+      let compareA = a[key];
+      let compareB = b[key];
+
+      // if not there find it in attributes
+      if (!compareA) {
+        compareA = a.attributes[key];
+        compareB = b.attributes[key];
+      }
+
+      if (compareA < compareB) {
+        return -1;
+      }
+      if (compareA > compareB) {
+        return 1;
+      }
+      return 0;
+    };
+    characters.sort(compare.bind(null, sortKey));
+  }
 
   return Object.sort(characters);
 }

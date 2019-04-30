@@ -32,7 +32,7 @@ export const User = function ({ name = '', bids = {}, questions = {} } = {}) {
 const IGNORED_PROPS = ['type'];
 
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (sortKey = 'name') => {
   const params = {
     TableName: process.env.GOTDP_DYNAMO_TABLE,
     IndexName: "GS_Type",
@@ -46,10 +46,33 @@ export const getAllUsers = async () => {
   };
 
   const items = (await documentClient.query(params).promise()).Items;
-  const users = {};
+  const users = [];
   items.forEach(item => {
-    users[item.name] = convertDynamoItemToUser(item);
+    users.push(convertDynamoItemToUser(item));
   });
+
+  if (sortKey) {
+    const compare = function (key, a, b) {
+      // look for key in top level props
+      let compareA = a[key];
+      let compareB = b[key];
+
+      // if not there find it in attributes
+      if (!compareA) {
+        compareA = a.attributes[key];
+        compareB = b.attributes[key];
+      }
+
+      if (compareA < compareB) {
+        return -1;
+      }
+      if (compareA > compareB) {
+        return 1;
+      }
+      return 0;
+    };
+    users.sort(compare.bind(null, sortKey));
+  }
 
   return Object.sort(users);
 }

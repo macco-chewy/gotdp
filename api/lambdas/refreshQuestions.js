@@ -30,7 +30,8 @@ const questions = [
   {
     name: 'question04',
     type: 'text',
-    text: 'Who kills The Night King?'
+    text: 'Who kills The Night King?',
+    correctAnswer: 'Arya Stark'
   },
   {
     name: 'question05',
