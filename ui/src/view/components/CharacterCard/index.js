@@ -57,7 +57,7 @@ export default function CharacterCard(props) {
   return (
     <div className={rootClassNames} onClick={handleClick}>
       <div className={styles.profilePicContainer}>
-        <div className={styles.profilePic} style={{ backgroundImage: `url(${character.attributes.imageUrl})` }} />
+        <div className={styles.profilePic} style={(character.attributes.imageUrl) ? { backgroundImage: `url(${character.attributes.imageUrl})` } : {}} />
       </div>
       <div className={styles.detailsContainer}>
         <div className={styles.name}><h2>{character.attributes.displayName || character.attributes.name}</h2></div>
