@@ -95,15 +95,15 @@ export default function CharacterCard(props) {
                   <th colSpan="2" style={{ textAlign: 'center', backgroundColor: 'var(--black)', fontSize: '1.2rem' }}>Bids</th>
                 </tr>
                 {
-                  Object.keys(users).map((name, i) => {
-                    const user = users[name];
+                  Object.keys(users).map(index => {
+                    const user = users[index];
                     const bid = user.attributes.bids[character.id];
                     if (!bid) {
                       return null;
                     }
                     return (
-                      <tr key={i}>
-                        <th>{name}</th>
+                      <tr key={index}>
+                        <th>{user.name}</th>
                         <td className={styles[`status${bid}`]}>&nbsp;</td>
                       </tr>
                     )
