@@ -4,6 +4,8 @@ import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import { sendGAPageView, sendGALoadTiming, sendGAScreenViewDuration } from 'utils/ga';
+
 import styles from './styles.module.css';
 
 class BasicLayout extends Component {
@@ -15,6 +17,8 @@ class BasicLayout extends Component {
 
   constructor(props) {
     super(props);
+    this.loadTimer = Date.now();
+    this.screenViewTimer = Date.now();
     this.state = {
       bgIndex: 0
     }
@@ -22,9 +26,24 @@ class BasicLayout extends Component {
 
   componentWillMount() {
     this.generateNextIndex();
-    setInterval(this.generateNextIndex, 60000);
   }
 
+
+  componentDidMount() {
+    // setInterval(this.generateNextIndex, 60000);
+    sendGAPageView(window.location.pathname);
+    if (this.loadTimer) {
+      sendGALoadTiming(window.location.pathname, Date.now() - this.loadTimer);
+      this.loadTimer = 0;
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.screenViewTimer) {
+      sendGAScreenViewDuration(window.location.pathname, Date.now() - this.screenViewTimer);
+      this.screenViewTimer = 0;
+    }
+  }
 
   generateNextIndex = () => {
     this.setState({ bgIndex: Math.floor((Math.random() * 10) + 1) });
