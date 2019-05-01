@@ -11,10 +11,10 @@ const initialState = {
   global: {
     isLoading: false
   },
-  characters: {},
-  questions: {},
+  characters: [],
+  questions: [],
   user: null,
-  users: {}
+  users: []
 };
 
 // exports

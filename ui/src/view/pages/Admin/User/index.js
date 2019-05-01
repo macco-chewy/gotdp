@@ -86,7 +86,7 @@ const QuestionFormRow = (props) => {
       const classNames = classnames(styles.formItem, styles.flex1);
       return (
         <div className={rowStyle}>
-          <div className={styles.formItemLabel}><h5>{question.attributes.text}</h5></div>
+          <div className={styles.formItemLabel}><h4>{question.attributes.text}</h4></div>
           <div className={classNames} />
 
           {
@@ -136,10 +136,10 @@ class User extends Component {
 
   componentDidMount() {
     const { characters, questions } = this.props;
-    if (!characters || typeof characters !== 'object' || Object.keys(characters).length === 0) {
+    if (!characters || typeof characters !== 'object' || characters.length === 0) {
       this.props.getCharacters();
     }
-    if (!questions || typeof questions !== 'object' || Object.keys(questions).length === 0) {
+    if (!questions || typeof questions !== 'object' || questions.length === 0) {
       this.props.getQuestions();
     }
   };
@@ -272,8 +272,6 @@ class User extends Component {
   render() {
     const { characters, isLoading, questions, user: stateUser } = this.props;
     const { user, canSubmit } = this.state;
-    const characterKeys = (characters && typeof characters === 'object') ? Object.keys(characters) : [];
-    const questionKeys = (questions && typeof questions === 'object') ? Object.keys(questions) : [];
 
     return (
       <BasicLayout>
@@ -302,10 +300,10 @@ class User extends Component {
               <h2>Character Statuses</h2>
             </div>
             {
-              !characterKeys.length > 0
+              characters.length === 0
                 ? null
-                : characterKeys.map((name, i) => {
-                  return <CharacterFormRow key={i} character={characters[name]} user={user} onChange={this.handleAnswerUpdate} />
+                : characters.map((character, i) => {
+                  return <CharacterFormRow key={i} character={character} user={user} onChange={this.handleAnswerUpdate} />
                 })
             }
 
@@ -315,10 +313,10 @@ class User extends Component {
               <h2>Questions</h2>
             </div>
             {
-              !questionKeys.length > 0
+              questions.length === 0
                 ? null
-                : questionKeys.map((name, i) => {
-                  return <QuestionFormRow key={i} question={questions[name]} user={user} onChange={this.handleAnswerUpdate} />
+                : questions.map((question, i) => {
+                  return <QuestionFormRow key={i} question={question} user={user} onChange={this.handleAnswerUpdate} />
                 })
             }
 

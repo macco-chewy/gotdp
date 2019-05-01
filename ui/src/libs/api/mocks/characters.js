@@ -1,5 +1,5 @@
-export const characters = {
-  "Arya Stark": {
+export const characters = [
+  {
     "type": "Character",
     "id": "2cc5ecd3-6329-499f-9ee6-015dba18060f",
     "name": "Arya Stark",
@@ -14,7 +14,7 @@ export const characters = {
       "status": "1"
     }
   },
-  "Beric Dondarrion": {
+  {
     "type": "Character",
     "id": "88516c78-9a90-43a1-aba8-8f689a35c8cb",
     "name": "Beric Dondarrion",
@@ -29,7 +29,7 @@ export const characters = {
       "status": "1"
     }
   },
-  "Brandon Stark": {
+  {
     "type": "Character",
     "id": "70694807-a591-455a-b6f3-fa1bafdab79b",
     "name": "Brandon Stark",
@@ -44,4 +44,4 @@ export const characters = {
       "status": "1"
     }
   }
-};
+];
