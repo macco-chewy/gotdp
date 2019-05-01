@@ -8,9 +8,8 @@ export async function handler() {
     const users = await getAllUsers();
     const characters = await getAllCharacters();
     const questions = await getAllQuestions();
-    const keys = Object.keys(users);
-    for (let i = 0, x = keys.length; i < x; i++) {
-      await refreshUserScore(users[keys[i]], characters, questions);
+    for (let i = 0, x = users.length; i < x; i++) {
+      console.log(await refreshUserScore(users[i], characters, questions));
     }
     return 'ok';
   } catch (e) {

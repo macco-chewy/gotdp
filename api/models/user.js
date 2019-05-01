@@ -197,8 +197,7 @@ export const refreshUserScore = async (user, characters, questions) => {
   user.attributes.score = 0;
 
   // loop characters
-  Object.keys(characters).forEach(key => {
-    const character = characters[key];
+  characters.forEach(character => {
     const cid = character.id;
     const bid = user.attributes.bids[cid];
     if (bid) {
@@ -218,9 +217,7 @@ export const refreshUserScore = async (user, characters, questions) => {
   });
 
   // loop questions
-  Object.keys(questions).forEach(key => {
-    const question = questions[key];
-
+  questions.forEach(question => {
     // if no correct answer then don't count the point
     if (!question.attributes.correctAnswer) {
       return;
