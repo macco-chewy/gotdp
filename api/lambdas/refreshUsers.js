@@ -9,7 +9,7 @@ export async function handler() {
     const characters = await getAllCharacters();
     const questions = await getAllQuestions();
     for (let i = 0, x = users.length; i < x; i++) {
-      console.log(await refreshUserScore(users[i], characters, questions));
+      await refreshUserScore(users[i], characters, questions);
     }
     return 'ok';
   } catch (e) {

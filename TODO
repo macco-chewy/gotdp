@@ -1,0 +1,31 @@
+TODO
+ - add legend to home
+
+ - create leaderboard component
+ - create "heads" component
+ - modify home to show leaderboard
+ - calculate statistics
+   - favorite to live
+   - favorite to die
+   - favorite to wight
+   - any unanimous
+   - most upsetting (expected vs outcome)
+
+Re-use admin user screen to illustrate how current scoring is calculated
+ - add user answer key to right side of form
+ - if colors match you get a point
+    - if also the character is deceased you get a point
+ - for questions only calculate when there is an answer
+   - gray out row if not
+
+
+--------------------------------------------------------------------------------
+| Character                                     | <status>      |    <bid>     |   - row matches user admin form row
+--------------------------------------------------------------------------------   - status and bid match color of answer
+
+
+
+-------------------------------------------------------------------------------------
+| Question                                       | <answer>      |   <user answer>  | - grayed out until there is a correctAnswer
+------------------------------------------------------------------------------------- - answer always olive
+                                                                                      - user answer is olive when correct and --ruby when incorrect

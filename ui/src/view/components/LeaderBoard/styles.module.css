@@ -1,0 +1,64 @@
+.root {
+  flex: 1;
+}
+
+
+
+.header {
+  padding: .2rem;
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  background: var(--black);
+  border: 1px solid var(--off-white);
+  border-bottom: 0;
+  border-radius: 3rem 3rem 0 0;
+}
+
+.container {
+  border-left: 1px solid var(--off-white);
+  border-right: 1px solid var(--light-gray);
+}
+
+.root table {
+  width: calc(100% - 1px);
+  margin-bottom: 2px;
+}
+
+.root tr {
+  border-bottom: 2px solid var(--dark-gray);
+}
+
+.root th {
+  width: 60%;
+  padding: .2rem;
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  text-align: right;
+}
+
+.root td {
+  width: 40%;
+  text-align: center;
+  font-size: 4rem;
+}
+
+
+
+
+.first {
+  color: var(--olive);
+  background-color: rgba(162, 170, 51, .2);
+}
+
+.second {
+  color: var(--ruby);
+  background-color: rgba(170, 59, 51, .2);
+}
+
+.third {
+  color: var(--ice);
+  background-color: rgba(87, 190, 245, .2);
+}
+
