@@ -1,8 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import * as request from 'request-promise';
 import { DynamoDB } from 'aws-sdk';
-
-import * as common from '../libs/common';
 
 const documentClient = new DynamoDB.DocumentClient();
 
@@ -78,7 +75,7 @@ export const getAllUsers = async (sortKey = 'name') => {
     users.sort(compare.bind(null, sortKey));
   }
 
-  return Object.sort(users);
+  return users;
 }
 
 
