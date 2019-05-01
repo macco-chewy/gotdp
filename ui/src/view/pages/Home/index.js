@@ -20,10 +20,10 @@ class Home extends Component {
 
   componentDidMount() {
     const { characters, users } = this.props;
-    if (!characters || typeof characters !== 'object' || Object.keys(characters).length === 0) {
+    if (!characters || typeof characters !== 'object' || characters.length === 0) {
       this.props.getCharacters();
     }
-    if (!users || typeof users !== 'object' || Object.keys(users).length === 0) {
+    if (!users || typeof users !== 'object' || users.length === 0) {
       this.props.getUsers();
     }
   };

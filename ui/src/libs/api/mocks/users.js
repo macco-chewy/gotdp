@@ -1,5 +1,5 @@
-export const users = {
-  "Mike": {
+export const users = [
+  {
     "type": "User",
     "id": "a8fc0c53-53c2-4b65-ae47-d85391abc123",
     "version": 1,
@@ -19,7 +19,7 @@ export const users = {
       }
     }
   },
-  "Billy": {
+  {
     "type": "User",
     "id": "f4639e98-9b04-468b-ac26-755b34d1c01f",
     "name": "Billy",
@@ -41,7 +41,7 @@ export const users = {
       "questions": {}
     }
   },
-  "Johnny": {
+  {
     "type": "User",
     "id": "301e7df4-5f56-4efd-8acb-7b0a3bfa1d43",
     "name": "Johnny",
@@ -69,7 +69,7 @@ export const users = {
       }
     }
   },
-  "Steve": {
+  {
     "type": "User",
     "id": "89cc92fd-55b7-48d8-92ad-870b43294c0e",
     "name": "Steve",
@@ -105,4 +105,4 @@ export const users = {
       }
     }
   }
-};
+];

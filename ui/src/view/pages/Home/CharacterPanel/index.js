@@ -29,15 +29,13 @@ export default class CharacterPanel extends Component {
 
   render() {
     const { characters, users } = this.props;
-    const keys = (characters && typeof characters === 'object') ? Object.keys(characters) : [];
     const { activeCharacterId } = this.state;
     return (
       <div className={styles.root}>
         {
-          !keys.length > 0
+          characters.length === 0
             ? null
-            : keys.map((name, i) => {
-              const character = characters[name]
+            : characters.map((character, i) => {
               return <CharacterCard key={i} character={character} users={users} onClick={this.handleCharacterCardClick} active={character.id === activeCharacterId} />
             })
         }

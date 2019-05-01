@@ -1,5 +1,5 @@
-export const questions = {
-  "question01": {
+export const questions = [
+  {
     "type": "Question",
     "id": "c896e502-e383-4187-b517-a7d6d3065c14",
     "name": "question01",
@@ -11,7 +11,7 @@ export const questions = {
       "text": "Who will sit the Iron Throne?"
     }
   },
-  "question02": {
+  {
     "type": "Question",
     "id": "dfb83c0e-3abc-400b-aa0f-05111c356731",
     "name": "question02",
@@ -33,7 +33,7 @@ export const questions = {
       "text": "Is Daenerys Pregnant?"
     }
   },
-  "question03": {
+  {
     "type": "Question",
     "id": "a4852937-237c-40fc-9af2-e5d28284bde8",
     "name": "question03",
@@ -56,4 +56,4 @@ export const questions = {
       "dependsOn": "question02"
     }
   }
-};
+];
