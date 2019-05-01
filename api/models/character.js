@@ -3,8 +3,6 @@ import * as request from 'request-promise';
 import { DynamoDB } from 'aws-sdk';
 const cheerio = require('cheerio');
 
-import * as common from '../libs/common';
-
 const documentClient = new DynamoDB.DocumentClient();
 
 // define dynamo indexes
@@ -88,7 +86,7 @@ export const getAllCharacters = async (sortKey = 'displayName') => {
     characters.sort(compare.bind(null, sortKey));
   }
 
-  return Object.sort(characters);
+  return characters;
 }
 
 
