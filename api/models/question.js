@@ -12,7 +12,7 @@ const INDEX_U = `${TYPE.toUpperCase()}|v`;
 
 
 // Base Question object
-export const Question = function ({ name = '', type = '', text = '', answers, correctAnswer, dependsOn, finalAnswer } = {}) {
+export const Question = function ({ name = '', type = '', text = '', answers, correctAnswer, dependsOn } = {}) {
   // properties
   this.type = TYPE;
   this.id = uuid();
@@ -27,8 +27,7 @@ export const Question = function ({ name = '', type = '', text = '', answers, co
     text,
     answers: (answers) ? JSON.parse(JSON.stringify(answers)) : undefined,
     correctAnswer,
-    dependsOn,
-    finalAnswer
+    dependsOn
   }
 };
 
@@ -154,8 +153,6 @@ export const saveQuestion = async (question) => {
     question.version = existingQuestion.version + 1;
     // update the updateDt
     question.updateDt = Date.now();
-    // update attributes
-    question.attributes = Object.assign({}, existingQuestion.attributes, question.attributes);
 
     // create attribute updates
     const updates = {};
@@ -206,7 +203,7 @@ export const refreshQuestionByName = async (name, attributes = {}) => {
   }
 
   // save the question
-  await saveQuestion(question);
+  return await saveQuestion(question);
 };
 
 const convertDynamoItemToQuestion = (item = {}) => {

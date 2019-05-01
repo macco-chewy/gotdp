@@ -134,7 +134,12 @@ functions:
     handler: lambdas/refreshQuestions.handler
     name: ${self:custom.lambda.namePrefix}refreshQuestions
     events:
+  
+  refreshUsers:
+    handler: lambdas/refreshUsers.handler
+    name: ${self:custom.lambda.namePrefix}refreshUsers
+    events:
       - schedule:
-          name: ${self:custom.lambda.namePrefix}refreshQuestions-schedule
+          name: ${self:custom.lambda.namePrefix}refreshUsers-schedule
           rate: rate(${self:custom.functions.${self:custom.stage}.refreshRate, self:custom.functions.default.refreshRate})
           enabled: true

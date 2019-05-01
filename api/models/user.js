@@ -11,8 +11,11 @@ const TYPE = 'User';
 const INDEX = `${TYPE.toUpperCase()}|v0`;
 const INDEX_U = `${TYPE.toUpperCase()}|v`;
 
+const CHAR_POINTS = 5;
+const QUES_POINTS = 10;
+
 // Base Character object
-export const User = function ({ name = '', bids = {}, questions = {} } = {}) {
+export const User = function ({ name = '', bids = {}, questions = {}, score = 0 } = {}) {
   // properties
   this.type = TYPE;
   this.id = uuid();
@@ -24,7 +27,8 @@ export const User = function ({ name = '', bids = {}, questions = {} } = {}) {
   // attributes
   this.attributes = {
     bids,
-    questions
+    questions,
+    score
   }
 };
 
@@ -127,6 +131,7 @@ export const saveUser = async (user) => {
   const existingUser = await getUserByName(user.name);
   if (existingUser) {
     const deepEqual = require('fast-deep-equal');
+
     if (deepEqual(existingUser.attributes, user.attributes)) {
       return existingUser;
     }
@@ -149,8 +154,6 @@ export const saveUser = async (user) => {
     user.version = existingUser.version + 1;
     // update the updateDt
     user.updateDt = Date.now();
-    // update attributes
-    user.attributes = Object.assign({}, existingUser.attributes, user.attributes);
 
     // create attribute updates
     const updates = {};
@@ -183,6 +186,63 @@ export const saveUser = async (user) => {
 
   return user;
 };
+
+
+export const refreshUserScore = async (user, characters, questions) => {
+  if (!user) {
+    throw new Error('user is required');
+  }
+  if (!(user instanceof User)) {
+    throw new Error('user must be of type User');
+  }
+
+  // zero out score
+  user.attributes.score = 0;
+
+  // loop characters
+  Object.keys(characters).forEach(key => {
+    const character = characters[key];
+    const cid = character.id;
+    const bid = user.attributes.bids[cid];
+    if (bid) {
+
+      // console.log('Bid:', character.attributes.status, bid, (character.attributes.status === bid), (character.attributes.status === bid && character.attributes.status !== '1'));
+
+      // if the character status equals the user bid then the user chose correctly - add a point
+      if (character.attributes.status === bid) {
+        user.attributes.score += CHAR_POINTS;
+
+        // if the character is also deceased then the user also chose the correct wight status - add a point
+        if (character.attributes.status !== '1') {
+          user.attributes.score += CHAR_POINTS;
+        }
+      }
+    }
+  });
+
+  // loop questions
+  Object.keys(questions).forEach(key => {
+    const question = questions[key];
+
+    // if no correct answer then don't count the point
+    if (!question.attributes.correctAnswer) {
+      return;
+    }
+
+    const qid = question.id;
+    const bid = user.attributes.questions[qid];
+
+    // console.log(question.attributes.correctAnswer, bid, (question.attributes.correctAnswer === bid));
+
+    // if the user answered the question correctly - add a point
+    if (question.attributes.correctAnswer === bid) {
+      user.attributes.score += QUES_POINTS;
+    }
+  });
+
+  return console.log(await saveUser(user));
+
+}
 
 
 
