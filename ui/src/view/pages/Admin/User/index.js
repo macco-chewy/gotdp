@@ -8,8 +8,6 @@ import { collection as characterCollection } from 'actions/characters';
 import { collection as questionCollection } from 'actions/questions';
 import { create as createUser, get as getUser } from 'actions/user';
 
-import BasicLayout from 'view/layouts/BasicLayout';
-
 import styles from './styles.module.css';
 
 
@@ -213,56 +211,6 @@ class User extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    // const data = {
-    //   name: '',
-    //   attributes: {
-    //     bids: {},
-    //     questions: {}
-    //   }
-    // };
-
-    // const elements = event.target.elements;
-    // for (let i = 0, x = elements.length; i < x; i++) {
-    //   const element = elements[i];
-    //   element.disabled = true;
-    //   const type = element.type;
-    //   const category = element.name.substr(0, 5);
-    //   const property = element.name.substr(5);
-
-    //   let value;
-    //   switch (type) {
-    //     case 'radio':
-    //       if (element.checked) {
-    //         value = element.value;
-    //       }
-    //       break;
-    //     default:
-    //       value = element.value;
-    //       break;
-    //   }
-
-    //   // skip if no value
-    //   if (!value) {
-    //     continue;
-    //   }
-
-    //   switch (category) {
-    //     case 'user_':
-    //       data[property] = value;
-    //       break;
-    //     case 'char_':
-    //       data.bids[property] = value;
-    //       break;
-    //     case 'ques_':
-    //       data.questions[property] = value;
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // }
-    // console.log(data);
-    // this.props.createUser(data);
-
     const user = this.state.user;
     this.props.createUser(user);
 
@@ -274,62 +222,60 @@ class User extends Component {
     const { user, canSubmit } = this.state;
 
     return (
-      <BasicLayout>
-        <div className={styles.root}>
-          <form onSubmit={this.handleUsernameSearch}>
-            <div className={styles.formRow}>
-              <h2>User Details</h2>
-            </div>
-            <div className={styles.formRow}>
-              <div className={classnames(styles.formItem, styles.flex1)}>
-                <label htmlFor="search_name"><h3>Name</h3></label>
-                <input type="text" className="form-control" id="search_name" name="search_name" onChange={this.handleNameChange} />
-                <div>
-                  <button type="submit" className="btn btn-primary" style={{ margin: '.4rem .4rem 0 0' }} disabled={isLoading || !canSubmit}>Search</button>
-                  <button type="button" className="btn btn-primary" style={{ margin: '.4rem .4rem 0 0' }} onClick={this.handleUserDelete} disabled={isLoading || !stateUser}>Delete</button>
-                </div>
+      <div className={styles.root}>
+        <form onSubmit={this.handleUsernameSearch}>
+          <div className={styles.formRow}>
+            <h2>User Details</h2>
+          </div>
+          <div className={styles.formRow}>
+            <div className={classnames(styles.formItem, styles.flex1)}>
+              <label htmlFor="search_name"><h3>Name</h3></label>
+              <input type="text" className="form-control" id="search_name" name="search_name" onChange={this.handleNameChange} />
+              <div>
+                <button type="submit" className="btn btn-primary" style={{ margin: '.4rem .4rem 0 0' }} disabled={isLoading || !canSubmit}>Search</button>
+                <button type="button" className="btn btn-primary" style={{ margin: '.4rem .4rem 0 0' }} onClick={this.handleUserDelete} disabled={isLoading || !stateUser}>Delete</button>
               </div>
             </div>
+          </div>
 
-            <div className={styles.formRowSpacer} />
-          </form>
+          <div className={styles.formRowSpacer} />
+        </form>
 
-          <form onSubmit={this.handleFormSubmit}>
+        <form onSubmit={this.handleFormSubmit}>
 
-            <div className={styles.formRow}>
-              <h2>Character Statuses</h2>
+          <div className={styles.formRow}>
+            <h2>Character Statuses</h2>
+          </div>
+          {
+            characters.length === 0
+              ? null
+              : characters.map((character, i) => {
+                return <CharacterFormRow key={i} character={character} user={user} onChange={this.handleAnswerUpdate} />
+              })
+          }
+
+          <div className={styles.formRowSpacer} />
+
+          <div className={styles.formRow}>
+            <h2>Questions</h2>
+          </div>
+          {
+            questions.length === 0
+              ? null
+              : questions.map((question, i) => {
+                return <QuestionFormRow key={i} question={question} user={user} onChange={this.handleAnswerUpdate} />
+              })
+          }
+
+          <div className={styles.formRowSpacer} />
+
+          <div className={styles.formRow}>
+            <div className={styles.formItem}>
+              <button type="submit" className="btn btn-primary" disabled={isLoading || !canSubmit}>Save user details</button>
             </div>
-            {
-              characters.length === 0
-                ? null
-                : characters.map((character, i) => {
-                  return <CharacterFormRow key={i} character={character} user={user} onChange={this.handleAnswerUpdate} />
-                })
-            }
-
-            <div className={styles.formRowSpacer} />
-
-            <div className={styles.formRow}>
-              <h2>Questions</h2>
-            </div>
-            {
-              questions.length === 0
-                ? null
-                : questions.map((question, i) => {
-                  return <QuestionFormRow key={i} question={question} user={user} onChange={this.handleAnswerUpdate} />
-                })
-            }
-
-            <div className={styles.formRowSpacer} />
-
-            <div className={styles.formRow}>
-              <div className={styles.formItem}>
-                <button type="submit" className="btn btn-primary" disabled={isLoading || !canSubmit}>Save user details</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </BasicLayout>
+          </div>
+        </form>
+      </div>
     );
   }
 }

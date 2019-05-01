@@ -1,5 +1,30 @@
 .root {
   display: flex;
-  flex-direction: column;
-  width: 100%;
 }
+
+
+@media (min-width: 0px) {
+  .root {
+    flex-direction: column;
+  }
+
+  .leaderboardPanel {
+    margin-bottom: 5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .root {
+    flex-direction: row;
+  }
+
+  .leaderboardPanel {
+    flex: 2;
+    margin-right: 2rem;
+  }
+
+  .characterPanel {
+    flex: 1;
+  }
+}
+

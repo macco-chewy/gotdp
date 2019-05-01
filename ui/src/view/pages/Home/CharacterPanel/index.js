@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import CharacterCard from 'view/components/CharacterCard';
+import CharacterHead from 'view/components/CharacterHead';
+import Panel from 'view/components/Panel';
 
 import styles from './styles.module.css';
 
@@ -12,34 +13,22 @@ export default class CharacterPanel extends Component {
     characters: PropTypes.any
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      activeCharacterId: ''
-    }
-  }
-
   handleCharacterCardClick = (characterId) => {
-    const nextCharacterId = (characterId !== this.state.activeCharacterId) ? characterId : '';
-    this.setState({
-      activeCharacterId: nextCharacterId
-    });
+    console.log(characterId);
   }
 
   render() {
-    const { characters, users } = this.props;
-    const { activeCharacterId } = this.state;
+    const { characters } = this.props;
     return (
-      <div className={styles.root}>
+      <Panel header="Characters" className={styles.root}>
         {
           characters.length === 0
             ? null
             : characters.map((character, i) => {
-              return <CharacterCard key={i} character={character} users={users} onClick={this.handleCharacterCardClick} active={character.id === activeCharacterId} />
+              return <CharacterHead key={i} character={character} onClick={this.handleCharacterCardClick} className={styles.head} />
             })
         }
-      </div>
+      </Panel>
     );
   }
 }
