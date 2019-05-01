@@ -33,10 +33,6 @@ export const Character = function () {
   // attributes
   this.attributes = {
     age: 0,
-    bids: {
-      1: [],
-      2: []
-    },
     displayName: '',
     imageUrl: '',
     quote: '',
@@ -168,8 +164,6 @@ export const saveCharacter = async (character) => {
     character.version = existingCharacter.version + 1;
     // update the updateDt
     character.updateDt = Date.now();
-    // update attributes
-    character.attributes = Object.assign({}, existingCharacter.attributes, character.attributes);
 
     // create attribute updates
     const updates = {};
@@ -237,9 +231,6 @@ export const refreshCharacterByName = async (data) => {
   if (status) {
     character.attributes.status = status;
   }
-
-  // prevent overwriting bids by deleting
-  delete character.attributes.bids;
 
   return await saveCharacter(character);
 };
