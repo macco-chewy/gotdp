@@ -240,7 +240,7 @@ export const refreshUserScore = async (user, characters, questions) => {
     }
   });
 
-  return console.log(await saveUser(user));
+  return await saveUser(user);
 
 }
 
