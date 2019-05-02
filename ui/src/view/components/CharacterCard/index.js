@@ -5,13 +5,15 @@ import styles from './styles.module.css';
 
 export default function CharacterCard(props) {
 
-  const { character, users, active, onClick } = props;
+  const { character, users, active, onClick, className } = props;
   if (!character) {
     return null;
   }
 
   const handleClick = () => {
-    onClick(character.id);
+    if (onClick) {
+      onClick(character.id);
+    }
   }
 
   let rootClassNames = styles.root;
@@ -32,6 +34,8 @@ export default function CharacterCard(props) {
   if (active) {
     rootClassNames = classnames(rootClassNames, styles.active);
   }
+
+  rootClassNames = classnames(rootClassNames, className);
 
   let liveCount, deadCount, wightCount;
   liveCount = deadCount = wightCount = 0;

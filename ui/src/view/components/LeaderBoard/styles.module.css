@@ -2,25 +2,6 @@
   flex: 1;
 }
 
-
-
-.header {
-  padding: .2rem;
-  font-family: "Cinzel", serif;
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  background: var(--black);
-  border: 1px solid var(--off-white);
-  border-bottom: 0;
-  border-radius: 3rem 3rem 0 0;
-}
-
-.container {
-  border-left: 1px solid var(--off-white);
-  border-right: 1px solid var(--light-gray);
-}
-
 .root table {
   width: calc(100% - 1px);
   margin-bottom: 2px;

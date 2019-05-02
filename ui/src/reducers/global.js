@@ -1,4 +1,5 @@
 export function isLoading(state = true, action) {
+  console.log('action type', action.type);
   if (/^REQUEST_.*/.test(action.type)) {
     return true;
   }

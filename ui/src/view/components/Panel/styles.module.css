@@ -3,7 +3,6 @@
   flex-direction: column;
 }
 
-
 .header {
   flex: 0;
   padding: .5rem;
@@ -25,4 +24,19 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   border-left: 3px solid var(--light-gray);
+  border-right: 1px solid var(--light-gray);
+}
+
+.footer {
+  flex: 0;
+  padding: 1rem;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border: 3px solid var(--light-gray);
+  border-right: 1px solid var(--light-gray);
+  border-top: 0;
+  border-bottom: 1px solid var(--light-gray);
+  border-radius: 0 0 3rem 3rem;
 }

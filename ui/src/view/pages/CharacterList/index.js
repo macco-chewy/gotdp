@@ -39,9 +39,10 @@ class Home extends Component {
 
   handleCharacterCardClick = (characterId) => {
     const nextCharacterId = (characterId !== this.state.activeCharacterId) ? characterId : '';
-    this.setState({
-      activeCharacterId: nextCharacterId
-    });
+    // this.setState({
+    //   activeCharacterId: nextCharacterId
+    // });
+    this.props.push(`/characters/${characterId}`);
   }
 
   render() {

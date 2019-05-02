@@ -33,6 +33,14 @@
   background-size: cover;
 }
 
+.banner {
+  flex: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--lapis);
+}
+
 .title {
   font-weight: bold;
   text-shadow: 2px 2px 10px #000000;
@@ -45,9 +53,13 @@
   text-shadow: 1px 1px 1px var(--light-gray);
 }
 
+.breadCrumbs {
+  color: var(--off-white);
+  font-family: "Cinzel", serif;
+}
+
 .body {
   flex: 1;
-  margin: 24px;
 }
 
 .footer {
@@ -80,9 +92,13 @@
   }
 
   .header {
+    border-radius: 35px 0 0 35px;
+  }
+
+  .banner {
+    flex: 0;
     height: 75px;
     padding: .5rem 2rem 0 90px;
-    background-color: var(--lapis);
     border-bottom: 1px solid var(--dark-gray);
     border-radius: 35px 0 0 35px;
     display: flex;
@@ -93,6 +109,25 @@
 
   .header h1 {
     font-size: 3.5rem;
+  }
+
+  .breadCrumbs {
+    padding: 1rem 1rem 0;
+    font-size: 1.5rem;
+  }
+
+  .link {
+    padding: 0 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .divider {
+    font-weight: bold;
+  }
+
+  .current {
+    padding: 0 1rem;
   }
 
   .logo {
@@ -107,6 +142,10 @@
   .quote {
     display: none;
   }
+
+  .body {
+    padding: 1rem;
+  }
 }
 
 
@@ -119,11 +158,33 @@
   }
 
   .header {
+    border-radius: 0 24px 0 0;
+  }
+
+  .banner {
     height: 110px;
     padding: 2rem 2rem 0 190px;
-    margin-bottom: 4rem;
     border-bottom: 3px solid var(--dark-gray);
     border-radius: 0 24px 0 0;
+  }
+
+  .breadCrumbs {
+    padding: 1rem 3rem 1rem 200px;
+    font-size: 1.5rem;
+  }
+
+  .link {
+    padding: 0 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .divider {
+    font-weight: bold;
+  }
+
+  .current {
+    padding: 0 1rem;
   }
 
   .logo {
@@ -136,5 +197,9 @@
 
   .quote {
     display: block;
+  }
+
+  .body {
+    padding: 2rem;
   }
 }
