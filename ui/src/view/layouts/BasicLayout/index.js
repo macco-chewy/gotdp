@@ -68,7 +68,6 @@ function BreadCrumbs(props) {
 class BasicLayout extends Component {
   static propTypes = {
     characters: PropTypes.any,
-    getCharacters: PropTypes.func,
     goBack: PropTypes.func,
     location: PropTypes.string,
     push: PropTypes.func

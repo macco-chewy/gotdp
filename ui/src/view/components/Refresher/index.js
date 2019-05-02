@@ -3,30 +3,45 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { collection as characterCollection } from 'actions/characters';
+import { collection as questionCollection } from 'actions/questions';
 import { collection as userCollection } from 'actions/users';
 
 class Refresher extends Component {
   static propTypes = {
     characters: PropTypes.any,
     getCharacters: PropTypes.func,
+    getQuestions: PropTypes.func,
     getUsers: PropTypes.func,
+    questions: PropTypes.any,
     users: PropTypes.any
   };
+  
+  constructor(props){
+    super(props);
+
+    this.state = {
+      interval: 0
+    }
+  }
 
   componentDidMount() {
     this.refresh();
 
     // set interval
+    this.setState({
+      interval: setInterval(this.refresh, 60000)
+    })
   };
 
   refresh = () => {
     this.props.getCharacters();
+    this.props.getQuestions();
     this.props.getUsers();
   }
 
   render() {
-    const { characters, users } = this.props;
-    if (characters.length === 0 || users.length === 0) {
+    const { characters, questions, users } = this.props;
+    if (!characters.length || !questions.length || !users.length) {
       return null;
     }
 
@@ -38,11 +53,13 @@ class Refresher extends Component {
 
 const getState = (globalState) => ({
   characters: globalState.characters,
+  questions: globalState.questions,
   users: globalState.users
 });
 
 const actions = {
   getCharacters: characterCollection.get,
+  getQuestions: questionCollection.get,
   getUsers: userCollection.get
 };
 
