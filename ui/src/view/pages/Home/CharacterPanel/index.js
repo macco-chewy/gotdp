@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { push } from 'connected-react-router';
 
 import CharacterHead from 'view/components/CharacterHead';
 import Panel from 'view/components/Panel';
@@ -7,20 +9,20 @@ import Panel from 'view/components/Panel';
 import styles from './styles.module.css';
 
 
-
-export default class CharacterPanel extends Component {
+class CharacterPanel extends Component {
   static propTypes = {
-    characters: PropTypes.any
+    characters: PropTypes.any,
+    push: PropTypes.func
   };
 
   handleCharacterCardClick = (characterId) => {
-    console.log(characterId);
-  }
+    this.props.push(`/characters/${characterId}`);
+  };
 
   render() {
     const { characters } = this.props;
     return (
-      <Panel header="Characters" className={styles.root}>
+      <Panel header="Characters" className={styles.root} innerClassName={styles.container}>
         {
           characters.length === 0
             ? null
@@ -32,3 +34,13 @@ export default class CharacterPanel extends Component {
     );
   }
 }
+
+const getState = (globalState) => ({
+  characters: globalState.characters
+});
+
+const actions = {
+  push
+};
+
+export default connect(getState, actions)(CharacterPanel);

@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.container {
+  padding: 1rem;
+}
+
 .head {
   flex: 1 0 1;
   margin: .5rem;

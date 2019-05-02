@@ -47,7 +47,7 @@ export default function LeaderBoard(props) {
   let rootClassName = classnames(styles.root, className);
 
   return (
-    <Panel header="Leader Board" className={rootClassName}>
+    <Panel header="Leader Board" footer="* Not in contention" className={rootClassName}>
       <table>
         <tbody>
           {
@@ -85,9 +85,6 @@ export default function LeaderBoard(props) {
               )
             })
           }
-          <tr className={styles.footer}>
-              <td colSpan="2">* Admin - Not in contention</td>
-          </tr>
         </tbody>
       </table>
     </Panel>

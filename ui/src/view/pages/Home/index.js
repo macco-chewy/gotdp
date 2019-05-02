@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 
 import CharacterPanel from './CharacterPanel';
@@ -12,7 +11,6 @@ import styles from './styles.module.css';
 class Home extends Component {
   static propTypes = {
     characters: PropTypes.any,
-    push: PropTypes.func,
     users: PropTypes.any
   };
 
@@ -26,7 +24,7 @@ class Home extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.leaderboardPanel}><LeaderBoard characters={characters} users={users} /></div>
-        <div className={styles.characterPanel}><CharacterPanel characters={characters} users={users} /></div>
+        <div className={styles.characterPanel}><CharacterPanel characters={characters} /></div>
       </div>
     );
   }
@@ -37,8 +35,6 @@ const getState = (globalState) => ({
   users: globalState.users
 });
 
-const actions = {
-  push
-};
+const actions = {};
 
 export default connect(getState, actions)(Home);
