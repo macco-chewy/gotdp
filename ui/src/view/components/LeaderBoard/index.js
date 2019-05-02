@@ -92,7 +92,7 @@ export default function LeaderBoard(props) {
         user.style = styles.last;
       }
     }
-
+    return user;
   });
 
   let rootClassName = classnames(styles.root, className);
@@ -103,7 +103,6 @@ export default function LeaderBoard(props) {
         <tbody>
           {
             scoredUsers.map((user, i) => {
-              console.log(user.style);
               return (
                 <tr key={i} className={user.style}>
                   <th>{user.name}</th>

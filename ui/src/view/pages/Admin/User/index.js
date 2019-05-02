@@ -4,8 +4,6 @@ import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { collection as characterCollection } from 'actions/characters';
-import { collection as questionCollection } from 'actions/questions';
 import { create as createUser, get as getUser } from 'actions/user';
 
 import styles from './styles.module.css';
@@ -113,7 +111,6 @@ class User extends Component {
     characters: PropTypes.any,
     clearUser: PropTypes.func,
     createUser: PropTypes.func,
-    getCharacters: PropTypes.func,
     getUser: PropTypes.func,
     isLoading: PropTypes.bool,
     questions: PropTypes.any,
@@ -131,16 +128,6 @@ class User extends Component {
   componentWillMount() {
     this.props.clearUser();
   }
-
-  componentDidMount() {
-    const { characters, questions } = this.props;
-    if (!characters || typeof characters !== 'object' || characters.length === 0) {
-      this.props.getCharacters();
-    }
-    if (!questions || typeof questions !== 'object' || questions.length === 0) {
-      this.props.getQuestions();
-    }
-  };
 
   componentWillUpdate(nextProps) {
     // check if user has changed
@@ -288,8 +275,6 @@ const getState = (globalState) => ({
 });
 
 const actions = {
-  getCharacters: characterCollection.get,
-  getQuestions: questionCollection.get,
   createUser: createUser.submit,
   getUser: getUser.byName,
   clearUser: getUser.clear,
