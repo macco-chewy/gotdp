@@ -62,3 +62,24 @@
   background-color: rgba(87, 190, 245, .2);
 }
 
+.last {
+  color: var(--light-gray);
+}
+
+.last td,
+.last th {
+  padding: 1.4rem;
+  font-size: 2rem;
+}
+
+tr.footer {
+  border-bottom: 0;
+}
+
+.footer td {
+  padding: 1rem;
+  color: var(--light-gray);
+  font-size: 1rem;
+  font-weight: bold;
+  background: var(--black);
+}
