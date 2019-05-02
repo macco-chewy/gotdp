@@ -24,6 +24,7 @@ export const User = function ({ name = '', bids = {}, questions = {}, score = 0 
   // attributes
   this.attributes = {
     bids,
+    ignore: false,
     questions,
     score
   }
