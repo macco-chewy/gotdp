@@ -10,7 +10,7 @@ custom:
     port: 3000
   
   defaults:
-    stage: Development
+    stage: dev
     region: us-west-1
 
   apiGateway:
@@ -23,11 +23,6 @@ custom:
       "Fn::ImportValue": "ConsumerApi-${self:custom.stage}-${self:custom.region}-DefaultLambdaRole-Arn"
     defaultTimeout: 30
     namePrefix: "gotdp-consumerapi-${self:custom.stage}-"
-  functions:
-    default:
-      refreshRate: "15 minutes"
-    dev:
-      refreshRage: "30 days"
   stackName: ${self:custom.stage}-${self:service} 
   stage: ${opt:stage,self:custom.defaults.stage}
   region: ${opt:region,self:custom.defaults.region}
@@ -125,10 +120,7 @@ functions:
     handler: lambdas/refreshCharacters.handler
     name: ${self:custom.lambda.namePrefix}refreshCharacters
     events:
-      - schedule:
-          name: ${self:custom.lambda.namePrefix}refreshCharacters-schedule
-          rate: rate(${self:custom.functions.${self:custom.stage}.refreshRate, self:custom.functions.default.refreshRate})
-          enabled: true
+      - schedule: "cron(4/15 * ? * SUN-MON *)"
   
   refreshQuestions:
     handler: lambdas/refreshQuestions.handler
@@ -139,7 +131,4 @@ functions:
     handler: lambdas/refreshUsers.handler
     name: ${self:custom.lambda.namePrefix}refreshUsers
     events:
-      - schedule:
-          name: ${self:custom.lambda.namePrefix}refreshUsers-schedule
-          rate: rate(${self:custom.functions.${self:custom.stage}.refreshRate, self:custom.functions.default.refreshRate})
-          enabled: true
+      - schedule: "cron(7/15 * ? * SUN-MON *)"
