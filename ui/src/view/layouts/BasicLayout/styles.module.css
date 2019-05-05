@@ -65,10 +65,8 @@
 }
 
 .breadCrumbs {
-  padding: 2rem 3rem 0;
   color: var(--off-white);
   font-family: "Cinzel", serif;
-  font-size: 1.5rem;
 }
 
 .body {
@@ -156,6 +154,11 @@
     border-radius: 0 0 0 10px;
   }
 
+  .breadCrumbs {
+    padding: 1rem 2rem 0;
+    font-size: 1rem;
+  }
+
   .link {
     padding: 0 1rem;
     font-weight: bold;
@@ -188,6 +191,11 @@
 @media (min-width: 360px) {
   .header h1 {
     font-size: 2.5rem;
+  }
+
+  .breadCrumbs {
+    padding: 1rem 3rem 0;
+    font-size: 1.5rem;
   }
 }
 
@@ -283,6 +291,11 @@
 
   .navFooter {
     display: none;
+  }
+
+  .breadCrumbs {
+    padding: 2rem 3rem 0;
+    font-size: 1.5rem;
   }
 
   .link {
