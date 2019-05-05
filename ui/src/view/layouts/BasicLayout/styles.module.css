@@ -22,10 +22,12 @@
 }
 
 .header {
+  margin-bottom: 2rem;
   flex: 0;
   position: relative;
   display: flex;
   flex-direction: column;
+  z-index: 10;
 }
 
 .logo {
@@ -53,13 +55,25 @@
   text-shadow: 1px 1px 1px var(--light-gray);
 }
 
+.navItem {
+  font-family: "Cinzel", serif;
+  font-weight: bold;
+  text-align: right;
+  color: var(--dark-gray);
+  background: var(--snow);
+  cursor: pointer;
+}
+
 .breadCrumbs {
+  padding: 2rem 3rem 0;
   color: var(--off-white);
   font-family: "Cinzel", serif;
+  font-size: 1.5rem;
 }
 
 .body {
   flex: 1;
+  padding: 0 2rem 3rem;
 }
 
 .footer {
@@ -95,25 +109,51 @@
     border-radius: 35px 0 0 35px;
   }
 
+  .logo {
+    z-index: 3;
+  }
+
   .banner {
     flex: 0;
-    height: 75px;
-    padding: .5rem 2rem 0 90px;
+    height: 60px;
+    padding: .5rem 2rem 0 70px;
     border-bottom: 1px solid var(--dark-gray);
     border-radius: 35px 0 0 35px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
+    z-index: 2;
   }
 
   .header h1 {
-    font-size: 3.5rem;
+    font-size: 2rem;
   }
 
-  .breadCrumbs {
-    padding: 1rem 1rem 0;
+  .navTrigger {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+
+  .navItem {
+    padding: 1.5rem;
     font-size: 1.5rem;
+    border-left: 1px solid var(--dark-gray);
+    border-bottom: 1px solid var(--dark-gray);
+  }
+
+  .navFooter {
+    height: 10px;
+    background: var(--dark-gray);
+    border-radius: 0 0 0 10px;
   }
 
   .link {
@@ -134,17 +174,68 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
     background-size: cover;
   }
 
   .quote {
     display: none;
   }
+}
 
-  .body {
-    padding: 1rem;
+
+@media (min-width: 360px) {
+  .header h1 {
+    font-size: 2.5rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .nav {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 15rem;
+    margin-top: -130px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+
+  .nav.show {
+    margin-top: 0px;
+    animation-duration: .5s;
+    animation-name: slidein;
+    transition-timing-function: ease-in-out;
+  }
+
+  .nav.hide {
+    margin-top: -130px;
+    animation-duration: .5s;
+    animation-name: slideout;
+    transition-timing-function: ease-in-out;
+  }
+
+  @keyframes slidein {
+    from {
+      margin-top: -130px;
+    }
+
+    to {
+      margin-top: 0px;
+    }
+  }
+
+  @keyframes slideout {
+    from {
+      margin-top: 0px;
+    }
+
+    to {
+      margin-top: -130px;
+    }
   }
 }
 
@@ -161,16 +252,37 @@
     border-radius: 0 24px 0 0;
   }
 
+  .header h1 {
+    font-size: 4rem;
+  }
+
   .banner {
-    height: 110px;
+    height: 115px;
     padding: 2rem 2rem 0 190px;
-    border-bottom: 3px solid var(--dark-gray);
+    border-bottom: 2px solid var(--dark-gray);
     border-radius: 0 24px 0 0;
   }
 
-  .breadCrumbs {
-    padding: 1rem 3rem 1rem 200px;
+  .navTrigger {
+    display: none;
+  }
+
+  .nav {
+    margin-left: 110px;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 3px solid var(--dark-gray);
+  }
+
+  .navItem {
+    flex: 1;
+    padding: .5rem 1.5rem;
     font-size: 1.5rem;
+    border-left: 2px solid var(--dark-gray);
+  }
+
+  .navFooter {
+    display: none;
   }
 
   .link {
@@ -197,9 +309,5 @@
 
   .quote {
     display: block;
-  }
-
-  .body {
-    padding: 2rem;
   }
 }

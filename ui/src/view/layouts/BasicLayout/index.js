@@ -78,7 +78,8 @@ class BasicLayout extends Component {
     this.loadTimer = Date.now();
     this.screenViewTimer = Date.now();
     this.state = {
-      bgIndex: Math.floor((Math.random() * 10) + 1)
+      bgIndex: Math.floor((Math.random() * 10) + 1),
+      navDisplayed: null
     }
   }
 
@@ -97,8 +98,14 @@ class BasicLayout extends Component {
     }
   }
 
-  handleBreadcrumbClick = (path) => {
+  toggleNav = () => {
+    const { navDisplayed } = this.state;
+    this.setState({ navDisplayed: !navDisplayed });
+  }
+
+  handlePushClick = (path) => {
     this.props.push(path);
+    this.setState({ navDisplayed: false });
   }
 
   handleBackClick = () => {
@@ -114,6 +121,14 @@ class BasicLayout extends Component {
     if (bgIndex) {
       rootClassNames = classnames(rootClassNames, styles[`bg${bgIndex}`]);
     }
+
+    let navClassNames = styles.nav;
+    const { navDisplayed } = this.state;
+    navClassNames = classnames(navClassNames, navDisplayed
+      ? styles.show
+      : styles.hide
+    );
+
     return (
       <div className={rootClassNames}>
         <div className={styles.container}>
@@ -121,10 +136,20 @@ class BasicLayout extends Component {
             <div className={styles.banner}>
               <div className={styles.title}><h1>GoT Death Pool</h1></div>
               <div className={styles.quote}>I swear if they don't cover Jaime's golden hand in dragon glass to pimp slap the shit out of white walkers, then what has this all been about?</div>
+              <div className={styles.navTrigger} onClick={this.toggleNav}>{
+                (this.state.navDisplayed)
+                  ? <span>&#x25BC;</span>
+                  : <span>&#x25B2;</span>
+              }</div>
+            </div>
+            <div className={navClassNames}>
+              <div className={styles.navItem} onClick={this.handlePushClick.bind(null, '/characters')}>Characters</div>
+              <div className={styles.navItem} onClick={this.handlePushClick.bind(null, '/bidders')}>Bidders</div>
+              <div className={styles.navFooter} />
             </div>
             <div className={styles.breadCrumbs}>
               <BackButton location={location} onClick={this.handleBackClick} />
-              <BreadCrumbs location={location} onClick={this.handleBreadcrumbClick} />
+              <BreadCrumbs location={location} onClick={this.handlePushClick} />
             </div>
             <div className={styles.logo}></div>
           </div>

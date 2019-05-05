@@ -51,6 +51,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--primary-text);
   font-size: 12px;
+  min-width: 320px;
 }
 
 h1, h2, h3, h4, h5, h6 {

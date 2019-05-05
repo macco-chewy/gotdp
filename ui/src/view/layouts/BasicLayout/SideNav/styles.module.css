@@ -1,0 +1,188 @@
+@import '~scss/defaults';
+
+$scrollableHeight: 475px;
+$tripleScrollableHeight: 540px;
+
+.wrapper {
+  background-color: $white;
+  height: calc(100vh - #{$navHeight * 2 - 1});
+  overflow: hidden;
+  position: fixed;
+  width: $sideNavWidth;
+  left: 0;
+  top: $navHeight * 2;
+  z-index: 1300;
+  box-shadow: 1px 2px 6px 0px rgba(0, 0, 0, 0.08);
+  transition: 300ms ease width;
+  @media (max-height: $scrollableHeight) {
+    overflow: auto;
+  }
+
+  &.tripleNav {
+    @media (min-width: $col-sm) and (max-width: $col-md - 1) {
+      top: $navHeight * 3;
+      height: calc(100vh - #{$navHeight * 3 - 1});
+    }
+    @media (max-height: $tripleScrollableHeight) {
+      overflow: auto;
+    }
+    .listBottom {
+      @media (max-height: $tripleScrollableHeight) {
+        position: static !important;
+      }
+    }
+  }
+
+  @media (max-width: $col-sm) and (min-width: ($col-sm - 60)) {
+    transition: none;
+  }
+
+  &.open {
+    width: 300px;
+    z-index: 9999;
+    .closeIcon {
+      display: inline-block;
+    }
+  }
+}
+
+.iconList {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  &.listBottom {
+    @media (min-width: $col-sm) {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+    }
+    @media (min-width: $col-md) {
+      display: none;
+    }
+    @media (max-height: $scrollableHeight) {
+      position: static !important;
+    }
+  }
+  li {
+    white-space: nowrap;
+    list-style-type: none;
+    position: relative;
+    margin-top: 24px;
+    &.accountsItem {
+      @media (max-width: ($col-sm - 1)) {
+        border-top: 1px solid $separatorColor;
+        border-bottom: 1px solid $separatorColor;
+        padding: 20px 0px;
+        margin-top: 12px 0;
+      }
+    }
+    &.active {
+      font-weight: $semi-bold;
+      border-left: 4px solid;
+      a {
+        padding-left: 8.5px;
+        opacity: 1 !important;
+        font-weight: $semi-bold;
+      }
+    }
+    a {
+      padding: 12.5px;
+      display: block;
+      font-weight: $regular;
+      cursor: pointer;
+      text-decoration: none !important;
+      &:hover {
+        text-decoration: underline !important;
+        opacity: 1;
+      }
+    }
+    i {
+      padding-right: 18px;
+      font-size: 22px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+}
+
+.closeIcon:global(.material-icons) {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1300;
+  color: $grey;
+  cursor: pointer;
+  margin: 6px;
+}
+
+.overlay {
+  z-index: 1059;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media (max-width: ($col-sm - 1)) {
+  .wrapper {
+    width: 0;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    &.open {
+      width: calc(100% - 50px);
+    }
+  }
+  .mobileHeader {
+    display: block !important;
+  }
+  .closeIcon {
+    color: $white !important;
+  }
+}
+
+.mobileHeader {
+  min-width: 250px;
+  display: none;
+  padding: 20px 12px;
+
+  .mobileHeaderContainer {
+    display: table;
+    color: $white;
+    > div {
+      display: table-cell;
+      padding-right: 12px;
+      vertical-align: top;
+    }
+    h3 {
+      margin: 0;
+      font-weight: $regular;
+      line-height: 1.3;
+      color: $white;
+    }
+    a {
+      font-size: 14px;
+      text-decoration: underline;
+    }
+  }
+}
+
+.pencilIcon {
+  font-size: 18px !important;
+  vertical-align: top;
+  margin-top: 4px;
+  margin-right: 5px;
+}
+
+.whiteText {
+  color: $white !important;
+}
+
+.listBottom {
+  @media (max-width: ($col-sm)) {
+    border-top: 1px solid $separatorColor;;
+  }
+}
