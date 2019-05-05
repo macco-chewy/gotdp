@@ -267,11 +267,11 @@ class User extends Component {
   }
 }
 
-const getState = (globalState) => ({
-  characters: globalState.characters,
-  isLoading: globalState.global.isLoading,
-  questions: globalState.questions,
-  user: globalState.user
+const mapStateToProps = (state) => ({
+  characters: state.characters,
+  isLoading: state.global.isLoading,
+  questions: state.questions,
+  user: state.user
 });
 
 const actions = {
@@ -281,4 +281,4 @@ const actions = {
   push
 };
 
-export default connect(getState, actions)(User);
+export default connect(mapStateToProps, actions)(User);

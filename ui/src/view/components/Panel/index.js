@@ -4,13 +4,13 @@ import classnames from 'classnames';
 import styles from './styles.module.css';
 
 export default function Panel(props) {
-  const { header, footer, className, innerClassName } = props;
+  const { header, footer, className, headerClassName, bodyClassName, footerClassName } = props;
 
   return (
     <div className={classnames(styles.root, className)}>
-      <div className={styles.header}>{header || '&nbsp;'}</div>
-      <div className={classnames(styles.container, innerClassName)}>{props.children}</div>
-      <div className={styles.footer}>{footer}</div>
+      <div className={classnames(styles.header, headerClassName)}>{header || '&nbsp;'}</div>
+      <div className={classnames(styles.body, bodyClassName)}>{props.children}</div>
+      <div className={classnames(styles.footer, footerClassName)}>{footer}</div>
     </div>
   );
 }

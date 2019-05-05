@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import Panel from 'view/components/Panel';
+
 import styles from './styles.module.css';
 
 export default function CharacterCard(props) {
@@ -92,12 +94,10 @@ export default function CharacterCard(props) {
             <div className={styles.summary}>{character.attributes.summary}</div>
             <div><a href={character.attributes.sourceUrl} target="new">Read more</a></div>
           </div>
-          <div className={styles.userPanel}>
+
+          <Panel header="Bids" className={styles.bidPanel} headerClassName={styles.bidPanelHeader} bodyClassName={styles.bidPanelBody} footerClassName={styles.bidPanelFooter}>
             <table>
               <tbody>
-                <tr>
-                  <th colSpan="2" style={{ textAlign: 'center', backgroundColor: 'var(--black)', fontSize: '1.2rem' }}>Bids</th>
-                </tr>
                 {
                   users.map((user, i) => {
                     const bid = user.attributes.bids[character.id];
@@ -115,7 +115,7 @@ export default function CharacterCard(props) {
                 }
               </tbody>
             </table>
-          </div>
+          </Panel>
         </div>
       </div>
     </div>

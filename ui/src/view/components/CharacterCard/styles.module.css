@@ -7,7 +7,6 @@
 }
 
 .profilePicContainer {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75) ), url(img/profileDefault.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
@@ -21,7 +20,6 @@
   background-repeat: no-repeat;
   background-position: center top;
   border-radius: 1rem 0 0 1rem;
-  filter: saturate(250%);
 }
 
 .detailsContainer {
@@ -63,30 +61,54 @@
   text-align: justify;
 }
 
-.userPanel {
-  
+.bidPanel {
+  display: flex;
+  flex-direction: column;
 }
 
-.userPanel table {
-  width: 100%;
-  border: 1px solid #333333;
-}
-
-.userPanel th {
-  padding: .2rem;
-  background: var(--dark-gray);
+.bidPanelHeader {
+  flex: 0;
+  padding: .25rem;
+  font-size: 1.25rem;
   color: var(--off-white);
-  border-bottom: 1px solid var(--black);
-  font-family: "Cinzel", serif;
-  font-size: .8rem;
-  text-align: center;
+  background: var(--dark-gray);
+  border-color: var(--dark-gray);
+  border-bottom: 1px solid var(--dark-gray);
 }
 
-.userPanel td {
-  width: 2rem;
-  border-bottom: 1px solid var(--black);
+.bidPanelBody {
+  flex: 1;
+  border-color: var(--dark-gray);
+  background: var(--dark-gray);
+}
+
+.bidPanelFooter {
+  flex: 0;
+  background: var(--dark-gray);
+  border-color: var(--dark-gray);
+  border-top: 1px solid var(--dark-gray);
+}
+
+.bidPanel table {
+  width: 100%;
+}
+
+.bidPanel tr {
+  border-bottom: 1px solid var(--dark-gray);
+}
+
+.bidPanel th {
+  padding: .5rem;
+  background: var(--off-white);
+  color: var(--dark-gray);
+  border-right: 1px solid var(--dark-gray);
+  font-family: "Cinzel", serif;
   font-size: 1rem;
-  text-align: center;
+  text-align: right;
+}
+
+.bidPanel td {
+  width: 2rem;
 }
 
 td.status1 {
@@ -125,6 +147,10 @@ td.status3 {
   color: var(--font-color-alive);
 }
 
+.alive .profilePic {
+  /* filter: saturate(250%); */
+}
+
 .alive .name {
   border-bottom: 1px solid var(--font-color-alive);
 }
@@ -144,8 +170,8 @@ td.status3 {
 }
 
 .deceased .profilePic {
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1);
+  /* filter: grayscale(1); */
+  opacity: 0.5;
 }
 
 .deceased .name {
@@ -167,7 +193,8 @@ td.status3 {
 }
 
 .wight .profilePic {
-  filter: sepia(50%) hue-rotate(170deg) saturate(250%);
+  /* filter: sepia(50%) hue-rotate(170deg) saturate(250%); */
+  opacity: 0.5;
 }
 
 .wight .name {
@@ -183,14 +210,20 @@ td.status3 {
   color: var(--font-color-wight);
 }
 
-.active .details {
-  display: flex;
+.root.active {
+  height: auto;
 }
 
-.inactive {
-  animation-duration: .5s;
-  animation-name: contract;
-  animation-timing-function: ease-in-out;
+.active .profilePicContainer {
+  border-radius: 1rem;
+}
+
+.active .profilePic {
+  border-radius: 1rem;
+}
+
+.active .details {
+  display: flex;
 }
 
 
@@ -216,40 +249,36 @@ td.status3 {
     flex-direction: column;
   }
 
-  .characterPanel {
-  
-  }
-
-  .userPanel {
+  .bidPanel {
     margin-top: 2rem;
-  }
-
-  .root.active {
-    height: calc(30rem + .4rem);
   }
 
   .active .profilePicContainer {
     width: 10rem;
-    height: 30rem;
+    height: 15rem;
+  }
+
+  .active .stats {
+    display: none;
   }
 }
 
 
-@media (min-width: 520px) {
+@media (min-width: 440px) {
+  .active .profilePicContainer {
+    width: 20rem;
+    height: 30rem;
+  }
+
   .stats {
     display: block;
   }
 }
 
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .root {
     margin-bottom: 1rem;
-  }
-
-  .profilePicContainer {
-    width: 8rem;
-    height: 8rem;
   }
 
   .details {
@@ -257,24 +286,17 @@ td.status3 {
   }
 
   .characterPanel {
-    flex: 3;
+    flex: 2;
     padding-bottom: 1rem;
   }
   
-  .userPanel {
+  .bidPanel {
     flex: 1;
     margin-top: 0;
     margin-left: 2rem;
   }
 
-  .root.active {
-    margin-left: 2rem;
-    height: calc(30rem + .4rem);
+  .active .stats {
+    display: block;
   }
-
-  .active .profilePicContainer {
-    width: 20rem;
-    height: 30rem;
-  }
-
 }

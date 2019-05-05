@@ -24,20 +24,21 @@ class Home extends Component {
 
     return (
       <div className={styles.root}>
+        <div className={styles.pageHeader}>Character Detail</div>
         <CharacterCard character={character} users={users} active={true} className={styles.card} />
       </div>
     );
   }
 }
 
-const getState = (globalState, ownProps) => ({
-  characters: globalState.characters,
+const mapStateToProps = (state, ownProps) => ({
+  characters: state.characters,
   cid: ownProps.match.params.cid,
-  users: globalState.users
+  users: state.users
 });
 
 const actions = {
   push
 };
 
-export default connect(getState, actions)(Home);
+export default connect(mapStateToProps, actions)(Home);

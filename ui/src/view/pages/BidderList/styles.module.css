@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.pageHeader {
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  color: var(--light-gray);
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.bidderContainer {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--dark-gray);
+  align-items: center;
+}
+
+.bidderName {
+  flex: 1;
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.bidderScore {
+  flex: 1;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+}
