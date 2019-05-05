@@ -18,7 +18,10 @@ const characters = [
   'Missandei',
   'Theon Greyjoy',
   'Euron Greyjoy',
-  'The Mountain',
+  {
+    name: 'The Mountain',
+    imageUrl: 'https://vignette.wikia.nocookie.net/gameofthrones/images/5/5d/Gregor_closeup_ep7.png/revision/latest/scale-to-width-down/344?cb=20170903033840'
+  },
   'The Hound',
   'Qyburn',
   'Gilly',

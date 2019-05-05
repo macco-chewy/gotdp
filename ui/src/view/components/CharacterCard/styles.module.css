@@ -7,7 +7,6 @@
 }
 
 .profilePicContainer {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75) ), url(img/profileDefault.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
@@ -21,7 +20,6 @@
   background-repeat: no-repeat;
   background-position: center top;
   border-radius: 1rem 0 0 1rem;
-  filter: saturate(250%);
 }
 
 .detailsContainer {
@@ -149,6 +147,10 @@ td.status3 {
   color: var(--font-color-alive);
 }
 
+.alive .profilePic {
+  /* filter: saturate(250%); */
+}
+
 .alive .name {
   border-bottom: 1px solid var(--font-color-alive);
 }
@@ -168,8 +170,8 @@ td.status3 {
 }
 
 .deceased .profilePic {
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1);
+  /* filter: grayscale(1); */
+  opacity: 0.5;
 }
 
 .deceased .name {
@@ -191,7 +193,8 @@ td.status3 {
 }
 
 .wight .profilePic {
-  filter: sepia(50%) hue-rotate(170deg) saturate(250%);
+  /* filter: sepia(50%) hue-rotate(170deg) saturate(250%); */
+  opacity: 0.5;
 }
 
 .wight .name {

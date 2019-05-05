@@ -209,27 +209,32 @@ export const refreshCharacterByName = async (data) => {
     throw new Error('Error in refreshCharacterByName - name is required');
   }
 
-  let name, displayName, status;
+  // create an overrides hash
+  // this allows character data overrides to be passed from the caller
+  let overrides = {};
+
+  // determine name and overrides
+  let name;
   if (typeof data === 'object') {
     name = data.name;
-    displayName = data.displayName || name;
-    status = data.status;
+    overrides = Object.assign(overrides, data);
+    delete overrides.name;
   } else {
     name = data;
-    displayName = name;
+  }
+
+  // ensure displayName
+  if (!overrides.displayName) {
+    overrides.displayName = name;
   }
 
   // fetch current character data from wiki
   const character = await fetchCharacterFromWiki(name);
 
-  // save displayName
-  character.attributes.displayName = displayName;
+  // set overrides
+  character.attributes = Object.assign(character.attributes, overrides);
 
-  // override status
-  if (status) {
-    character.attributes.status = status;
-  }
-
+  // save and return
   return await saveCharacter(character);
 };
 

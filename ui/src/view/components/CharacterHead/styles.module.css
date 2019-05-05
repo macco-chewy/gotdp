@@ -8,7 +8,6 @@
 .profilePicContainer {
   width: 100%;
   height: 100%;
-  background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75) ), url(img/profileDefault.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
@@ -22,11 +21,14 @@
   background-repeat: no-repeat;
   background-position: center top;
   border-radius: 1rem;
-  filter: saturate(250%);
 }
 
 .alive {
   background: var(--bg-color-alive);
+}
+
+.alive .profilePic {
+  /* filter: saturate(250%); */
 }
 
 .deceased {
@@ -34,8 +36,8 @@
 }
 
 .deceased .profilePic {
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1);
+  /* filter: grayscale(1); */
+  opacity: 0.60;
 }
 
 .wight {
@@ -43,6 +45,7 @@
 }
 
 .wight .profilePic {
-  filter: sepia(50%) hue-rotate(170deg) saturate(250%);
+  /* filter: sepia(50%) hue-rotate(170deg) saturate(250%); */
+  opacity: 0.60;
 }
 
