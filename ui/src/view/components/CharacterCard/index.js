@@ -92,7 +92,7 @@ export default function CharacterCard(props) {
               })
             }</div>
             <div className={styles.summary}>{character.attributes.summary}</div>
-            <div><a href={character.attributes.sourceUrl} target="new">Read more</a></div>
+            <div><a href={character.attributes.sourceUrl} target="_blank" rel="noopener noreferrer">Read more</a></div>
           </div>
 
           <Panel header="Bids" className={styles.bidPanel} headerClassName={styles.bidPanelHeader} bodyClassName={styles.bidPanelBody} footerClassName={styles.bidPanelFooter}>

@@ -11,6 +11,7 @@ import BidderList from 'view/pages/BidderList';
 import CharacterDetail from 'view/pages/CharacterDetail';
 import CharacterList from 'view/pages/CharacterList';
 import Home from 'view/pages/Home';
+import AdminQuestions from 'view/pages/Admin/Questions';
 import AdminSuccess from 'view/pages/Admin/Success';
 import AdminUser from 'view/pages/Admin/User';
 
@@ -25,6 +26,7 @@ export default class App extends Component {
           <BasicLayout>
             <Refresher>
               <Switch>
+                <Route exact path="/admin/questions" component={AdminQuestions} />
                 <Route exact path="/admin/success" component={AdminSuccess} />
                 <Route exact path="/admin/user" component={AdminUser} />
                 <Route exact path="/bidders" component={BidderList} />
