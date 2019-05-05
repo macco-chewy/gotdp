@@ -22,7 +22,7 @@ class CharacterPanel extends Component {
   render() {
     const { characters } = this.props;
     return (
-      <Panel header="Characters" className={styles.root} innerClassName={styles.container}>
+      <Panel header="Characters" className={styles.root} bodyClassName={styles.body}>
         {
           characters.length === 0
             ? null

@@ -63,30 +63,49 @@
   text-align: justify;
 }
 
-.userPanel {
+.bidPanel {
   
 }
 
-.userPanel table {
-  width: 100%;
-  border: 1px solid #333333;
-}
-
-.userPanel th {
-  padding: .2rem;
-  background: var(--dark-gray);
+.bidPanelHeader {
+  padding: .25rem;
+  font-size: 1.25rem;
   color: var(--off-white);
-  border-bottom: 1px solid var(--black);
-  font-family: "Cinzel", serif;
-  font-size: .8rem;
-  text-align: center;
+  background: var(--dark-gray);
+  border-color: var(--dark-gray);
+  border-bottom: 1px solid var(--dark-gray);
 }
 
-.userPanel td {
-  width: 2rem;
-  border-bottom: 1px solid var(--black);
+.bidPanelBody {
+  border-color: var(--dark-gray);
+}
+
+.bidPanelFooter {
+  background: var(--dark-gray);
+  border-color: var(--dark-gray);
+  border-top: 1px solid var(--dark-gray);
+}
+
+.bidPanel table {
+  width: 100%;
+}
+
+.bidPanel tr {
+  border-bottom: 1px solid var(--dark-gray);
+}
+
+.bidPanel th {
+  padding: .5rem;
+  background: var(--light-gray);
+  color: var(--dark-gray);
+  border-right: 1px solid var(--dark-gray);
+  font-family: "Cinzel", serif;
   font-size: 1rem;
-  text-align: center;
+  text-align: right;
+}
+
+.bidPanel td {
+  width: 2rem;
 }
 
 td.status1 {
@@ -220,7 +239,7 @@ td.status3 {
   
   }
 
-  .userPanel {
+  .bidPanel {
     margin-top: 2rem;
   }
 
@@ -261,7 +280,7 @@ td.status3 {
     padding-bottom: 1rem;
   }
   
-  .userPanel {
+  .bidPanel {
     flex: 1;
     margin-top: 0;
     margin-left: 2rem;
