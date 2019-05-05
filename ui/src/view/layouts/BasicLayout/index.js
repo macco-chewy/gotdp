@@ -156,7 +156,7 @@ class BasicLayout extends Component {
           <div className={styles.body}>{this.props.children}</div>
           <div className={styles.footer}>
             <div><span style={{ textDecoration: 'line-through' }}>&copy;</span> 2019 - No Rights Reserved.</div>
-            <div>Data provided by <a href="https://gameofthrones.fandom.com" target="new">Game of Thrones Wiki _ FANDOM powered by Wikia</a> without permission.  If this is a problem I'm happy to stop.</div>
+            <div>Data provided by <a href="https://gameofthrones.fandom.com" target="_blank" rel="noopener noreferrer">Game of Thrones Wiki _ FANDOM powered by Wikia</a> without permission.  If this is a problem I'm happy to stop.</div>
           </div>
         </div>
       </div>

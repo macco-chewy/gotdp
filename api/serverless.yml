@@ -135,10 +135,9 @@ functions:
   refreshQuestions:
     handler: lambdas/refreshQuestions.handler
     name: ${self:custom.lambda.namePrefix}refreshQuestions
-    events:
   
   refreshUsers:
     handler: lambdas/refreshUsers.handler
     name: ${self:custom.lambda.namePrefix}refreshUsers
     events:
-      - schedule: "cron(7/15 * ? * SUN-MON *)"
+      - schedule: "cron(7/15 * ? * * *)"

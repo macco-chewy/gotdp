@@ -10,8 +10,9 @@
   padding-left: 1rem;
   font-family: "Cinzel", serif;
   font-size: 2rem;
+  font-weight: bold;
   color: var(--light-gray);
-  border-bottom: 2px solid var(--light-gray);
+  border-bottom: 1px solid var(--light-gray);
 }
 
 .card {
