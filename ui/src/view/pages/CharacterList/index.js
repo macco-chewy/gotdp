@@ -49,13 +49,13 @@ class Home extends Component {
   }
 }
 
-const getState = (globalState) => ({
-  characters: globalState.characters,
-  users: globalState.users
+const mapStateToProps = (state) => ({
+  characters: state.characters,
+  users: state.users
 });
 
 const actions = {
   push
 };
 
-export default connect(getState, actions)(Home);
+export default connect(mapStateToProps, actions)(Home);

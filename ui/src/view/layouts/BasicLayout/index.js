@@ -139,8 +139,8 @@ class BasicLayout extends Component {
   }
 }
 
-const getState = (globalState) => ({
-  location: globalState.router.location.pathname
+const mapStateToProps = (state) => ({
+  location: state.router.location.pathname
 });
 
 const actions = {
@@ -148,4 +148,4 @@ const actions = {
   push
 };
 
-export default connect(getState, actions)(BasicLayout);
+export default connect(mapStateToProps, actions)(BasicLayout);

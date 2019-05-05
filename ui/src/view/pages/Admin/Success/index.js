@@ -21,10 +21,10 @@ class Success extends Component {
   }
 }
 
-const getState = (globalState) => ({});
+const mapStateToProps = (state) => ({});
 
 const actions = {
   push
 };
 
-export default connect(getState, actions)(Success);
+export default connect(mapStateToProps, actions)(Success);

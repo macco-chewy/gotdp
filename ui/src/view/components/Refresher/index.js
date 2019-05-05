@@ -51,10 +51,10 @@ class Refresher extends Component {
   }
 }
 
-const getState = (globalState) => ({
-  characters: globalState.characters,
-  questions: globalState.questions,
-  users: globalState.users
+const mapStateToProps = (state) => ({
+  characters: state.characters,
+  questions: state.questions,
+  users: state.users
 });
 
 const actions = {
@@ -63,4 +63,4 @@ const actions = {
   getUsers: userCollection.get
 };
 
-export default connect(getState, actions)(Refresher);
+export default connect(mapStateToProps, actions)(Refresher);

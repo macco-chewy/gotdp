@@ -35,12 +35,12 @@ class CharacterPanel extends Component {
   }
 }
 
-const getState = (globalState) => ({
-  characters: globalState.characters
+const mapStateToProps = (state) => ({
+  characters: state.characters
 });
 
 const actions = {
   push
 };
 
-export default connect(getState, actions)(CharacterPanel);
+export default connect(mapStateToProps, actions)(CharacterPanel);
