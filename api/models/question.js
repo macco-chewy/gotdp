@@ -194,6 +194,9 @@ export const refreshQuestionByName = async (name, attributes = {}) => {
   attributes.name = name;
   const question = new Question(attributes);
 
+  // delete correctAnswer - this is not the interface for setting that value
+  delete question.attributes.correctAnswer;
+
   for (const attribute in question.attributes) {
     if (question.attributes[attribute] === undefined) {
       delete question.attributes[attribute];

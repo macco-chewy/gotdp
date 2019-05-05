@@ -106,6 +106,16 @@ functions:
     environment:
       STATUS: 'ok'
   
+  patchQuestion:
+    handler: lambdas/patchQuestion.handler
+    name: ${self:custom.lambda.namePrefix}patchQuestion
+    events:
+      - http:
+          path: question
+          method: patch
+          cors: true
+          private: false
+  
   putUser:
     handler: lambdas/putUser.handler
     name: ${self:custom.lambda.namePrefix}putUser
