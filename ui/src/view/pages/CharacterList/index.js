@@ -37,6 +37,7 @@ class Home extends Component {
 
     return (
       <div className={styles.root}>
+        <div className={styles.pageHeader}>Character List</div>
         {
           characters.length === 0
             ? null

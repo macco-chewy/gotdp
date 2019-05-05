@@ -5,6 +5,15 @@
   width: 100%;
 }
 
+.pageHeader {
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  color: var(--light-gray);
+  border-bottom: 2px solid var(--light-gray);
+}
+
 .card {
   flex: 1;
 }

@@ -24,6 +24,7 @@ class Home extends Component {
 
     return (
       <div className={styles.root}>
+        <div className={styles.pageHeader}>Character Detail</div>
         <CharacterCard character={character} users={users} active={true} className={styles.card} />
       </div>
     );
