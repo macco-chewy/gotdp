@@ -120,6 +120,52 @@ export const getUserByName = async (name) => {
 };
 
 
+export const getUserHistoryByName = async (name) => {
+  const params = {
+    TableName: process.env.GOTDP_DYNAMO_TABLE,
+    IndexName: "GS_Name",
+    KeyConditionExpression: "#name = :name and begins_with(#sk, :sk)",
+    ExpressionAttributeNames: {
+      "#name": "name",
+      "#sk": "sk"
+    },
+    ExpressionAttributeValues: {
+      ":name": name,
+      ":sk": INDEX.slice(0, -1)
+    }
+  };
+  const items = (await documentClient.query(params).promise()).Items;
+
+  // if no items
+  if (!Array.isArray(items) || items.length === 0) {
+    return;
+  }
+
+  let lastId, maxVersion = '0';
+  const versions = items.map(version => {
+    // check for id mismatch
+    if (lastId && version.id !== lastId) {
+      throw new Error('Query returned multiple users');
+    }
+
+    lastId = version.id;
+    if (parseInt(version.version, 10) > parseInt(maxVersion, 10)) {
+      maxVersion = version.version;
+    }
+
+    return convertDynamoItemToUser(version);
+  });
+
+  // the first version is the current version
+  // use it as the base object
+  const user = versions.shift();
+  // attach remaining versions as history
+  user.history = versions;
+
+  return user;
+}
+
+
 export const saveUser = async (user) => {
   if (!(user instanceof User)) {
     throw new Error('Cannot save user - not of type User');
