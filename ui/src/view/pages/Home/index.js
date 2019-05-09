@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import PageHeader from 'view/components/PageHeader';
 import CharacterPanel from './CharacterPanel';
-import LeaderBoard from 'view/components/LeaderBoard';
+import LeaderBoard from './LeaderBoard';
 
 import styles from './styles.module.css';
 
@@ -23,8 +24,11 @@ class Home extends Component {
 
     return (
       <div className={styles.root}>
-        <div className={styles.leaderboardPanel}><LeaderBoard characters={characters} users={users} /></div>
-        <div className={styles.characterPanel}><CharacterPanel characters={characters} /></div>
+        <PageHeader legend="rank">Welcome</PageHeader>
+        <div className={styles.bodyContainer}>
+          <LeaderBoard users={users} className={styles.leaderboardPanel} />
+          <CharacterPanel characters={characters} className={styles.characterPanel} />
+        </div>
       </div>
     );
   }

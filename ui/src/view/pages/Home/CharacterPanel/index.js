@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
+import classnames from 'classnames';
 
 import CharacterHead from 'view/components/CharacterHead';
 import Panel from 'view/components/Panel';
@@ -20,9 +21,9 @@ class CharacterPanel extends Component {
   };
 
   render() {
-    const { characters } = this.props;
+    const { characters, className } = this.props;
     return (
-      <Panel header="Characters" className={styles.root} bodyClassName={styles.body}>
+      <Panel header="Characters" className={classnames(styles.root, className)} bodyClassName={styles.body}>
         {
           characters.length === 0
             ? null

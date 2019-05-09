@@ -4,11 +4,12 @@ import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 
 import CharacterCard from 'view/components/CharacterCard';
+import PageHeader from 'view/components/PageHeader';
 
 import styles from './styles.module.css';
 
 
-class Home extends Component {
+class CharacterList extends Component {
   static propTypes = {
     characters: PropTypes.any,
     push: PropTypes.func,
@@ -23,12 +24,8 @@ class Home extends Component {
     }
   }
 
-  handleCharacterCardClick = (characterId) => {
-    // const nextCharacterId = (characterId !== this.state.activeCharacterId) ? characterId : '';
-    // this.setState({
-    //   activeCharacterId: nextCharacterId
-    // });
-    this.props.push(`/characters/${characterId}`);
+  handleCharacterCardClick = (name) => {
+    this.props.push(`/characters/${name}`);
   }
 
   render() {
@@ -37,7 +34,8 @@ class Home extends Component {
 
     return (
       <div className={styles.root}>
-        <div className={styles.pageHeader}>Character List</div>
+        <PageHeader legend="status">Character List</PageHeader>
+
         {
           characters.length === 0
             ? null
@@ -59,4 +57,4 @@ const actions = {
   push
 };
 
-export default connect(mapStateToProps, actions)(Home);
+export default connect(mapStateToProps, actions)(CharacterList);

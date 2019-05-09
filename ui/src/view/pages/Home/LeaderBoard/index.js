@@ -7,8 +7,8 @@ import styles from './styles.module.css';
 
 export default function LeaderBoard(props) {
 
-  const { characters, users, className } = props;
-  if (!characters || !users) {
+  const { users, className } = props;
+  if (!users) {
     return null;
   }
 

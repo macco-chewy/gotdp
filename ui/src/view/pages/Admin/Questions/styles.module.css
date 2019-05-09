@@ -14,17 +14,17 @@
 
 .formRow.status1 {
   color: var(--olive);
-  background-color: rgba(162, 170, 51, .2);
+  background-color: var(--olive-transparent);
 }
 
 .formRow.status2 {
   color: var(--ruby);
-  background-color: rgba(170, 59, 51, .2);
+  background-color: var(--ruby-transparent);
 }
 
 .formRow.status3 {
   color: var(--ice);
-  background-color: rgba(87, 190, 245, .2);
+  background-color: var(--ice-transparent);
 }
 
 .formRowSpacer {

@@ -14,9 +14,12 @@
   --blue-berry: #3b33aa;
   --lapis: #3366aa;
   --ice: #57bef5;
+  --ice-transparent: rgba(87, 190, 245, .25);
   --snow: #d4e8f3;
   --ruby: #aa3b33;
+  --ruby-transparent: rgba(170, 59, 51, .35);
   --olive: #a2aa33;
+  --olive-transparent: rgba(162, 170, 51, .3);
   
   /* color aliases */
   --primary-text: var(--off-white);
@@ -112,8 +115,4 @@ input[type=file] {
   h5 {
     font-size: 12px;
   }
-}
-
-@media (min-width: 768px) {
-  
 }

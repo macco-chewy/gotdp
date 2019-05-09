@@ -7,6 +7,7 @@ import Refresher from 'view/components/Refresher';
 
 import BasicLayout from 'view/layouts/BasicLayout';
 
+import BidderDetail from 'view/pages/BidderDetail';
 import BidderList from 'view/pages/BidderList';
 import CharacterDetail from 'view/pages/CharacterDetail';
 import CharacterList from 'view/pages/CharacterList';
@@ -30,8 +31,9 @@ export default class App extends Component {
                 <Route exact path="/admin/success" component={AdminSuccess} />
                 <Route exact path="/admin/user" component={AdminUser} />
                 <Route exact path="/bidders" component={BidderList} />
+                <Route exact path="/bidders/:name" component={BidderDetail} />
                 <Route exact path="/characters" component={CharacterList} />
-                <Route exact path="/characters/:cid" component={CharacterDetail} />
+                <Route exact path="/characters/:name" component={CharacterDetail} />
                 <Route exact path="/home" component={Home} />
                 <Redirect to="/home" />
               </Switch>

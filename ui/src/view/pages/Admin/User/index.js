@@ -6,6 +6,8 @@ import classnames from 'classnames';
 
 import { create as createUser, get as getUser } from 'actions/user';
 
+import PageHeader from 'view/components/PageHeader';
+
 import styles from './styles.module.css';
 
 
@@ -106,7 +108,7 @@ const QuestionFormRow = (props) => {
 
 
 
-class User extends Component {
+class AdminUser extends Component {
   static propTypes = {
     characters: PropTypes.any,
     clearUser: PropTypes.func,
@@ -210,10 +212,8 @@ class User extends Component {
 
     return (
       <div className={styles.root}>
+        <PageHeader>User Details</PageHeader>
         <form onSubmit={this.handleUsernameSearch}>
-          <div className={styles.formRow}>
-            <h2>User Details</h2>
-          </div>
           <div className={styles.formRow}>
             <div className={classnames(styles.formItem, styles.flex1)}>
               <label htmlFor="search_name"><h3>Name</h3></label>
@@ -230,9 +230,8 @@ class User extends Component {
 
         <form onSubmit={this.handleFormSubmit}>
 
-          <div className={styles.formRow}>
-            <h2>Character Statuses</h2>
-          </div>
+
+          <PageHeader legend="status">Character Statuses</PageHeader>
           {
             characters.length === 0
               ? null
@@ -243,9 +242,7 @@ class User extends Component {
 
           <div className={styles.formRowSpacer} />
 
-          <div className={styles.formRow}>
-            <h2>Questions</h2>
-          </div>
+          <PageHeader legend="questions">Questions</PageHeader>
           {
             questions.length === 0
               ? null
@@ -281,4 +278,4 @@ const actions = {
   push
 };
 
-export default connect(mapStateToProps, actions)(User);
+export default connect(mapStateToProps, actions)(AdminUser);

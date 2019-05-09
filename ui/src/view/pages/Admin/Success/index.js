@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 
 
 
-class Success extends Component {
+class AdminSuccess extends Component {
   static propTypes = {
     push: PropTypes.func
   };
@@ -27,4 +27,4 @@ const actions = {
   push
 };
 
-export default connect(mapStateToProps, actions)(Success);
+export default connect(mapStateToProps, actions)(AdminSuccess);
