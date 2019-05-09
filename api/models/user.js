@@ -246,19 +246,34 @@ export const refreshUserScore = async (user, characters, questions) => {
   // loop characters
   characters.forEach(character => {
     const cid = character.id;
-    const bid = user.attributes.bids[cid];
+    const status = parseInt(character.attributes.status, 10);
+    const bid = parseInt(user.attributes.bids[cid], 10);
     if (bid) {
 
-      // console.log('Bid:', character.attributes.status, bid, (character.attributes.status === bid), (character.attributes.status === bid && character.attributes.status !== '1'));
+      // console.log('Bid:', bid, status, (bid === 1 && bid === status), (bid > 1 && status > 1));
 
-      // if the character status equals the user bid then the user chose correctly - add a point
-      if (character.attributes.status === bid) {
+      // did bidder guess alive or deceased
+      // if bid is alive and equals status
+      // or bid is not alive and status is not alive
+      // grant points
+      if (
+        (bid === 1 && status === bid)
+        || (bid > 1 && status > 1)
+      ) {
         user.attributes.score += CHAR_POINTS;
+      }
 
-        // if the character is also deceased then the user also chose the correct wight status - add a point
-        if (character.attributes.status !== '1') {
-          user.attributes.score += CHAR_POINTS;
-        }
+      // console.log('Bonus Bid:', bid, status, (bid > 1 && status === bid));
+
+      // did bidder guess wight or not
+      // if bid is not alive
+      // and status equals bid
+      // grant points
+      if (
+        bid > 1
+        && status === bid
+      ) {
+        user.attributes.score += CHAR_POINTS;
       }
     }
   });
