@@ -7,14 +7,14 @@
   flex: 0;
   padding: .5rem;
   font-family: "Cinzel", serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   background: var(--black);
-  border: 3px solid var(--light-gray);
+  border: 2px solid var(--light-gray);
   border-right: 1px solid var(--light-gray);
   border-bottom: 0;
-  border-radius: 3rem 3rem 0 0;
+  border-radius: 2rem 2rem 0 0;
 }
 
 .body {
@@ -23,7 +23,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  border-left: 3px solid var(--light-gray);
+  border-left: 2px solid var(--light-gray);
   border-right: 1px solid var(--light-gray);
 }
 
@@ -34,9 +34,9 @@
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
-  border: 3px solid var(--light-gray);
+  border: 2px solid var(--light-gray);
   border-right: 1px solid var(--light-gray);
   border-top: 0;
   border-bottom: 1px solid var(--light-gray);
-  border-radius: 0 0 3rem 3rem;
+  border-radius: 0 0 2rem 2rem;
 }

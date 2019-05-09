@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 
-import PageHeader from 'view/components/PageHeader';
 import CharacterPanel from './CharacterPanel';
-import LeaderBoard from './LeaderBoard';
+import LeaderBoard from 'view/components/LeaderBoard';
+import PageHeader from 'view/components/PageHeader';
 
 import styles from './styles.module.css';
 
@@ -12,8 +13,13 @@ import styles from './styles.module.css';
 class Home extends Component {
   static propTypes = {
     characters: PropTypes.any,
+    push: PropTypes.func,
     users: PropTypes.any
   };
+
+  handleBidderClick = (name) => {
+    this.props.push(`/bidders/${name}`);
+  }
 
   render() {
     const { characters, users } = this.props;
@@ -24,9 +30,11 @@ class Home extends Component {
 
     return (
       <div className={styles.root}>
-        <PageHeader legend="rank">Welcome</PageHeader>
         <div className={styles.bodyContainer}>
-          <LeaderBoard users={users} className={styles.leaderboardPanel} />
+          <div className={styles.leaderboardPanel}>
+            <PageHeader legend="rank">Leader Board</PageHeader>
+            <LeaderBoard users={users} onClick={this.handleBidderClick} />
+          </div>
           <CharacterPanel characters={characters} className={styles.characterPanel} />
         </div>
       </div>
@@ -39,6 +47,8 @@ const mapStateToProps = (state) => ({
   users: state.users
 });
 
-const actions = {};
+const actions = {
+  push
+};
 
 export default connect(mapStateToProps, actions)(Home);
