@@ -1,0 +1,121 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.scoringDetails {
+  margin: 0 1rem;
+  font-size: 1.1rem;
+}
+
+.scoringDetails em {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.possiblePoints {
+  margin-right: 3rem;
+  text-align: center;
+}
+
+.correctAnswer {
+  text-align: right;
+}
+
+.actualPoints {
+  margin-right: 3rem;
+  color: var(--off-white);
+  background: var(--black);
+  text-align: center;
+}
+
+.actualAnswer {
+  color: var(--off-white);
+  background: var(--black);
+  text-align: left;
+}
+
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--dark-gray);
+  background-color: var(--black);
+}
+
+.formRow.status1 {
+  color: var(--olive);
+  background-color: var(--olive-transparent);
+}
+
+.formRow.status2 {
+  color: var(--ruby);
+  background-color: var(--ruby-transparent);
+}
+
+.formRow.status3 {
+  color: var(--ice);
+  background-color: var(--ice-transparent);
+}
+
+.formRowSpacer {
+  height: 3rem;
+}
+
+.formItemLabel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  flex: 6;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.formItem {
+  padding: 0 .5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.formItem.flex1 {
+  flex: 1;
+}
+
+.formItem.flex2 {
+  flex: 2;
+}
+
+.formItem.flex3 {
+  flex: 3;
+}
+
+.formItme.flex4 {
+  flex: 4;
+}
+
+.formItem.flex5 {
+  flex: 5;
+}
+
+.formItem.flex6 {
+  flex: 6;
+}
+
+.formItem.status1 {
+  color: var(--off-white);
+  background-color: var(--olive);
+}
+
+.formItem.status2 {
+  color: var(--off-white);
+  background-color: var(--ruby);
+}
+
+.formItem.status3 {
+  color: var(--off-white);
+  background-color: var(--ice);
+}

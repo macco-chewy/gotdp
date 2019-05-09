@@ -83,6 +83,8 @@ functions:
             parameters:
               paths:
                 name: true
+              querystrings:
+                withHistory: false
   
   getUsers:
     handler: lambdas/getUsers.handler

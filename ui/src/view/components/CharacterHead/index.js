@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import styles from './styles.module.css';
 
-export default function CharacterCard(props) {
+export default function CharacterHead(props) {
 
   const { character, onClick, className } = props;
   if (!character) {
@@ -11,7 +11,7 @@ export default function CharacterCard(props) {
   }
 
   const handleClick = () => {
-    onClick(character.id);
+    onClick(character.name);
   }
 
   let rootClassNames = styles.root;

@@ -1,15 +1,19 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import Panel from 'view/components/Panel';
-
 import styles from './styles.module.css';
 
 export default function LeaderBoard(props) {
 
-  const { characters, users, className } = props;
-  if (!characters || !users) {
+  const { users, className, onClick } = props;
+  if (!users) {
     return null;
+  }
+
+  const handleClick = (name) => {
+    if (onClick) {
+      onClick(name);
+    }
   }
 
   // filter out any ignored users
@@ -98,31 +102,27 @@ export default function LeaderBoard(props) {
   let rootClassName = classnames(styles.root, className);
 
   return (
-    <Panel header="Leader Board" footer="* Not in contention" className={rootClassName}>
-      <table>
-        <tbody>
-          {
-            scoredUsers.map((user, i) => {
-              return (
-                <tr key={i} className={user.style}>
-                  <th>{user.name}</th>
-                  <td>{user.attributes.score || 0}</td>
-                </tr>
-              )
-            })
-          }
-          {
-            ignoredUsers.map((user, i) => {
-              return (
-                <tr key={i} className={styles.last}>
-                  <th>*{user.name}</th>
-                  <td>{user.attributes.score || 0}</td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </table>
-    </Panel>
+    <div className={rootClassName}>
+      {
+        scoredUsers.map((user, i) => {
+          return (
+            <div key={i} className={classnames(styles.bidderContainer, user.style)} onClick={() => handleClick(user.name)}>
+              <div className={styles.bidderName}>{user.name}</div>
+              <div className={styles.bidderScore}>{user.attributes.score}</div>
+            </div>
+          )
+        })
+      }
+      {
+        ignoredUsers.map((user, i) => {
+          return (
+            <div key={i} className={classnames(styles.bidderContainer, styles.last)} onClick={() => handleClick(user.name)}>
+              <div className={styles.bidderName}>*{user.name}</div>
+              <div className={styles.bidderScore}>{user.attributes.score}</div>
+            </div>
+          )
+        })
+      }
+    </div>
   );
 }

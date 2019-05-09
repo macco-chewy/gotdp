@@ -58,7 +58,7 @@ const QuestionFormRow = (props) => {
 
 
 
-class Questions extends Component {
+class AdminQuestions extends Component {
   static propTypes = {
     isLoading: PropTypes.bool,
     questions: PropTypes.any,
@@ -159,4 +159,4 @@ const actions = {
   push
 };
 
-export default connect(mapStateToProps, actions)(Questions);
+export default connect(mapStateToProps, actions)(AdminQuestions);

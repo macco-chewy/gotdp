@@ -1,11 +1,14 @@
-import { getUserByName } from '../models/user';
+import { getUserByName, getUserHistoryByName } from '../models/user';
 
 
 export async function handler(event) {
   try {
 
     const name = decodeURIComponent(event.pathParameters.name);
-    const user = await getUserByName(name);
+    const withHistory = decodeURIComponent((event.queryStringParameters) ? event.queryStringParameters.withHistory : '');
+    const user = (withHistory === 'true' || withHistory === '1')
+      ? await getUserHistoryByName(name)
+      : await getUserByName(name);
 
     if (!user) {
       return {

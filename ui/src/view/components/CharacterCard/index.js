@@ -14,7 +14,7 @@ export default function CharacterCard(props) {
 
   const handleClick = () => {
     if (onClick) {
-      onClick(character.id);
+      onClick(character.name);
     }
   }
 

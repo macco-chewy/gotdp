@@ -4,21 +4,31 @@
   width: 100%;
 }
 
-.pageHeader {
-  margin-bottom: 2rem;
-  padding-left: 1rem;
-  font-family: "Cinzel", serif;
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--light-gray);
-  border-bottom: 1px solid var(--light-gray);
-}
-
 .bidderContainer {
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid var(--dark-gray);
   align-items: center;
+  cursor: pointer;
+}
+
+.first {
+  color: var(--olive);
+  background-color: var(--olive-transparent);
+}
+
+.second {
+  color: var(--ruby);
+  background-color: var(--ruby-transparent);
+}
+
+.third {
+  color: var(--ice);
+  background-color: var(--ice-transparent);
+}
+
+.last {
+  color: var(--light-gray);
 }
 
 .bidderName {

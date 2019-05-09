@@ -1,66 +1,48 @@
 .root {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 2px solid var(--black);
 }
 
-.root table {
-  width: calc(100% - 1px);
-  margin-bottom: 2px;
+.bidderContainer {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--dark-gray);
+  align-items: center;
+  cursor: pointer;
 }
-
-.root tr {
-  border-bottom: 2px solid var(--dark-gray);
-}
-
-.root th {
-  width: 60%;
-  padding: .2rem;
-  font-family: "Cinzel", serif;
-  font-size: 2.5rem;
-  text-align: right;
-}
-
-.root td {
-  width: 40%;
-  text-align: center;
-  font-size: 4rem;
-}
-
-
-
 
 .first {
   color: var(--olive);
-  background-color: rgba(162, 170, 51, .2);
+  background-color: var(--olive-transparent);
 }
 
 .second {
   color: var(--ruby);
-  background-color: rgba(170, 59, 51, .2);
+  background-color: var(--ruby-transparent);
 }
 
 .third {
   color: var(--ice);
-  background-color: rgba(87, 190, 245, .2);
+  background-color: var(--ice-transparent);
 }
 
 .last {
   color: var(--light-gray);
 }
 
-.last td,
-.last th {
-  padding: 1.4rem;
+.bidderName {
+  flex: 1;
+  font-family: "Cinzel", serif;
   font-size: 2rem;
-}
-
-tr.footer {
-  border-bottom: 0;
-}
-
-.footer td {
-  padding: 1rem;
-  color: var(--light-gray);
-  font-size: 1rem;
   font-weight: bold;
-  background: var(--black);
+  text-align: right;
+}
+
+.bidderScore {
+  flex: 1;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
 }
