@@ -41,9 +41,9 @@ const QuestionFormRow = (props) => {
 
   const rowStyle = classnames(styles.formRow, (answer) ? styles.status1 : '');
   const itemClassNames = classnames(styles.formItem, styles.flex2);
+  const correctAnswerClassNames = classnames(itemClassNames, styles.correctAnswer);
   const possiblePointsClassNames = classnames(itemClassNames, styles.possiblePoints);
   const actualPointsClassNames = classnames(itemClassNames, styles.actualPoints, (bid === answer) ? styles.status1 : (bid) ? styles.status2 : '');
-  const correctAnswerClassNames = classnames(itemClassNames, styles.correctAnswer);
   const actualAnswerClassNames = classnames(itemClassNames, styles.actualAnswer, (bid === answer) ? styles.status1 : (bid) ? styles.status2 : '');
 
   return (
@@ -51,10 +51,10 @@ const QuestionFormRow = (props) => {
       <div className={styles.formItemLabel}>
         <h4>{question.attributes.text}</h4>
       </div>
-      <div className={possiblePointsClassNames}>{possiblePoints}</div>
       <div className={correctAnswerClassNames}>{answer}</div>
-      <div className={actualAnswerClassNames}>{bid || 'no answer'}</div>
+      <div className={possiblePointsClassNames}>{possiblePoints}</div>
       <div className={actualPointsClassNames}>{actualPoints}</div>
+      <div className={actualAnswerClassNames}>{bid || 'no answer'}</div>
     </div>
   );
 }
@@ -197,6 +197,15 @@ class BidderDetail extends Component {
     }
 
     stats.answer = question.attributes.correctAnswer;
+    switch (question.attributes.type) {
+      case 'radio':
+        stats.answer = question.attributes.answers.find(answer => {
+          return answer.value === stats.answer;
+        }).text;
+        break;
+      default:
+        break;
+    }
     stats.possiblePoints = QUES_POINTS
 
     // if no user return
@@ -210,12 +219,22 @@ class BidderDetail extends Component {
       stats.actualPoints = QUES_POINTS;
     }
 
+    switch (question.attributes.type) {
+      case 'radio':
+        stats.bid = question.attributes.answers.find(answer => {
+          return answer.value === stats.bid;
+        }).text;
+        break;
+      default:
+        break;
+    }
+
     return stats;
   }
 
   render() {
     const { totalPossiblePoints, totalActualPoints } = this.state;
-    const { characters, isLoading, questions, user } = this.props;
+    const { characters, questions, user } = this.props;
 
     if (!user) {
       return null;
@@ -244,15 +263,23 @@ class BidderDetail extends Component {
 
         <div className={styles.formRowSpacer}></div>
 
-        {/* <div>{totalPossiblePoints}</div>
-        <div>{totalActualPoints}</div> */}
+        <PageHeader>Totals</PageHeader>
+        <div className={styles.formRow}>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreLabel)}>Total Possible:</div>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreValue)}>{totalPossiblePoints}</div>
+        </div>
+        <div className={styles.formRow}>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreLabel)}>Total Score:</div>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreValue)}>{totalActualPoints}</div>
+        </div>
 
+        <div className={styles.formRowSpacer}></div>
 
         <PageHeader legend="status">Character Bids</PageHeader>
         <div className={styles.formRow}>
           <div className={styles.formItemLabel}>Name</div>
-          <div className={classnames(styles.formItem, styles.flex1, styles.possiblePoints)}>Possible</div>
-          <div className={classnames(styles.formItem, styles.flex1, styles.actualPoints)}>Actual</div>
+          <div className={classnames(styles.formItem, styles.flex1, styles.possiblePoints)}>Worth</div>
+          <div className={classnames(styles.formItem, styles.flex1, styles.actualPoints)}>Score</div>
         </div>
         {
           characters.length === 0
@@ -268,10 +295,10 @@ class BidderDetail extends Component {
         <PageHeader legend="questions">Bonus Questions</PageHeader>
         <div className={styles.formRow}>
           <div className={styles.formItemLabel}>Question</div>
-          <div className={classnames(styles.formItem, styles.flex2, styles.possiblePoints)}>Possible</div>
           <div className={classnames(styles.formItem, styles.flex2, styles.correctAnswer)}>Answer</div>
+          <div className={classnames(styles.formItem, styles.flex2, styles.possiblePoints)}>Worth</div>
+          <div className={classnames(styles.formItem, styles.flex2, styles.actualPoints)}>Score</div>
           <div className={classnames(styles.formItem, styles.flex2, styles.actualAnswer)}>Bid</div>
-          <div className={classnames(styles.formItem, styles.flex2, styles.actualPoints)}>Actual</div>
         </div>
         {
           questions.length === 0
@@ -281,6 +308,18 @@ class BidderDetail extends Component {
               return <QuestionFormRow key={i} question={question} user={user} {...stats} />
             })
         }
+
+        <div className={styles.formRowSpacer}></div>
+
+        <PageHeader>Totals</PageHeader>
+        <div className={styles.formRow}>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreLabel)}>Total Possible:</div>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreValue)}>{totalPossiblePoints}</div>
+        </div>
+        <div className={styles.formRow}>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreLabel)}>Total Score:</div>
+          <div className={classnames(styles.formItem, styles.flex1, styles.scoreValue)}>{totalActualPoints}</div>
+        </div>
 
       </div>
     );

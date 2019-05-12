@@ -15,7 +15,6 @@
 }
 
 .possiblePoints {
-  margin-right: 3rem;
   text-align: center;
 }
 
@@ -24,16 +23,25 @@
 }
 
 .actualPoints {
-  margin-right: 3rem;
+  margin-right: 1rem;
   color: var(--off-white);
   background: var(--black);
   text-align: center;
 }
 
 .actualAnswer {
+  margin-right: 1rem;
   color: var(--off-white);
   background: var(--black);
   text-align: left;
+}
+
+.scoreLabel {
+  justify-content: flex-end !important;
+}
+
+.scoreValue {
+  justify-content: flex-start !important;
 }
 
 
@@ -79,6 +87,9 @@
   padding: 0 .5rem;
   font-size: 1.5rem;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .formItem.flex1 {
@@ -118,4 +129,29 @@
 .formItem.status3 {
   color: var(--off-white);
   background-color: var(--ice);
+}
+
+
+@media (min-width: 0) {
+  .correctAnswer {
+    display: none;
+  }
+
+  .actualAnswer {
+    display: none;
+  }
+}
+
+
+@media (min-width: 620px) {
+  .correctAnswer {
+    display: flex;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .actualAnswer {
+    display: flex;
+  }
 }

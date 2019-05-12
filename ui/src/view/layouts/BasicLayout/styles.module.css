@@ -71,7 +71,6 @@
 
 .body {
   flex: 1;
-  padding: 0 2rem 3rem;
 }
 
 .footer {
@@ -185,6 +184,10 @@
   .quote {
     display: none;
   }
+
+  .body {
+    padding: 0 0 2rem;
+  }
 }
 
 
@@ -196,6 +199,13 @@
   .breadCrumbs {
     padding: 1rem 3rem 0;
     font-size: 1.5rem;
+  }
+}
+
+
+@media (min-width: 620px) {
+  .body {
+    padding: 0 1rem 2rem;
   }
 }
 
@@ -322,5 +332,9 @@
 
   .quote {
     display: block;
+  }
+
+  .body {
+    padding: 0 2rem 4rem;
   }
 }
