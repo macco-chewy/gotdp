@@ -213,11 +213,8 @@ class BidderDetail extends Component {
     if (!user || !user.attributes.questions[question.id]) {
       return stats;
     }
-
+    
     stats.bid = user.attributes.questions[question.id];
-    if (stats.bid === stats.answer) {
-      stats.actualPoints = QUES_POINTS;
-    }
 
     switch (question.attributes.type) {
       case 'radio':
@@ -227,6 +224,10 @@ class BidderDetail extends Component {
         break;
       default:
         break;
+    }
+
+    if (stats.bid === stats.answer) {
+      stats.actualPoints = QUES_POINTS;
     }
 
     return stats;

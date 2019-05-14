@@ -19,7 +19,7 @@
 }
 
 .correctAnswer {
-  text-align: right;
+  text-align: center;
 }
 
 .actualPoints {
@@ -33,7 +33,7 @@
   margin-right: 1rem;
   color: var(--off-white);
   background: var(--black);
-  text-align: left;
+  text-align: center;
 }
 
 .scoreLabel {
