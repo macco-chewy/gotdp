@@ -20,7 +20,8 @@ const characters = [
   'Euron Greyjoy',
   {
     name: 'The Mountain',
-    imageUrl: 'https://vignette.wikia.nocookie.net/gameofthrones/images/5/5d/Gregor_closeup_ep7.png/revision/latest/scale-to-width-down/344?cb=20170903033840'
+    imageUrl: 'https://vignette.wikia.nocookie.net/gameofthrones/images/5/5d/Gregor_closeup_ep7.png/revision/latest/scale-to-width-down/344?cb=20170903033840',
+    status: '2'
   },
   'The Hound',
   'Qyburn',
